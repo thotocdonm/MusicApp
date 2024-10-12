@@ -9,11 +9,9 @@
         <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
         @if (Session["user_id"] != null)
         {
-            using (Html.BeginForm("Logout", "Auth", FormMethod.Post, new { id = "logoutForm" }))
-            {
-                @Html.AntiForgeryToken()
-                <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-outline-danger">Logout</a>
-            }
+            <form action="/Auth/Logout" method="post">
+                <button type="submit" id="bt_logout" name="bt_logout" >Logout</button>
+            </form>
         }
     </section>
 

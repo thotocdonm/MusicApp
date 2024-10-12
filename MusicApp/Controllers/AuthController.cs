@@ -74,7 +74,6 @@ namespace MusicApp.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Logout()
         {
             Session.Clear();
