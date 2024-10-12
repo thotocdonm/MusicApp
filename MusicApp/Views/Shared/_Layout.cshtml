@@ -8,8 +8,21 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="container body-content">
-        @RenderBody()
+    <div class="main-layout">
+        <!-- Playlist view (persistent) -->
+        <div id="playlistView">
+            @Html.Partial("_PlaylistView")
+        </div>
+
+        <!-- Main content area (this will change dynamically) -->
+        <div id="mainContent">
+            @RenderBody()
+        </div>
+
+        <!-- Footer music player (persistent) -->
+        <div id="musicPlayerFooter">
+            @Html.Partial("_MusicPlayerFooter")
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
