@@ -22,7 +22,7 @@ namespace MusicApp.Models
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="music")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Testing1")]
 	public partial class DataClasses1DataContext : System.Data.Linq.DataContext
 	{
 		
