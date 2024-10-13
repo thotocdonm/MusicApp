@@ -25,14 +25,14 @@ namespace MusicApp.Controllers
             var user = db.mic_users.FirstOrDefault(x => x.login_name == username);
             if(user != null)
             {
-                ViewBag.Message = "Username is exist!";
+                TempData["ErrorMessage"] = "Username already exists!";
                 return View();
             }
             else
             {
                 if(password != confirmpassword)
                 {
-                    ViewBag.Message = "Confirm password does not match the password!";
+                    TempData["ErrorMessage"] = "Confirm password does not match the password!";
                     return View();
                 }
                 else
@@ -42,10 +42,10 @@ namespace MusicApp.Controllers
                     newuser.password = password;
                     db.mic_users.InsertOnSubmit(newuser);
                     db.SubmitChanges();
-                    ViewBag.Message = "Sign up successful!";
+                    TempData["SuccessMessage"] = "Sign up successful!";
+                    return RedirectToAction("Login", "Auth");
                 }
             }
-            return RedirectToAction("Login", "Auth");
         }
         public ActionResult Login()
         {

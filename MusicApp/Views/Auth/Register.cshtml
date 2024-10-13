@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Register";
     Layout = null;
 }
@@ -40,6 +39,7 @@
             border-radius: 5px; /* Bo góc */
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body style="background-color: #000000">
@@ -113,8 +113,24 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
+    <!-- Add this script at the end of the body -->
+    <script>
+        $(document).ready(function () {
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <text>
+                alert('@TempData["ErrorMessage"]');
+                </text>
+            }
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <text>
+                alert('@TempData["SuccessMessage"]');
+                </text>
+            }
+        });
+    </script>
+
 </body>
 
 </html>
-
-
