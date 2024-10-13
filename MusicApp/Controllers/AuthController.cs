@@ -10,6 +10,7 @@ namespace MusicApp.Controllers
 {
     public class AuthController : Controller
     {
+
         public DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-H3FAVBH;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
         // GET: Auth
         public ActionResult Register()
@@ -38,8 +39,10 @@ namespace MusicApp.Controllers
                 else
                 {
                     mic_user newuser = new mic_user();
+                    int cost = 10;
+                    string hashPassword = BCrypt.Net.BCrypt.HashPassword(password, cost);
                     newuser.login_name = username;
-                    newuser.password = password;
+                    newuser.password = hashPassword;
                     db.mic_users.InsertOnSubmit(newuser);
                     db.SubmitChanges();
                     TempData["SuccessMessage"] = "Sign up successful!";
@@ -56,18 +59,28 @@ namespace MusicApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = db.mic_users.FirstOrDefault(x => x.login_name == model.login_name && x.password == model.password);
+                var user = db.mic_users.FirstOrDefault(x => x.login_name == model.login_name);
                 if (user != null)
                 {
-                    Session["user_id"] = user.user_id;
-                    Session["login_name"] = user.login_name;
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    if (BCrypt.Net.BCrypt.Verify(model.password, user.password))
+                    {
+                        Session["user_id"] = user.user_id;
+                        Session["login_name"] = user.login_name;
+                        Session["role"] = user.role;
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        TempData["checkPassword"] = "Wrong password!";
+                        return View();
+                    }
                 }
             }
+            else
+            {
+                ModelState.AddModelError("", "Invalid username or password.");
+            }
+        
             return View(model);
         }
 

@@ -9,6 +9,9 @@
         <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
         @if (Session["user_id"] != null)
         {
+            <p>UserId : @Session["user_id"]</p>
+            <p>Username : @Session["login_name"]</p>
+            <p>Role: @Session["role"]</p>
             <form action="/Auth/Logout" method="post">
                 <button type="submit" id="bt_logout" name="bt_logout" >Logout</button>
             </form>
