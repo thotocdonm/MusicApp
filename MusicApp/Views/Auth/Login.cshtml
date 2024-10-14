@@ -107,7 +107,7 @@
     <script src="Content("~/vendor/bootstrap/js/bootstrap.bundle.min.js")"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="Content("~/vendor/jquery-easing/jquery.easing.min.js")"></script>
+    <script src="@Url.Content("~/vendor/jquery-easing/jquery.easing.min.js")"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="Content("~/js/sb-admin-2.min.js")"></script>
@@ -117,7 +117,13 @@
             @if (TempData["checkPassword"] != null)
             {
                 <text>
-                    alert('@TempData["checkPassword"]');
+            alert('@TempData["checkPassword"]');
+                </text>
+            }
+            @if (TempData["checkUser"] != null)
+            {
+                <text>
+            alert('@TempData["checkUser"]');
                 </text>
             }
         });

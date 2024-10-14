@@ -72,15 +72,16 @@ namespace MusicApp.Controllers
                     else
                     {
                         TempData["checkPassword"] = "Wrong password!";
-                        return View();
                     }
                 }
+                else
+                {
+                    TempData["checkUser"] = "Invalid input. Please check your username and password.";
+                }
             }
-            else
-            {
-                ModelState.AddModelError("", "Invalid username or password.");
-            }
-        
+            
+            
+
             return View(model);
         }
 
