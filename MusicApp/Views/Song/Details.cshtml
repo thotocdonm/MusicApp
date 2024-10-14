@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            color: #444444;
+            font-size: 9pt;
+            background-color: #FAFAFA;
+        }
+        .play-btn:hover {
+            background-color: #3be477 !important;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="spotify-layout" class=" rounded-3 text-white" style="background: #191414">
+        <div  class="col-md-12 pb-4 px-4" style="display:flex;gap:10px;padding-top:6em;align-items:end">
+            <div>
+                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="img-thumbnail" style="height: 232px; width: 232px; box-shadow: 0 4px 60px rgba(0, 0, 0, .5);" alt="..." />
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:10px">
+                <div>
+                    Song
+                </div>
+                <div style="font-size: 6rem; white-space: nowrap; width: 100%;font-weight:bold">
+                    Kaikai Kitan
+                </div>
+            </div>
+
+        </div>
+        <div class="p-5">
+       
+            <div style="display:flex;gap:10px">
+                <div id="toggle-button" class="rounded-circle play-btn" style="background-color:#1db954;height:56px;width:56px;display:flex;align-items:center;justify-content:center">
+                    <i id="play-icon" class="bi bi-play-fill" style="color:black; font-size:28px; line-height:0;"></i>
+                </div>
+            </div>
+        </div>
+     
+    </div>
+    <script>
+        $(document).ready(function () {
+            var colorThief = new ColorThief();
+            var img = document.getElementById('thumbnail');
+            img.setAttribute('crossOrigin', '');
+
+            // When the image is loaded, extract the color
+            $(img).on('load', function () {
+                var result = colorThief.getColor(img);
+                var rgbColor = 'rgb(' + result[0] + ',' + result[1] + ',' + result[2] + ')';
+                console.log('run')
+                // Apply the background gradient using the dominant color
+                $('#spotify-layout').css('background', 'linear-gradient(180deg, ' + rgbColor + ' 0%, #121212 100%)');
+            });
+
+            // If the image is already loaded (in case of cached images)
+            if (img.complete) {
+                $(img).trigger('load');
+            }
+        });
+
+        $(document).ready(function () {
+            $('#toggle-button').click(function () {
+                var icon = $('#play-icon');
+
+                // Check the current icon and toggle it
+                if (icon.hasClass('bi-play-fill')) {
+                    icon.removeClass('bi-play-fill').addClass('bi-pause-fill'); // Change to pause icon
+                } else {
+                    icon.removeClass('bi-pause-fill').addClass('bi-play-fill'); // Change back to play icon
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
