@@ -1,7 +1,102 @@
-﻿
+﻿@model List<MusicApp.Models.mic_user>
+
 @{
     ViewBag.Title = "User";
 }
 
-<h2>User</h2>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>$(document).ready(function () {
+        $('#myModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Lấy nút đã click (nút Edit)
 
+            // Lấy thông tin từ các thuộc tính data-*
+            var userId = button.data('id');
+            var loginName = button.data('login-name');
+            var email = button.data('email');
+            var mobileNumber = button.data('mobile-number');
+            var role = button.data('role');
+
+            // Điền thông tin vào các trường trong modal
+            $('#id').val(userId);
+            $('#login_name').val(loginName);
+            $('#email').val(email);
+            $('#mobile_number').val(mobileNumber);
+            $('#role').val(role);
+        });
+    });</script>
+<h2>User</h2>
+<form action="" medthod="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">UserID</th>
+                <th scope="col">Tên Đăng Nhập</th>
+                <th scope="col">Email</th>
+                <th scope="col">SĐT</th>
+                <th scope="col">Role</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.user_id</td>
+                    <td>@user.login_name</td>
+                    <td>@user.email</td>
+                    <td>@user.mobile_number</td>
+                    <td>@user.role</td>
+                    <td>
+                        <a class="bi bi-pencil" href="#" data-bs-toggle="modal" data-bs-target="#myModal"
+                           data-id="@user.user_id"
+                           data-login-name="@user.login_name"
+                           data-email="@user.email"
+                           data-mobile-number="@user.mobile_number"
+                           data-role="@user.role" 
+                           style="color: yellow;"></a>
+                        <a class="bi bi-trash" href="/Admin/Delete?id=@user.user_id" style="color: red;"></a>
+                    </td>
+                </tr>
+            }
+            <!-- Modal-->
+            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <Form action="/Admin/Edit" method="post">
+                                <div style="display: flex; justify-content: space-between;margin-bottom: 10px;">
+                                    <label name="ID">ID</label>
+                                    <input type="text" id="id" name="id" style="width: 65%;" readonly />
+                                </div>
+                                <div style="display: flex;justify-content: space-between; margin-bottom: 10px;">
+                                    <label name="login_name">Tên Đăng Nhập</label>
+                                    <input type="text" id="login_name" style="width: 65%;" />
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                    <label name="email">Email</label>
+                                    <input type="text" id="email" style="width: 65%;" />
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                    <label name="mobile_number">SĐT</label>
+                                    <input type="text" id="mobile_number" style="width: 65%;" />
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;"">
+                                    <label name="role">Role</label>
+                                    <input type="text" id="role" style="width: 65%;" />
+                                </div>
+                            </Form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </tbody>
+    </table>
+</form>
