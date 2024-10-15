@@ -67,32 +67,32 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <Form action="/Admin/Edit" method="post">
+                            <form action="/Admin/Edit" method="post">
                                 <div style="display: flex; justify-content: space-between;margin-bottom: 10px;">
-                                    <label name="ID">ID</label>
+                                    <label name="id">ID</label>
                                     <input type="text" id="id" name="id" style="width: 65%;" readonly />
                                 </div>
                                 <div style="display: flex;justify-content: space-between; margin-bottom: 10px;">
                                     <label name="login_name">Tên Đăng Nhập</label>
-                                    <input type="text" id="login_name" style="width: 65%;" />
+                                    <input type="text" id="login_name" name="login_name" style="width: 65%;" />
                                 </div>
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
                                     <label name="email">Email</label>
-                                    <input type="text" id="email" style="width: 65%;" />
+                                    <input type="text" id="email" name="email" style="width: 65%;" />
                                 </div>
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
                                     <label name="mobile_number">SĐT</label>
-                                    <input type="text" id="mobile_number" style="width: 65%;" />
+                                    <input type="text" id="mobile_number" name="mobile_number" style="width: 65%;" />
                                 </div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;"">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;" ">
                                     <label name="role">Role</label>
-                                    <input type="text" id="role" style="width: 65%;" />
+                                    <input type="text" id="role" name="role" style="width: 65%;" />
                                 </div>
-                            </Form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

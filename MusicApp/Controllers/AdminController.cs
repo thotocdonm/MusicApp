@@ -34,15 +34,30 @@ namespace MusicApp.Controllers
             var user = db.mic_users.Where(x => x.is_deleted == '0').ToList();
             return View("User",user); 
         }
-        public ActionResult Edit(int id, string login_name, string email, string mobile_number, string role)
+        public ActionResult Edit()
         {
-            var user = db.mic_users.Where(x => x.user_id == id);
-            if (user != null) {
-                
-            }
-            return View("User",x);
+            var user = db.mic_users.ToList();
+            return View(user);
         }
+        [HttpPost]
+        public ActionResult Edit(mic_user user)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingUser = db.mic_users.FirstOrDefault(u => u.user_id == user.user_id);
+                if (existingUser != null)
+                {
+                    existingUser.login_name = user.login_name;
+                    existingUser.email = user.email;
+                    existingUser.mobile_number = user.mobile_number;
+                    existingUser.role = user.role;
 
+                    db.SubmitChanges();
+                }
+                return RedirectToAction("User", "Admin");
+            }
+            return View(user);
+        }
         public ActionResult Music()
         {
             return View();
