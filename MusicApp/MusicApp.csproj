@@ -2103,6 +2103,7 @@
     <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Assets\vendor\jquery\jquery.min.map" />
     <Content Include="Assets\vendor\jquery\jquery.slim.min.map" />
+    <Content Include="ConnectionStrings.config" />
     <None Include="Models\DataClasses1.dbml.layout">
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </None>
@@ -2117,8 +2118,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <None Include="ConnectionStrings.config" />
-    <None Include="ConnectionStrings.config.example" />
     <Content Include=".gitignore" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

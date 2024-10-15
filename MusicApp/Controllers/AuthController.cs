@@ -5,14 +5,14 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Configuration;
 
 namespace MusicApp.Controllers
 {
     public class AuthController : Controller
     {
 
-        public DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-H3FAVBH;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
-        // GET: Auth
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-H3FAVBH;Initial Catalog=music;Integrated Security=True;Encrypt=True;TrustServerCertificate=True");
         public ActionResult Register()
         {
             return View("Register");
@@ -79,10 +79,14 @@ namespace MusicApp.Controllers
                     TempData["checkUser"] = "Invalid input. Please check your username and password.";
                 }
             }
+            else
+            {
+                ModelState.AddModelError("","Please input your information.");
+            }
             
             
 
-            return View(model);
+            return View();
         }
 
 
