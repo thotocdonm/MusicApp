@@ -218,62 +218,96 @@
         });
 
         //Toggle play song btn
-        $(document).ready(function () {
-            $('#toggle-button').click(function () {
-                var icon = $('#play-icon');
+        //$(document).ready(function () {
+        //    $('#toggle-button').click(function () {
+        //        var icon = $('#play-icon');
 
-                // Check the current icon and toggle it
-                if (icon.hasClass('bi-play-fill')) {
-                    icon.removeClass('bi-play-fill').addClass('bi-pause-fill'); // Change to pause icon
-                } else {
-                    icon.removeClass('bi-pause-fill').addClass('bi-play-fill'); // Change back to play icon
-                }
-            });
-        });
+        //        // Check the current icon and toggle it
+        //        if (icon.hasClass('bi-play-fill')) {
+        //            icon.removeClass('bi-play-fill').addClass('bi-pause-fill'); // Change to pause icon
+        //        } else {
+        //            icon.removeClass('bi-pause-fill').addClass('bi-play-fill'); // Change back to play icon
+        //        }
+        //    });
+        //});
 
         //Toggle play song btn on Track list
         $(document).ready(function () {
             let playingTrack = null; // Track the currently playing track element
+            let playingButton = null; // Track the currently playing button
+
+            // Toggle play song button
+            $('#toggle-button').click(function () {
+                var icon = $('#play-icon');
+
+                // If there's a track currently playing, stop it first
+                if (playingTrack !== null) {
+                    $(playingTrack).removeClass('playing');
+                    const originalIndex = $(playingTrack).data('original-index');
+                    $(playingTrack).find('.track-index').text(originalIndex);
+                    $(playingTrack).find('.col-3, .col-1').css('color', '#b3b3b3');
+                    $(playingTrack).find('span').css('color', '#FFFFFF'); // Reset text color
+                    playingTrack = null; // No track is currently playing
+                }
+
+                // Check the current icon and toggle it
+                if (icon.hasClass('bi-play-fill')) {
+                    icon.removeClass('bi-play-fill').addClass('bi-pause-fill'); // Change to pause icon
+                    playingButton = this; // Mark this button as playing
+                } else {
+                    icon.removeClass('bi-pause-fill').addClass('bi-play-fill'); // Change back to play icon
+                    playingButton = null; // No button is currently playing
+                }
+            });
 
             // Hover event to change index to play icon
             $('.popular-track').hover(function () {
-                // Only show the play icon if the track is not playing
                 if (!$(this).hasClass('playing')) {
-                    // Store the original index in a data attribute
                     const originalIndex = $(this).find('.track-index').text();
                     $(this).data('original-index', originalIndex);
                     $(this).find('.track-index').html('<i class="bi bi-play-fill"></i>'); // Show play icon
                 }
             }, function () {
-                // Restore the original index if not playing when the mouse leaves
                 if (!$(this).hasClass('playing')) {
                     const originalIndex = $(this).data('original-index');
                     $(this).find('.track-index').text(originalIndex);
                 }
             });
 
-            // Click event to toggle play/pause
+            // Click event to toggle play/pause for track
             $('.popular-track').click(function () {
                 // If the clicked track is already playing, pause it
                 if ($(this).hasClass('playing')) {
                     $(this).removeClass('playing');
-                    const originalIndex = $(this).data('original-index'); // Retrieve original index
-                    $(this).find('.track-index').text(originalIndex); // Reset index
-                    $(playingTrack).find('.col-3, .col-1').css('color', '#b3b3b3');
-                    $(playingTrack).find('span').css('color', '#FFFFFF'); // Reset text color for the previous track
+                    const originalIndex = $(this).data('original-index');
+                    $(this).find('.track-index').text(originalIndex);
+                    $(this).find('.col-3, .col-1').css('color', '#b3b3b3');
+                    $(this).find('span').css('color', '#FFFFFF'); // Reset text color
                     playingTrack = null; // No track is currently playing
+
+                    // Revert the button's icon if the toggle button is also playing
+                    if (playingButton !== null) {
+                        $('#play-icon').removeClass('bi-pause-fill').addClass('bi-play-fill');
+                        playingButton = null;
+                    }
                 } else {
                     // Pause any currently playing track before starting a new one
                     if (playingTrack !== null) {
                         $(playingTrack).removeClass('playing');
                         const originalIndex = $(playingTrack).data('original-index');
-                        $(playingTrack).find('.track-index').text(originalIndex); // Restore the previous track's index
+                        $(playingTrack).find('.track-index').text(originalIndex);
                         $(playingTrack).find('.col-3, .col-1').css('color', '#b3b3b3');
-                        $(playingTrack).find('span').css('color', '#FFFFFF'); // Reset text color for the previous track
+                        $(playingTrack).find('span').css('color', '#FFFFFF');
+                    }
+
+                    // Pause the toggle button if it is playing
+                    if (playingButton !== null) {
+                        $('#play-icon').removeClass('bi-pause-fill').addClass('bi-play-fill'); // Revert the button's icon
+                        playingButton = null;
                     }
 
                     // Play the clicked track
-                    const originalIndex = $(this).data('original-index'); // Retrieve the original index
+                    const originalIndex = $(this).data('original-index');
                     $(this).addClass('playing'); // Mark this track as playing
                     $(this).find('.track-index').html('<i class="bi bi-pause-fill" style="color: #1db954;"></i>'); // Show pause icon
                     $(this).find('span, .col-3, .col-1').css('color', '#1db954'); // Change text color to green
@@ -282,6 +316,7 @@
                 }
             });
         });
+
 
 
 
