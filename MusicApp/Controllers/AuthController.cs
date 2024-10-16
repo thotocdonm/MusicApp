@@ -43,10 +43,11 @@ namespace MusicApp.Controllers
                     string hashPassword = BCrypt.Net.BCrypt.HashPassword(password, cost);
                     newuser.login_name = username;
                     newuser.password = hashPassword;
+                    newuser.role = "user";
+                    TempData["SuccessMessage"] = "Sign up successful!";
                     db.mic_users.InsertOnSubmit(newuser);
                     db.SubmitChanges();
-                    TempData["SuccessMessage"] = "Sign up successful!";
-                    return RedirectToAction("Login", "Auth");
+                    return View("Register");
                 }
             }
         }
