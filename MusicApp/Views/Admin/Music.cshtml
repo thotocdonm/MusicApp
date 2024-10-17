@@ -1,7 +1,32 @@
-﻿
+﻿@model List<MusicApp.Models.SingerSongViewModel>
 @{
     ViewBag.Title = "Music";
 }
 
-<h2>Music</h2>
+
+<h2>Singer Songs</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Song ID</th>
+            <th>Song Title</th>
+            <th>Singer Name</th>
+            <th>Create Time</th>
+            <th>Tools</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.SongId</td>
+                <td>@item.SongTitle</td>
+                <td>@item.SingerName</td>
+                <td>@item.created_time</td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
 

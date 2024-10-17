@@ -39,9 +39,6 @@ namespace MusicApp.Models
     partial void Insertmic_singer(mic_singer instance);
     partial void Updatemic_singer(mic_singer instance);
     partial void Deletemic_singer(mic_singer instance);
-    partial void Insertmic_song_comment(mic_song_comment instance);
-    partial void Updatemic_song_comment(mic_song_comment instance);
-    partial void Deletemic_song_comment(mic_song_comment instance);
     partial void Insertmic_song_like(mic_song_like instance);
     partial void Updatemic_song_like(mic_song_like instance);
     partial void Deletemic_song_like(mic_song_like instance);
@@ -104,14 +101,6 @@ namespace MusicApp.Models
 			get
 			{
 				return this.GetTable<mic_singer>();
-			}
-		}
-		
-		public System.Data.Linq.Table<mic_song_comment> mic_song_comments
-		{
-			get
-			{
-				return this.GetTable<mic_song_comment>();
 			}
 		}
 		
@@ -933,294 +922,6 @@ namespace MusicApp.Models
 		{
 			this.SendPropertyChanging();
 			entity.mic_singer = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mic_song_comments")]
-	public partial class mic_song_comment : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _song_comment_id;
-		
-		private int _song_id;
-		
-		private int _user_id;
-		
-		private string _comment;
-		
-		private char _is_deleted;
-		
-		private string _created_by;
-		
-		private System.Nullable<System.DateTime> _created_time;
-		
-		private EntityRef<mic_song> _mic_song;
-		
-		private EntityRef<mic_user> _mic_user;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onsong_comment_idChanging(int value);
-    partial void Onsong_comment_idChanged();
-    partial void Onsong_idChanging(int value);
-    partial void Onsong_idChanged();
-    partial void Onuser_idChanging(int value);
-    partial void Onuser_idChanged();
-    partial void OncommentChanging(string value);
-    partial void OncommentChanged();
-    partial void Onis_deletedChanging(char value);
-    partial void Onis_deletedChanged();
-    partial void Oncreated_byChanging(string value);
-    partial void Oncreated_byChanged();
-    partial void Oncreated_timeChanging(System.Nullable<System.DateTime> value);
-    partial void Oncreated_timeChanged();
-    #endregion
-		
-		public mic_song_comment()
-		{
-			this._mic_song = default(EntityRef<mic_song>);
-			this._mic_user = default(EntityRef<mic_user>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_song_comment_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int song_comment_id
-		{
-			get
-			{
-				return this._song_comment_id;
-			}
-			set
-			{
-				if ((this._song_comment_id != value))
-				{
-					this.Onsong_comment_idChanging(value);
-					this.SendPropertyChanging();
-					this._song_comment_id = value;
-					this.SendPropertyChanged("song_comment_id");
-					this.Onsong_comment_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_song_id", DbType="Int NOT NULL")]
-		public int song_id
-		{
-			get
-			{
-				return this._song_id;
-			}
-			set
-			{
-				if ((this._song_id != value))
-				{
-					if (this._mic_song.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onsong_idChanging(value);
-					this.SendPropertyChanging();
-					this._song_id = value;
-					this.SendPropertyChanged("song_id");
-					this.Onsong_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_id", DbType="Int NOT NULL")]
-		public int user_id
-		{
-			get
-			{
-				return this._user_id;
-			}
-			set
-			{
-				if ((this._user_id != value))
-				{
-					if (this._mic_user.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onuser_idChanging(value);
-					this.SendPropertyChanging();
-					this._user_id = value;
-					this.SendPropertyChanged("user_id");
-					this.Onuser_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_comment", DbType="NVarChar(1000) NOT NULL", CanBeNull=false)]
-		public string comment
-		{
-			get
-			{
-				return this._comment;
-			}
-			set
-			{
-				if ((this._comment != value))
-				{
-					this.OncommentChanging(value);
-					this.SendPropertyChanging();
-					this._comment = value;
-					this.SendPropertyChanged("comment");
-					this.OncommentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_deleted", DbType="Char(1) NOT NULL")]
-		public char is_deleted
-		{
-			get
-			{
-				return this._is_deleted;
-			}
-			set
-			{
-				if ((this._is_deleted != value))
-				{
-					this.Onis_deletedChanging(value);
-					this.SendPropertyChanging();
-					this._is_deleted = value;
-					this.SendPropertyChanged("is_deleted");
-					this.Onis_deletedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created_by", DbType="NVarChar(50)")]
-		public string created_by
-		{
-			get
-			{
-				return this._created_by;
-			}
-			set
-			{
-				if ((this._created_by != value))
-				{
-					this.Oncreated_byChanging(value);
-					this.SendPropertyChanging();
-					this._created_by = value;
-					this.SendPropertyChanged("created_by");
-					this.Oncreated_byChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created_time", DbType="DateTime")]
-		public System.Nullable<System.DateTime> created_time
-		{
-			get
-			{
-				return this._created_time;
-			}
-			set
-			{
-				if ((this._created_time != value))
-				{
-					this.Oncreated_timeChanging(value);
-					this.SendPropertyChanging();
-					this._created_time = value;
-					this.SendPropertyChanged("created_time");
-					this.Oncreated_timeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_song_mic_song_comment", Storage="_mic_song", ThisKey="song_id", OtherKey="song_id", IsForeignKey=true)]
-		public mic_song mic_song
-		{
-			get
-			{
-				return this._mic_song.Entity;
-			}
-			set
-			{
-				mic_song previousValue = this._mic_song.Entity;
-				if (((previousValue != value) 
-							|| (this._mic_song.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._mic_song.Entity = null;
-						previousValue.mic_song_comments.Remove(this);
-					}
-					this._mic_song.Entity = value;
-					if ((value != null))
-					{
-						value.mic_song_comments.Add(this);
-						this._song_id = value.song_id;
-					}
-					else
-					{
-						this._song_id = default(int);
-					}
-					this.SendPropertyChanged("mic_song");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_user_mic_song_comment", Storage="_mic_user", ThisKey="user_id", OtherKey="user_id", IsForeignKey=true)]
-		public mic_user mic_user
-		{
-			get
-			{
-				return this._mic_user.Entity;
-			}
-			set
-			{
-				mic_user previousValue = this._mic_user.Entity;
-				if (((previousValue != value) 
-							|| (this._mic_user.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._mic_user.Entity = null;
-						previousValue.mic_song_comments.Remove(this);
-					}
-					this._mic_user.Entity = value;
-					if ((value != null))
-					{
-						value.mic_song_comments.Add(this);
-						this._user_id = value.user_id;
-					}
-					else
-					{
-						this._user_id = default(int);
-					}
-					this.SendPropertyChanged("mic_user");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	
@@ -2162,8 +1863,6 @@ namespace MusicApp.Models
 		
 		private EntitySet<mic_favourite_song> _mic_favourite_songs;
 		
-		private EntitySet<mic_song_comment> _mic_song_comments;
-		
 		private EntitySet<mic_song_like> _mic_song_likes;
 		
 		private EntitySet<mic_song_playlist> _mic_song_playlists;
@@ -2197,7 +1896,6 @@ namespace MusicApp.Models
 		public mic_song()
 		{
 			this._mic_favourite_songs = new EntitySet<mic_favourite_song>(new Action<mic_favourite_song>(this.attach_mic_favourite_songs), new Action<mic_favourite_song>(this.detach_mic_favourite_songs));
-			this._mic_song_comments = new EntitySet<mic_song_comment>(new Action<mic_song_comment>(this.attach_mic_song_comments), new Action<mic_song_comment>(this.detach_mic_song_comments));
 			this._mic_song_likes = new EntitySet<mic_song_like>(new Action<mic_song_like>(this.attach_mic_song_likes), new Action<mic_song_like>(this.detach_mic_song_likes));
 			this._mic_song_playlists = new EntitySet<mic_song_playlist>(new Action<mic_song_playlist>(this.attach_mic_song_playlists), new Action<mic_song_playlist>(this.detach_mic_song_playlists));
 			this._mic_song_singers = new EntitySet<mic_song_singer>(new Action<mic_song_singer>(this.attach_mic_song_singers), new Action<mic_song_singer>(this.detach_mic_song_singers));
@@ -2397,19 +2095,6 @@ namespace MusicApp.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_song_mic_song_comment", Storage="_mic_song_comments", ThisKey="song_id", OtherKey="song_id")]
-		public EntitySet<mic_song_comment> mic_song_comments
-		{
-			get
-			{
-				return this._mic_song_comments;
-			}
-			set
-			{
-				this._mic_song_comments.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_song_mic_song_like", Storage="_mic_song_likes", ThisKey="song_id", OtherKey="song_id")]
 		public EntitySet<mic_song_like> mic_song_likes
 		{
@@ -2476,18 +2161,6 @@ namespace MusicApp.Models
 		}
 		
 		private void detach_mic_favourite_songs(mic_favourite_song entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_song = null;
-		}
-		
-		private void attach_mic_song_comments(mic_song_comment entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_song = this;
-		}
-		
-		private void detach_mic_song_comments(mic_song_comment entity)
 		{
 			this.SendPropertyChanging();
 			entity.mic_song = null;
@@ -2562,8 +2235,6 @@ namespace MusicApp.Models
 		
 		private EntitySet<mic_favourite_song> _mic_favourite_songs;
 		
-		private EntitySet<mic_song_comment> _mic_song_comments;
-		
 		private EntitySet<mic_song_like> _mic_song_likes;
 		
     #region Extensibility Method Definitions
@@ -2599,7 +2270,6 @@ namespace MusicApp.Models
 		public mic_user()
 		{
 			this._mic_favourite_songs = new EntitySet<mic_favourite_song>(new Action<mic_favourite_song>(this.attach_mic_favourite_songs), new Action<mic_favourite_song>(this.detach_mic_favourite_songs));
-			this._mic_song_comments = new EntitySet<mic_song_comment>(new Action<mic_song_comment>(this.attach_mic_song_comments), new Action<mic_song_comment>(this.detach_mic_song_comments));
 			this._mic_song_likes = new EntitySet<mic_song_like>(new Action<mic_song_like>(this.attach_mic_song_likes), new Action<mic_song_like>(this.detach_mic_song_likes));
 			OnCreated();
 		}
@@ -2857,19 +2527,6 @@ namespace MusicApp.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_user_mic_song_comment", Storage="_mic_song_comments", ThisKey="user_id", OtherKey="user_id")]
-		public EntitySet<mic_song_comment> mic_song_comments
-		{
-			get
-			{
-				return this._mic_song_comments;
-			}
-			set
-			{
-				this._mic_song_comments.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_user_mic_song_like", Storage="_mic_song_likes", ThisKey="user_id", OtherKey="user_id")]
 		public EntitySet<mic_song_like> mic_song_likes
 		{
@@ -2910,18 +2567,6 @@ namespace MusicApp.Models
 		}
 		
 		private void detach_mic_favourite_songs(mic_favourite_song entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_user = null;
-		}
-		
-		private void attach_mic_song_comments(mic_song_comment entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_user = this;
-		}
-		
-		private void detach_mic_song_comments(mic_song_comment entity)
 		{
 			this.SendPropertyChanging();
 			entity.mic_user = null;

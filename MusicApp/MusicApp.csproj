@@ -131,6 +131,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\SingerSongViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1916,11 +1917,6 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Models\DataClasses1.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Assets\dist\css\adminlte.css.map" />
     <Content Include="Assets\dist\css\adminlte.min.css.map" />
     <Content Include="Assets\dist\css\adminlte.rtl.css.map" />
@@ -2107,6 +2103,11 @@
     <Content Include="Content\fonts\CircularSpotifyText-Light.otf" />
     <Content Include="Content\fonts\CircularSpotifyText-Medium.otf" />
     <Content Include="Content\fonts\CircularSpotifyText-MediumItalic.otf" />
+    <Content Include="Models\DataClasses1.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Models\DataClasses1.dbml.layout">
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </None>
