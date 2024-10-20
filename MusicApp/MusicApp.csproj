@@ -135,6 +135,7 @@
   <ItemGroup>
     <Content Include="Assets\css\sb-admin-2.css" />
     <Content Include="Assets\css\sb-admin-2.min.css" />
+    <Content Include="Assets\css\StyleSheet.css" />
     <Content Include="Assets\dist\assets\img\AdminLTEFullLogo.png" />
     <Content Include="Assets\dist\assets\img\AdminLTELogo.png" />
     <Content Include="Assets\dist\assets\img\avatar.png" />
