@@ -6,7 +6,7 @@
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Assets/css/StyleSheet.css" rel="stylesheet" />
+    <link href="~/Assets/css/shared.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -26,10 +26,13 @@
                 @Html.Partial("_PlaylistView")
             </div>
 
-            <div id="mainContent" class="col-md-9">
-                @RenderBody()
-
+            <div class="col-md-9" style="height: 100%; flex: 1;overflow-y: auto; overflow-x: hidden">
+                <div id="mainContent">
+                    @RenderBody()
+                </div>
+                <div id="footerMain">
                 @Html.Partial("_FooterMain")
+                   </div>
             </div>
         </div>
         <div id="musicPlayerFooter" class="col-md-12">
