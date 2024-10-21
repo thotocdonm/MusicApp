@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Login";
     Layout = null;
 }
@@ -39,10 +38,42 @@
             padding: 20px; /* Khoảng đệm */
             border-radius: 5px; /* Bo góc */
         }
+
+        .showpw {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            background-color: transparent;
+            border: 0px;
+            border-radius: var(--encore-button-corner-radius, 9999px);
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            text-transform: none;
+            touch-action: manipulation;
+            transition-duration: 33ms;
+            transition-property: background-color, border-color, color, box-shadow, filter, transform;
+            user-select: none;
+            vertical-align: middle;
+            transform: translate3d(0px, 0px, 0px);
+            color: var(--text-subdued, #656565);
+            min-inline-size: 0px;
+            min-block-size: var(--encore-control-size-base, 48px);
+            padding-block-start: var(--encore-spacing-tighter, 12px);
+            padding-block-end: var(--encore-spacing-tighter, 12px);
+            padding-inline: 0px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
     </style>
+
+    <!-- Link đến Bootstrap Icons từ CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
 </head>
 
-<body style="background-color: #000000">
+<body style="background-color: #121212">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="container">
 
@@ -51,45 +82,53 @@
 
             <div class="col-xl-10 col-lg-12 col-md-9">
 
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0" style="background-color: #000000">
+                <div class="card o-hidden border-0 my-5">
+                    <div class="card-body p-0" style="background-color: #121212">
                         <!-- Nested Row within Card Body -->
                         <div class="d-flex justify-content-center">
                             <div class="col-lg-6">
                                 <div class="p-5">
-                                    <div>
-
+                                    <div class="text-center">
+                                        <i class="bi bi-spotify" style="font-size: 40px; color: white"></i>
                                     </div>
                                     <div class="text-center">
-                                        <h1 class="h4 mb-4 figtree-custom" style="color: #ffffff; font-size: 40px"><strong>Login to start listening</strong></h1>
+                                        <h1 class="h4 mb-4 figtree-custom" style="background-color: #121212; color: #ffffff; font-size: 40px "><strong>Login to start listening</strong></h1>
                                     </div>
-                                    @using (Html.BeginForm("Login", "Admin", FormMethod.Post))
+                                    @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
                                     {
                                         <div class="form-group">
                                             <p name="email" style="color: white; font-size: 15px"><strong>Email Address</strong></p>
-                                            <input type="text" style="background-color: #000000" class="form-control form-control-user"
-                                                   id="Username"
-                                                   name="Username"
+                                            <input type="email" style="background-color: #121212" class="form-control form-control-user"
+                                                   id="login_name"
+                                                   name="login_name"
                                                    placeholder="name@domain.com">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" style="background-color: #000000" class="form-control form-control-user"
-                                                   name="Password"
-                                                   id="Password" placeholder="Password">
+                                            <p name="email" style="color: white; font-size: 15px"><strong>Password</strong></p>
+                                            <div class="position-relative">
+                                                <input type="password" style="background-color: #121212" class="form-control form-control-user"
+                                                       name="password"
+                                                       id="password" placeholder="Password">
+                                                <div style="position: absolute; top: 50%; transform: translateY(-50%); display: flex; right: 12px; ">
+                                                    <button type="button" id="open" class="bi bi-eye showpw" aria-hidden="true" style="font-size:25px"></button>
+                                                    <button type="button" id="close" class="bi bi-eye-slash showpw" aria-hidden="true" style="display: none; font-size: 25px"></button>
+
+                                                </div>
+                                            </div> 
                                         </div>
+                                        <div style="margin-top:30px">
+                                            <button type="submit" class="btn btn-user btn-block" style="border-radius: 50px; color: #000000; background-color: #1ED760; border-color: #1ED760 ">
+                                                <strong>Login</strong>
+                                            </button>
+                                        </div>
+                                     }
 
-                                        <button type="submit" class="btn btn-user btn-block" style="border-radius: 50px; color: #000000; background-color: #1ED760; border-color: #1ED760 ">
-                                            <strong>Login</strong>
-                                        </button>
-
-                                    }
-
-                                    <hr>
+                                    <hr style="border-top-width: 1px; border-top-style: solid; border-top-color: rgb(41, 41, 41); ">
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html" style="color: white">Forgot Password?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html" style="color: white">Create an Account!</a>
+                                        <a class="small" href="/Auth/Register" style="color: white">Create an Account!</a>
                                     </div>
                                 </div>
                             </div>
@@ -104,16 +143,44 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="Content("~/vendor/jquery/jquery.min.js")"></script>
+    <script src="Content("~/vendor/bootstrap/js/bootstrap.bundle.min.js")"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="@Url.Content("~/vendor/jquery-easing/jquery.easing.min.js")"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="Content("~/js/sb-admin-2.min.js")"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            @if (TempData["checkPassword"] != null)
+            {
+                <text>
+            alert('@TempData["checkPassword"]');
+                </text>
+            }
+            @if (TempData["checkUser"] != null)
+            {
+                <text>
+            alert('@TempData["checkUser"]');
+                </text>
+            }
+            $("#open").click(function (e) {
+                e.preventDefault();
+                $("#open").hide();
+                $("#close").show();
+                $("#password").attr("type", "text");
+            });
+            $("#close").click(function (e) {
+                e.preventDefault();
+                $("#close").hide();
+                $("#open").show();
+                $("#password").attr("type", "password");
+            });
+        });
+    </script>
 
 </body>
 
 </html>
-
