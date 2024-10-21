@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net, Version=0.1.5073.29922, Culture=neutral, PublicKeyToken=6bcd409ee6bc9292, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt-Official.0.1.109\lib\BCrypt.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -131,11 +134,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\css\sb-admin-2.css" />
     <Content Include="Assets\css\sb-admin-2.min.css" />
+    <Content Include="Assets\css\StyleSheet.css" />
     <Content Include="Assets\dist\assets\img\AdminLTEFullLogo.png" />
     <Content Include="Assets\dist\assets\img\AdminLTELogo.png" />
     <Content Include="Assets\dist\assets\img\avatar.png" />
@@ -1909,7 +1914,11 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+
     <Content Include="Content\site.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="LICENSE.txt" />
+
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -2099,14 +2108,9 @@
     <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Assets\vendor\jquery\jquery.min.map" />
     <Content Include="Assets\vendor\jquery\jquery.slim.min.map" />
-    <Content Include="Content\fonts\CircularSpotifyText-Black.otf" />
-    <Content Include="Content\fonts\CircularSpotifyText-BlackItalic.otf" />
-    <Content Include="Content\fonts\CircularSpotifyText-Bold.otf" />
-    <Content Include="Content\fonts\CircularSpotifyText-Book.otf" />
-    <Content Include="Content\fonts\CircularSpotifyText-BookItalic.otf" />
-    <Content Include="Content\fonts\CircularSpotifyText-Light.otf" />
-    <Content Include="Content\fonts\CircularSpotifyText-Medium.otf" />
-    <Content Include="Content\fonts\CircularSpotifyText-MediumItalic.otf" />
+
+    <Content Include="ConnectionStrings.config" />
+
     <None Include="Models\DataClasses1.dbml.layout">
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </None>
@@ -2121,9 +2125,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <None Include="ConnectionStrings.config" />
-    <None Include="ConnectionStrings.config.example" />
     <Content Include=".gitignore" />
+    <None Include="Views\Shared\_FooterMain.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2147,7 +2150,11 @@
     <Content Include="Views\Shared\_MusicPlayerFooter.cshtml" />
     <Content Include="Views\Admin\Music.cshtml" />
     <Content Include="Views\Admin\Dashboard.cshtml" />
+
     <Content Include="Views\Song\Details.cshtml" />
+
+    <Content Include="Views\Shared\_Header.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
