@@ -1,8 +1,5 @@
 ﻿using MusicApp.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MusicApp.Controllers
@@ -24,7 +21,7 @@ namespace MusicApp.Controllers
         public ActionResult Delete()
         {
             int id = int.Parse(Request.QueryString["ID"]);
-            mic_user mic_User = db.mic_users.FirstOrDefault(x =>x.user_id == id);
+            mic_user mic_User = db.mic_users.FirstOrDefault(x => x.user_id == id);
 
             if (mic_User != null)
             {
@@ -32,7 +29,7 @@ namespace MusicApp.Controllers
                 db.SubmitChanges();
             }
             var user = db.mic_users.Where(x => x.is_deleted == '0').ToList();
-            return View("User",user); 
+            return View("User", user);
         }
         public ActionResult Edit()
         {
@@ -64,6 +61,11 @@ namespace MusicApp.Controllers
         }
 
         public ActionResult Dashboard()
+        {
+            return View();
+        }
+
+        public ActionResult Artist()
         {
             return View();
         }
