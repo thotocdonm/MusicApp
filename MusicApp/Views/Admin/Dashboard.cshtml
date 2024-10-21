@@ -1,7 +1,64 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Dashboard";
 }
 
-<h2>Dashboard</h2>
+<style>
+    a {
+        text-decoration: none;
+    }
 
+    .icon {
+        font-size: 2.5rem;
+        opacity: 0.8;
+    }
+
+    .card:hover {
+        cursor: pointer;
+        transform: scale(1.01);
+        transition: all 0.2s ease-in-out;
+    }
+
+    .card-footer {
+        font-size: 1.2em;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .footer-icon {
+        font-size: 1.8rem;
+        color: #fff;
+    }
+    .row-content {
+        margin-left : 20px ;
+    }
+
+    .card {
+        flex: 1;
+        max-width: 500px; 
+    }
+</style>
+
+<div class="row row-content">
+    <div class="col-md-3 col-sm-6">
+        <a href="/Admin/User" class="card bg-primary text-white mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-people-fill icon"></i> Total Users</h5>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <span>Số lượng: </span>
+                <h5>1,245</h5>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <a href="/Admin/Music" class="card bg-success text-white mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-music-note-list icon"></i> Total Songs</h5>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <span>Số lượng: </span>
+                <h5>3,412</h5>
+            </div>
+        </a>
+    </div>
+</div>
