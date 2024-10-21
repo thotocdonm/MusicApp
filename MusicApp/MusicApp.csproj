@@ -140,7 +140,7 @@
   <ItemGroup>
     <Content Include="Assets\css\sb-admin-2.css" />
     <Content Include="Assets\css\sb-admin-2.min.css" />
-    <Content Include="Assets\css\StyleSheet.css" />
+    <Content Include="Assets\css\shared.css" />
     <Content Include="Assets\dist\assets\img\AdminLTEFullLogo.png" />
     <Content Include="Assets\dist\assets\img\AdminLTELogo.png" />
     <Content Include="Assets\dist\assets\img\avatar.png" />
@@ -1914,11 +1914,9 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-
     <Content Include="Content\site.css" />
     <Content Include="Content\Site.css" />
     <Content Include="LICENSE.txt" />
-
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -2108,9 +2106,7 @@
     <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Assets\vendor\jquery\jquery.min.map" />
     <Content Include="Assets\vendor\jquery\jquery.slim.min.map" />
-
     <Content Include="ConnectionStrings.config" />
-
     <None Include="Models\DataClasses1.dbml.layout">
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </None>
@@ -2150,11 +2146,8 @@
     <Content Include="Views\Shared\_MusicPlayerFooter.cshtml" />
     <Content Include="Views\Admin\Music.cshtml" />
     <Content Include="Views\Admin\Dashboard.cshtml" />
-
     <Content Include="Views\Song\Details.cshtml" />
-
     <Content Include="Views\Shared\_Header.cshtml" />
-
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
