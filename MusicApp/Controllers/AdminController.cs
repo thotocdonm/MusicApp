@@ -1,12 +1,14 @@
 ﻿using MusicApp.Models;
+using System;
 using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
 
 namespace MusicApp.Controllers
 {
     public class AdminController : Controller
     {
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=Dienmoi\\MSSQLSERVER01;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=PC;Initial Catalog=music;Integrated Security=True;Encrypt=True;TrustServerCertificate=True");
         // GET: Admin
         public ActionResult Index()
         {
@@ -57,7 +59,23 @@ namespace MusicApp.Controllers
         }
         public ActionResult Music()
         {
-            return View();
+            {
+                var singerSongs = from singer in db.mic_singers
+                                  join songSinger in db.mic_song_singers on singer.singer_id equals songSinger.singer_id
+                                  join song in db.mic_songs on songSinger.song_id equals song.song_id
+                                  where song.is_deleted == '0'
+                                  select new SingerSongViewModel
+                                  {
+                                      SongId = song.song_id,
+                                      SongTitle = song.name,
+                                      SingerName = singer.name,
+                                      CreatedTime = song.created_time.GetValueOrDefault()
+                                  };
+
+
+                return View(singerSongs.ToList());
+            }
+      
         }
 
         public ActionResult Dashboard()

@@ -1,7 +1,36 @@
 ﻿
+
+@model IEnumerable<MusicApp.Models.SingerSongViewModel>
+
 @{
     ViewBag.Title = "Music";
 }
 
-<h2>Music</h2>
+<h2>Music List</h2>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>Song ID</th>
+            <th>Song Title</th>
+            <th>Singer Name</th>
+            <th>Created Time</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var song in Model)
+        {
+            <tr>
+                <td>@song.SongId</td>
+                <td>@song.SongTitle</td>
+                <td>@song.SingerName</td>
+                <td>@(song.CreatedTime.HasValue ? song.CreatedTime.Value.ToString("MM/dd/yyyy") : "N/A")</td>
+                <td>
+                    <a href="/Admin/Edit/@song.SongId" class="btn btn-primary">Edit</a>
+                    <a href="/Admin/Delete/@song.SongId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
