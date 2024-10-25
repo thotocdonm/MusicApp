@@ -4,7 +4,7 @@
     ViewBag.Title = "User";
 }
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>$(document).ready(function () {
         $('#myModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget); // Lấy nút đã click (nút Edit)
@@ -25,7 +25,7 @@
         });
     });</script>
 <h2>User</h2>
-<form action="" medthod="post">
+
     <table class="table">
         <thead>
             <tr>
@@ -67,10 +67,11 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/Admin/Edit" method="post">
+                            @using (Html.BeginForm("Edit", "Admin", FormMethod.Post))
+                            {
                                 <div style="display: flex; justify-content: space-between;margin-bottom: 10px;">
-                                    <label name="id">ID</label>
-                                    <input type="text" id="id" name="id" style="width: 65%;" readonly />
+                                    <label name="user_id">ID</label>
+                                    <input type="text" id="id" name="user_id" style="width: 65%;" readonly />
                                 </div>
                                 <div style="display: flex;justify-content: space-between; margin-bottom: 10px;">
                                     <label name="login_name">Tên Đăng Nhập</label>
@@ -84,7 +85,7 @@
                                     <label name="mobile_number">SĐT</label>
                                     <input type="text" id="mobile_number" name="mobile_number" style="width: 65%;" />
                                 </div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;" ">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; ">
                                     <label name="role">Role</label>
                                     <input type="text" id="role" name="role" style="width: 65%;" />
                                 </div>
@@ -92,11 +93,12 @@
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
-                            </form>
-                        </div>
+                             }
+
+                            </div>
                     </div>
                 </div>
             </div>
         </tbody>
     </table>
-</form>
+
