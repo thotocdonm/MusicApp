@@ -125,9 +125,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ArtistController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SongController.cs" />
+    <Compile Include="Controllers\testController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -141,6 +143,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\css\Artist.css" />
     <Content Include="Assets\css\sb-admin-2.css" />
     <Content Include="Assets\css\sb-admin-2.min.css" />
     <Content Include="Assets\css\shared.css" />
@@ -218,6 +221,7 @@
     <Content Include="Assets\dist\pages\widgets\cards.html" />
     <Content Include="Assets\dist\pages\widgets\info-box.html" />
     <Content Include="Assets\dist\pages\widgets\small-box.html" />
+    <Content Include="Assets\img\jungkook.jpg" />
     <Content Include="Assets\img\undraw_posting_photo.svg" />
     <Content Include="Assets\img\undraw_profile.svg" />
     <Content Include="Assets\img\undraw_profile_1.svg" />
@@ -1919,7 +1923,9 @@
     <Content Include="Global.asax" />
     <Content Include="Content\site.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Assets\img\360035391_289613953562683_8249506151759919674_n.webp" />
     <None Include="ConnectionStrings.config" />
+    <Content Include="jungkook.jpg" />
     <Content Include="LICENSE.txt" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -2126,6 +2132,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include=".gitignore" />
     <Content Include="Views\Admin\Artist.cshtml" />
+    <Content Include="Views\Artist\DetailArtist.cshtml" />
     <None Include="Views\Shared\_FooterMain.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -2152,6 +2159,7 @@
     <Content Include="Views\Admin\Dashboard.cshtml" />
     <Content Include="Views\Song\Details.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\test\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
