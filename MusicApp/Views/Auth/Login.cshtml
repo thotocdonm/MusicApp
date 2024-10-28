@@ -7,7 +7,6 @@
 <html lang="en">
 
 <head>
-    <h1>aloooo</h1>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,6 +19,7 @@
     <link href="~/Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
+    <link rel="icon" href="~/Assets/img/icons8-spotify-24.png" type="image/x-icon" />
 
     <!-- Custom styles for this template-->
     <link href="~/Assets/css/sb-admin-2.min.css" rel="stylesheet">
@@ -66,6 +66,30 @@
             justify-content: center;
             position: relative;
         }
+
+        .small {
+            color: white;
+            text-decoration: underline;
+        }
+
+            .small:hover {
+                color: #1ed760
+            }
+
+        .btnLogin {
+            border-radius: 50px;
+            color: #000000;
+            background-color: #1ED760;
+            border-color: #1ED760
+        }
+
+            .btnLogin:hover {
+                border-radius: 50px;
+                color: #000000;
+                background-color: #3be477;
+                border-color: #3be477;
+                transform: scale(1.05)
+            }
     </style>
 
     <!-- Link đến Bootstrap Icons từ CDN -->
@@ -117,7 +141,7 @@
                                             </div> 
                                         </div>
                                         <div style="margin-top:30px">
-                                            <button type="submit" class="btn btn-user btn-block" style="border-radius: 50px; color: #000000; background-color: #1ED760; border-color: #1ED760 ">
+                                            <button type="submit" class="btn btn-user btn-block btnLogin">
                                                 <strong>Login</strong>
                                             </button>
                                         </div>
@@ -125,10 +149,10 @@
 
                                     <hr style="border-top-width: 1px; border-top-style: solid; border-top-color: rgb(41, 41, 41); ">
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html" style="color: white">Forgot Password?</a>
+                                        <a class="small" href="forgot-password.html" >Forgot Password?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="/Auth/Register" style="color: white">Create an Account!</a>
+                                        <a class="small" href="/Auth/Register" >Create an Account!</a>
                                     </div>
                                 </div>
                             </div>

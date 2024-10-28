@@ -14,5 +14,11 @@ namespace MusicApp.Controllers
             // Your logic here
             return View();
         }
+
+        public ActionResult Test()
+        {
+            // Your logic here
+            return View();
+        }
     }
 }
