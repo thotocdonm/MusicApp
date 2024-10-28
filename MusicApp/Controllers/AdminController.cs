@@ -62,14 +62,14 @@ namespace MusicApp.Controllers
         {
             {
                 var singerSongs = from singer in db.mic_singers
-                                  join songSinger in db.mic_song_singers on singer.singer_id equals songSinger.singer_id
-                                  join song in db.mic_songs on songSinger.song_id equals song.song_id
+                                  join song in db.mic_songs on singer.singer_id equals song.singer_id
                                   where song.is_deleted == '0'
                                   select new SingerSongViewModel
                                   {
                                       SongId = song.song_id,
                                       SongTitle = song.name,
                                       SingerName = singer.name,
+                                      SingerId = singer.singer_id,
                                       CreatedTime = song.created_time.GetValueOrDefault()
                                   };
 
@@ -92,7 +92,7 @@ namespace MusicApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadSong(HttpPostedFileBase musicFile, HttpPostedFileBase thumbnailFile, String song_name, int? singerSelect, string newSingerName)
+        public ActionResult UploadSong(HttpPostedFileBase musicFile, HttpPostedFileBase thumbnailFile, String song_name, int? singerSelect, string newSingerName, string language, string genre)
         {
             long unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             string id = Guid.NewGuid().ToString();
@@ -150,28 +150,18 @@ namespace MusicApp.Controllers
             var song = new mic_song
             {
                 name = song_name,
+                singer_id = singerId,
                 is_deleted = '0',
                 thumbnail = imageFileName,
                 song_src = musicFileName,
                 song_url = id,
                 created_time = DateTime.Now,
+                language = language,
+                type = genre
             };
 
             db.mic_songs.InsertOnSubmit(song);
             db.SubmitChanges();
-
-            var songSinger = new mic_song_singer
-            {
-                song_id = song.song_id,
-                singer_id = singerId,
-                is_deleted = '0',
-                created_time = DateTime.Now,
-            };
-            db.mic_song_singers.InsertOnSubmit(songSinger);
-            db.SubmitChanges();
-
-
-
 
             return RedirectToAction("Music");
         }
@@ -207,6 +197,83 @@ namespace MusicApp.Controllers
             // Redirect to the action that fetches the song list
             return RedirectToAction("Music"); // Replace with your actual action name
         }
+
+        [HttpPost]
+        public ActionResult EditSong(int songId, string songTitle, HttpPostedFileBase musicFile, HttpPostedFileBase thumbnailFile, int? singerId, string editNewSingerName, string language, string genre)
+        {
+            var song = db.mic_songs.FirstOrDefault(s => s.song_id == songId);
+            if (song == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (singerId.HasValue)
+            {
+                song.singer_id = singerId.Value;
+            }
+
+
+            else if (!string.IsNullOrEmpty(editNewSingerName))
+            {
+                // Check if singer exists
+                var existingSinger = db.mic_singers.FirstOrDefault(s => s.name == editNewSingerName);
+                if (existingSinger != null)
+                {
+                    singerId = existingSinger.singer_id;
+                }
+                else
+                {
+                    // Create a new singer
+                    var newSinger = new mic_singer { name = editNewSingerName, is_deleted = '0', created_time = DateTime.Now };
+                    db.mic_singers.InsertOnSubmit(newSinger);
+                    db.SubmitChanges();
+                    song.singer_id = newSinger.singer_id;
+                }
+            }
+
+
+
+
+            // Update song details
+            song.name = songTitle;
+            song.modified_time = DateTime.Now;
+            song.type = genre;
+            song.language = language;
+
+            // If new music file is uploaded, delete old file and save new one
+            if (musicFile != null && musicFile.ContentLength > 0)
+            {
+                var oldMusicFilePath = Server.MapPath("~/Public/Songs/" + song.song_src);
+                if (System.IO.File.Exists(oldMusicFilePath))
+                {
+                    System.IO.File.Delete(oldMusicFilePath);
+                }
+
+                var musicFileName = Path.GetFileName(musicFile.FileName);
+                var musicFilePath = Path.Combine(Server.MapPath("~/Public/Songs"), musicFileName);
+                musicFile.SaveAs(musicFilePath);
+                song.song_src = musicFileName;
+            }
+
+            // If new thumbnail is uploaded, delete old file and save new one
+            if (thumbnailFile != null && thumbnailFile.ContentLength > 0)
+            {
+                var oldThumbnailFilePath = Server.MapPath("~/Public/Images/" + song.thumbnail);
+                if (System.IO.File.Exists(oldThumbnailFilePath))
+                {
+                    System.IO.File.Delete(oldThumbnailFilePath);
+                }
+
+                var thumbnailFileName = Path.GetFileName(thumbnailFile.FileName);
+                var thumbnailFilePath = Path.Combine(Server.MapPath("~/Public/Images"), thumbnailFileName);
+                thumbnailFile.SaveAs(thumbnailFilePath);
+                song.thumbnail = thumbnailFileName;
+            }
+
+            db.SubmitChanges();
+            return RedirectToAction("Music");
+        }
+
 
         public ActionResult Dashboard()
         {
