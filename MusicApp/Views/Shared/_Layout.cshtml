@@ -27,19 +27,19 @@
                 @Html.Partial("_PlaylistView")
             </div>
 
-            <div class="col-md-9 fade-out-container" style="height: 100%; flex: 1;overflow-y: auto; overflow-x: hidden">
+            <div class="col-md-9" style="height: 100%; flex: 1;overflow-y: auto; overflow-x: hidden">
                 <div id="mainContent">
                     @RenderBody()
                 </div>
                 <div id="footerMain">
-                @Html.Partial("_FooterMain")
-                   </div>
+                    @Html.Partial("_FooterMain")
+                </div>
             </div>
         </div>
         <div id="musicPlayerFooter" class="col-md-12">
             @Html.Partial("_MusicPlayerFooter")
         </div>
-    </div>
+      
     <script src="~/Scripts/bootstrap.js"></script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
