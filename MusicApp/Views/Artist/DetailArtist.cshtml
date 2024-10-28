@@ -208,6 +208,7 @@
                 // Nếu div chưa phát, hiển thị icon "play"
                 indexText.classList.add("d-none");
                 playIcon.classList.remove("d-none");
+                waveIcon.classList.add("d-none");
             }
         }
 
@@ -252,18 +253,17 @@
             // Cập nhật trạng thái cho bài hát mới được phát
             if (currentPlaying === element) {
                 // Nếu bài đang phát được nhấn lại, dừng phát
-                pauseIcon.classList.toggle("d-none");
-                playIcon.classList.toggle("d-none");
-
-                if (pauseIcon.classList.contains("d-none")) {
-                    indexText.classList.remove("d-none");
-                    currentPlaying = null;
-                }
+                pauseIcon.classList.add("d-none");
+                playIcon.classList.remove("d-none");
+                indexText.classList.add("d-none");
+                waveIcon.classList.add("d-none");
+                currentPlaying = null;
             } else {
                 // Nếu là div mới, hiển thị "pause" và cập nhật currentPlaying
                 playIcon.classList.add("d-none");
                 pauseIcon.classList.remove("d-none");
                 indexText.classList.add("d-none");
+                waveIcon.classList.add("d-none");
                 currentPlaying = element;
             }
         }
