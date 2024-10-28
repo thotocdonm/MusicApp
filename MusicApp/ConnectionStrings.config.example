@@ -1,5 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<connectionStrings>
-    <add name="musicConnectionString" connectionString="Data Source=DESKTOP-H3FAVBH;Initial Catalog=Testing1;Integrated Security=True;TrustServerCertificate=True"
-         providerName="System.Data.SqlClient" />
-</connectionStrings>
