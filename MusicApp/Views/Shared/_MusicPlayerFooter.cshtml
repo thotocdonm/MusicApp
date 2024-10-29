@@ -3,6 +3,7 @@
     ViewBag.Title = "_MusicPlayerFooter";
 }
 
+@Scripts.Render("~/Scripts/global.js")
 <div class="footer">
     <div class="footer-left">
         <div class="image">
@@ -36,26 +37,29 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const rangeInputs = document.querySelectorAll('input[type="range"]');
 
-        rangeInputs.forEach(rangeInput => {
-            updateRangeBackground(rangeInput);
-
-            rangeInput.addEventListener('input', function () {
-                updateRangeBackground(this);
-            });
-        });
-
-        function updateRangeBackground(rangeElement) {
-            const value = (rangeElement.value - rangeElement.min) / (rangeElement.max - rangeElement.min) * 100;
-            rangeElement.style.setProperty('--val', value + '%');
-        }
-    });
 
     $(document).ready(function () {
+
+          const $rangeInputs = $('input[type="range"]');
+
+    $rangeInputs.each(function () {
+        updateRangeBackground($(this)); // Initial background update
+    });
+
+    $rangeInputs.on('input', function () {
+        updateRangeBackground($(this));
+    });
+
+    function updateRangeBackground($rangeElement) {
+        const min = $rangeElement.attr('min') || 0;
+        const max = $rangeElement.attr('max') || 100;
+        const value = ($rangeElement.val() - min) / (max - min) * 100;
+        $rangeElement.css('--val', value + '%'); // Update custom CSS variable
+
+    }
         // Listen for the playSong event
-        var audio = new Audio();
+        
         let isPlaying = false;
         $(document).on('playSong', function (event, data) {
             // Update footer with the current song's details
@@ -70,7 +74,7 @@
             audio.addEventListener('loadedmetadata', function () {
                 $('.total-time').text(formatTime(audio.duration));
                 $('.progress-input').attr('max', audio.duration);
-               
+
             });
 
             // Play the song
@@ -87,21 +91,23 @@
                 if (isPlaying) {
                     $('.current-time').text(formatTime(audio.currentTime));
                     $('.progress-input').val(audio.currentTime);
+                    updateRangeBackground($('.progress-input'));
 
-                
                 }
             }, 1000);
 
             // Handle pause functionality
-            $('#play-btn').off('click').on('click', function () { // Use off() to prevent multiple bindings
-                if (audio.paused) {
-                    audio.play();
-                    $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
-                } else {
-                    audio.pause();
-                    $('#play-btn i').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
-                }
-            });
+            $('#play-btn').off('click').on('click', function () {
+    if (audio.paused) {
+        audio.play();
+        $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
+        $(document).trigger('footerSongPlaying'); // Notify that the song is playing
+    } else {
+        audio.pause();
+        $('#play-btn i').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
+        $(document).trigger('footerSongPaused'); // Notify that the song is paused
+    }
+});
 
             // Handle progress bar change
             $('.progress-input').on('input', function () {
