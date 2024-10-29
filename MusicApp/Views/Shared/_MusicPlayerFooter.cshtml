@@ -17,12 +17,12 @@
     <div class="footer-center">
         <div style="display: flex; align-items: center">
             <button class="control-btn btn-child"><i class="bi bi-skip-start-fill"></i></button>
-            <button class="control-btn"><i class="bi bi-pause-circle-fill" style=" font-size: 30px;"></i></button>
+            <button class="control-btn" id="play-btn"><i class="bi bi-play-circle-fill" style=" font-size: 30px;"></i></button>
             <button class="control-btn btn-child"><i class="bi bi-skip-end-fill"></i></button>
         </div>
         <div class="progress-bar">
             <div class="current-time">0</div>
-            <div class="range-input"><input type="range" min="0" max="100"></div>
+            <div class="range-input"><input type="range" class="progress-input" min="0" max="100"></div>
             <div class="total-time">1</div>
         </div>
     </div>
@@ -30,7 +30,7 @@
         <i class="bi bi-repeat"></i>
         <div class="volume">
             <div><i class="bi bi-volume-mute"></i></div>
-            <div class="range-input"><input type="range" min="0" max="100"></div>
+            <div class="range-input"><input type="range" class="volume-input" min="0" max="100" value="100"></div>
         </div>
     </div>
 </div>
@@ -50,6 +50,75 @@
         function updateRangeBackground(rangeElement) {
             const value = (rangeElement.value - rangeElement.min) / (rangeElement.max - rangeElement.min) * 100;
             rangeElement.style.setProperty('--val', value + '%');
+        }
+    });
+
+    $(document).ready(function () {
+        // Listen for the playSong event
+        var audio = new Audio();
+        let isPlaying = false;
+        $(document).on('playSong', function (event, data) {
+            // Update footer with the current song's details
+            $('.album-art').attr('src', "/Public/Images/" + data.albumArt);
+            $('.song-title').text(data.title);
+            $('.artist-name').text(data.artist);
+
+            // Set audio source
+            audio.src = "/Public/Songs/" + data.src;
+
+            // Update the total time based on the audio duration
+            audio.addEventListener('loadedmetadata', function () {
+                $('.total-time').text(formatTime(audio.duration));
+                $('.progress-input').attr('max', audio.duration);
+               
+            });
+
+            // Play the song
+            audio.play();
+            isPlaying = true;
+
+            // Show the footer if hidden
+            $('#musicPlayerFooter').show();
+
+            // Update the control button to pause
+            $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
+
+            setInterval(() => {
+                if (isPlaying) {
+                    $('.current-time').text(formatTime(audio.currentTime));
+                    $('.progress-input').val(audio.currentTime);
+
+                
+                }
+            }, 1000);
+
+            // Handle pause functionality
+            $('#play-btn').off('click').on('click', function () { // Use off() to prevent multiple bindings
+                if (audio.paused) {
+                    audio.play();
+                    $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
+                } else {
+                    audio.pause();
+                    $('#play-btn i').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
+                }
+            });
+
+            // Handle progress bar change
+            $('.progress-input').on('input', function () {
+                audio.currentTime = $(this).val();
+            });
+
+            // Handle volume control
+            $('.volume-input').on('input', function () {
+                audio.volume = $(this).val() / 100; // Convert to 0-1 range
+            });
+
+        });
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
         }
     });
 

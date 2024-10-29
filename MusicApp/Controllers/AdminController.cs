@@ -152,6 +152,7 @@ namespace MusicApp.Controllers
                 name = song_name,
                 singer_id = singerId,
                 is_deleted = '0',
+                views = 0,
                 thumbnail = imageFileName,
                 song_src = musicFileName,
                 song_url = id,

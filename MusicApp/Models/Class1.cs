@@ -34,6 +34,25 @@ namespace MusicApp.Models
         public IEnumerable<Singer> Singers { get; set; }
     }
 
+    public class DetailSong
+    {
+        public int SongId { get; set; }
+        public string SongTitle { get; set; }
+        public int Views { get; set; }
+        public int SingerId { get; set; }
+        public string SingerName { get; set; }
+        public string SongSrc { get; set; }
+
+        public string SongThumbnail { get; set; }
+        public string Duration { get; set; }
+    }
+
+    public class DetailSongView
+    {
+        public DetailSong DetailSong { get; set; }
+        public IEnumerable<DetailSong> PopularSongs { get; set; }
+    }
+
 
 
 }

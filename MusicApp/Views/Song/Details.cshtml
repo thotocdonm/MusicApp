@@ -1,6 +1,8 @@
 ﻿
+@model MusicApp.Models.DetailSongView
 @{
     ViewBag.Title = "Details";
+    int trackIndex = 1;
 }
 
 <!DOCTYPE html>
@@ -11,28 +13,31 @@
             font-family: 'Helvetica', 'Arial', sans-serif;
             color: #444444;
             font-size: 9pt;
-/*            background-color: #FAFAFA;*/
+            /*            background-color: #FAFAFA;*/
         }
+
         .play-btn:hover {
             background-color: #3be477 !important;
             cursor: pointer;
         }
+
         .like-btn:hover {
             color: #fff !important;
             cursor: pointer;
         }
+
         .artist-sec:hover {
             background-color: hsla(0, 0%, 100%, .1) !important;
-            cursor:pointer;
+            cursor: pointer;
         }
 
-        .popular-track{
-            padding:5px 16px !important;
+        .popular-track {
+            padding: 5px 16px !important;
         }
 
-        .popular-track:hover {
-            background-color: hsla(0, 0%, 100%, .1) !important;
-        }
+            .popular-track:hover {
+                background-color: hsla(0, 0%, 100%, .1) !important;
+            }
 
         .custom-dropdown {
             background-color: #292929; /* Black background */
@@ -40,16 +45,15 @@
             border: none; /* Remove border */
         }
 
-        .custom-dropdown .dropdown-item {
-            color: #fff; /* White text for each item */
-            padding: 10px 20px; /* Adjust padding to match Spotify's look */
-        }
+            .custom-dropdown .dropdown-item {
+                color: #fff; /* White text for each item */
+                padding: 10px 20px; /* Adjust padding to match Spotify's look */
+            }
 
-        .custom-dropdown .dropdown-item:hover {
-            background-color: #333; /* Dark gray hover effect */
-            color: #1DB954; /* Spotify green color on hover */
-         }
-      
+                .custom-dropdown .dropdown-item:hover {
+                    background-color: #333; /* Dark gray hover effect */
+                    color: #1DB954; /* Spotify green color on hover */
+                }
     </style>
 
 </head>
@@ -57,7 +61,7 @@
     <div id="spotify-layout" class=" rounded-3 text-white col-12" style="background: #191414;overflow-y:auto; height:100%">
         <div class="pb-4 px-4 row g-0" style="display:flex;gap:10px;padding-top:6em;align-items:end;flex-wrap:wrap">
             <div class="col-md-3 justify-content-center align-items-center" style="display:flex">
-                <img id="thumbnail" src="~/Public/Images/AlkaTale29_1729844178.png" class="img-thumbnail img-fluid song-img" 
+                <img id="thumbnail" src="~/Public/Images/@Model.DetailSong.SongThumbnail" class="img-thumbnail img-fluid song-img"
                      style="height: 232px; width: 232px; box-shadow: 0 4px 60px rgba(0, 0, 0, .5);object-fit:contain" alt="..." />
             </div>
             <div style="display:flex;flex-direction:column;gap:10px" class="col-md-7">
@@ -65,16 +69,14 @@
                     Song
                 </div>
                 <div style="font-size: calc(3vw + 3vh + 2vmin); white-space: nowrap; width: 100%; font-weight: bold">
-                    Kaikai Kitan
+                    @Model.DetailSong.SongTitle
                 </div>
                 <div class="fw-bold fs-6">
-                    Artist
+                    @Model.DetailSong.SingerName
                     <span><i class="bi bi-dot"></i></span>
-                    2018
+                    @Model.DetailSong.Duration
                     <span><i class="bi bi-dot"></i></span>
-                    4:35
-                    <span><i class="bi bi-dot"></i></span>
-                    8,500,000
+                    @Model.DetailSong.Views
                 </div>
             </div>
 
@@ -119,74 +121,44 @@
                             Artist
                         </div>
                         <div>
-                            Artist
+                            @Model.DetailSong.SingerName
                         </div>
                     </div>
                 </div>
-               
+
             </div>
             <div style="display:flex;flex-direction:column;gap:5px;padding:24px;">
                 <div style="color: #b3b3b3">
                     Popular Tracks by
                 </div>
                 <h3>
-                    Artist
+                    @Model.DetailSong.SingerName
                 </h3>
                 <div>
-                    <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
-                        <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
-                            <div style="color: #b3b3b3" class="track-index">
-                                1
+                    @foreach (var song in Model.PopularSongs)
+                    {
+                        <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
+                            <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
+                                <div style="color: #b3b3b3" class="track-index">
+                                    @trackIndex
+                                </div>
+                                <div style="height:40px;width:40px">
+                                    <img id="thumbnail" src="~/Public/Images/@song.SongThumbnail" class="rounded-1"
+                                         style="height: 100%; width: 100%;" alt="..." />
+                                </div>
+                                <span>@song.SongTitle</span>
                             </div>
-                            <div style="height:40px;width:40px">
-                                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="rounded-1"
-                                     style="height: 100%; width: 100%;" alt="..." />
+                            <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
+                                @song.Views
                             </div>
-                            <span>Kaikai Kitan</span>
-                        </div>
-                        <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
-                            130,000,000
-                        </div>
-                        <div class="col-1" style="color: #b3b3b3">
-                            4:15
-                        </div>
-                    </div>
-                    <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
-                        <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
-                            <div style="color: #b3b3b3" class="track-index">
-                                2
+                            <div class="col-1" style="color: #b3b3b3">
+                                @song.Duration
                             </div>
-                            <div style="height:40px;width:40px">
-                                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="rounded-1"
-                                     style="height: 100%; width: 100%;" alt="..." />
-                            </div>
-                            <span>Kaikai Kitan</span>
                         </div>
-                        <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
-                            130,000,000
-                        </div>
-                        <div class="col-1" style="color: #b3b3b3">
-                            4:15
-                        </div>
-                    </div>
-                    <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
-                        <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
-                            <div style="color: #b3b3b3" class="track-index">
-                                3
-                            </div>
-                            <div style="height:40px;width:40px">
-                                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="rounded-1"
-                                     style="height: 100%; width: 100%;" alt="..." />
-                            </div>
-                            <span>Kaikai Kitan</span>
-                        </div>
-                        <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
-                            130,000,000
-                        </div>
-                        <div class="col-1" style="color: #b3b3b3">
-                            4:15
-                        </div>
-                    </div>
+                        trackIndex++;
+                    }
+
+
                 </div>
 
             </div>
@@ -194,7 +166,7 @@
 
     </div>
 
-  
+
     <script>
         //Change background color based on thumbnail
         $(document).ready(function () {
@@ -217,19 +189,6 @@
             }
         });
 
-        //Toggle play song btn
-        //$(document).ready(function () {
-        //    $('#toggle-button').click(function () {
-        //        var icon = $('#play-icon');
-
-        //        // Check the current icon and toggle it
-        //        if (icon.hasClass('bi-play-fill')) {
-        //            icon.removeClass('bi-play-fill').addClass('bi-pause-fill'); // Change to pause icon
-        //        } else {
-        //            icon.removeClass('bi-pause-fill').addClass('bi-play-fill'); // Change back to play icon
-        //        }
-        //    });
-        //});
 
         //Toggle play song btn on Track list
         $(document).ready(function () {
@@ -318,7 +277,23 @@
         });
 
 
+        $(document).ready(function () {
+    $('#toggle-button').click(function () {
+        // Get song details from data attributes
+        var songTitle = @Html.Raw(Json.Encode(Model.DetailSong.SongTitle));
+        var artistName = @Html.Raw(Json.Encode(Model.DetailSong.SingerName));
+        var albumArt = @Html.Raw(Json.Encode(Model.DetailSong.SongThumbnail));
+        var songSrc = @Html.Raw(Json.Encode(Model.DetailSong.SongSrc));
 
+        // Trigger a custom event to notify the music player footer
+        $(document).trigger('playSong', {
+            title: songTitle,
+            artist: artistName,
+            albumArt: albumArt,
+            src: songSrc
+        });
+    });
+});
 
 
 
