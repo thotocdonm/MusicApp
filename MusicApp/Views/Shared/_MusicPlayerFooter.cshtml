@@ -62,6 +62,20 @@
         
         let isPlaying = false;
         $(document).on('playSong', function (event, data) {
+
+            if (currentSongId === data.id) {
+                if (audio.paused) {
+                    audio.play(); // Resume if paused
+                    $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
+                    isPlaying = true;
+                    $(document).trigger('footerSongPlaying');
+                }
+                return; // Exit if the same song is already playing
+            }
+
+            // Update the current song ID
+            currentSongId = data.id;
+
             // Update footer with the current song's details
             $('.album-art').attr('src', "/Public/Images/" + data.albumArt);
             $('.song-title').text(data.title);
@@ -102,6 +116,7 @@
         audio.play();
         $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
         $(document).trigger('footerSongPlaying'); // Notify that the song is playing
+    
     } else {
         audio.pause();
         $('#play-btn i').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
@@ -117,6 +132,11 @@
             // Handle volume control
             $('.volume-input').on('input', function () {
                 audio.volume = $(this).val() / 100; // Convert to 0-1 range
+            });
+            $(document).on('pauseSong', function () {
+                audio.pause();
+                $('#play-btn i').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
+                $(document).trigger('footerSongPaused'); // Notify that the song is paused
             });
 
         });
