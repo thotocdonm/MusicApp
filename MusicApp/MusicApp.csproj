@@ -128,6 +128,7 @@
     <Compile Include="Controllers\ArtistController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\SongController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2133,6 +2134,7 @@
     <Content Include="Views\Admin\Artist.cshtml" />
     <Content Include="Views\Artist\DetailArtist.cshtml" />
     <None Include="Views\Shared\_FooterMain.cshtml" />
+    <None Include="Views\Playlist\Details.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
