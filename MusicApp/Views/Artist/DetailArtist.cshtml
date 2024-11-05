@@ -91,10 +91,10 @@
 
             <div style=" width: 100%">
                 <h2 style="color:white">Popular</h2>
-                <div class="row g-0 popular-track track-container" data-index="1" onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
+                <div class="row g-0 popular-track track-container" data-index="1" data-audio="@Url.Content("~/Public/Songs/Jung Kook (정국) - Seven (feat. Latto) (Explicit Ver.).mp3")" onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
                     <div class="col-11 col-sm-8" style="display:flex; gap:16px; align-items:center;">
                         <div style="color: #b3b3b3;" class="track-index">
-                            <span class="index-text">1</span>
+                            <p class="index-text">1</p>
                             <i class="bi bi-play-fill d-none"></i>
                             <i class="bi bi-pause-fill d-none"></i>
                             <div class="bar-wave d-none" style="display: flex; gap: 2px; align-items: center;">
@@ -106,19 +106,19 @@
                         <div style="height:40px; width:40px;">
                             <img src="https://i.scdn.co/image/ab67616d00001e02741fd4807f442af3f7359316" class="rounded-1" style="height: 100%; width: 100%;" alt="..." />
                         </div>
-                        <span style="color:white;">Seven (feat. Latto) (Explicit Ver.)</span>
+                        <span style="color:white;" >Seven (feat. Latto) (Explicit Ver.)</span>
                     </div>
                     <div class="col-3 d-none d-sm-block" style="color: #b3b3b3;">2,001,923,921</div>
                     <div class="col-1" style="color: #b3b3b3;">3:03</div>
                 </div>
 
-                <div class="row g-0 popular-track track-container" data-index="2" onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
+                <div class="row g-0 popular-track track-container" data-index="2" data-audio="@Url.Content("~/Public/Songs/04%20Standing%20Next%20to%20You.mp3")" onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
                     <div class="col-11 col-sm-8" style="display:flex; gap:16px; align-items:center;">
                         <div style="color: #b3b3b3;" class="track-index">
-                            <span class="index-text">2</span>
+                            <p class="index-text">2</p>
                             <i class="bi bi-play-fill d-none"></i>
                             <i class="bi bi-pause-fill d-none"></i>
-                            
+
                             <div class="bar-wave d-none" style="display: flex; gap: 2px; align-items: center;">
                                 <i class="wave-bar"></i>
                                 <i class="wave-bar"></i>
@@ -137,7 +137,7 @@
                 <div class="row g-0 popular-track track-container" data-index="3" onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
                     <div class="col-11 col-sm-8" style="display:flex; gap:16px; align-items:center;">
                         <div style="color: #b3b3b3;" class="track-index">
-                            <span class="index-text">3</span>
+                            <p class="index-text">3</p>
                             <i class="bi bi-play-fill d-none"></i>
                             <i class="bi bi-pause-fill d-none"></i>
                             <div class="bar-wave d-none" style="display: flex; gap: 2px; align-items: center;">
@@ -154,11 +154,12 @@
                     <div class="col-3 d-none d-sm-block" style="color: #b3b3b3;">691,272,133</div>
                     <div class="col-1" style="color: #b3b3b3;">3:21</div>
                 </div>
-
+                <audio controls="controls" style="display:none" id="audioPlayer">
+                    <source src="" type="audio/mpeg" />
+                </audio>
             </div>
         </div>
     </div>
-    
 
     <script>
         $(document).ready(function () {
@@ -191,7 +192,10 @@
         }
 
         //Khi hover qua từng dòng nhạc và bấm vào thì đổi icon
+        
+
         let currentPlaying = null;
+        const audioPlayer = document.getElementById("audioPlayer");
 
         function showIcon(element) {
             const playIcon = element.querySelector(".track-index .bi-play-fill");
@@ -237,6 +241,11 @@
             const pauseIcon = element.querySelector(".track-index .bi-pause-fill");
             const indexText = element.querySelector(".track-index .index-text");
             const waveIcon = element.querySelector(".track-index .bar-wave");
+            const songSrc = element.getAttribute("data-audio");
+
+            // Lặp qua từng bài hát và gán sự kiện click
+           
+
             // Nếu hiện tại là div đang phát
             if (currentPlaying) {
                 const currentPlayIcon = currentPlaying.querySelector(".track-index .bi-play-fill");
@@ -248,6 +257,8 @@
                 currentPlayIcon.classList.add("d-none");
                 currentIndexText.classList.remove("d-none");
                 currentwaveIcon.classList.add("d-none");
+
+                audioPlayer.pause(); // Dừng bài hát hiện tại
             }
 
             // Cập nhật trạng thái cho bài hát mới được phát
@@ -258,6 +269,7 @@
                 indexText.classList.add("d-none");
                 waveIcon.classList.add("d-none");
                 currentPlaying = null;
+                audioPlayer.pause(); // Dừng phát
             } else {
                 // Nếu là div mới, hiển thị "pause" và cập nhật currentPlaying
                 playIcon.classList.add("d-none");
@@ -265,6 +277,21 @@
                 indexText.classList.add("d-none");
                 waveIcon.classList.add("d-none");
                 currentPlaying = element;
+
+                const songTitle = element.querySelector('span').innerText; // Lấy tên bài hát
+                const artistName = "Tên nghệ sĩ"; // Thay đổi theo cách bạn muốn lấy tên nghệ sĩ
+                document.getElementById('song-title').innerText = songTitle;
+                document.getElementById('artist-name').innerText = artistName;
+
+                // Phát nhạc bài mới
+                audioPlayer.querySelector("source").src = songSrc;
+                audioPlayer.load();
+                audioPlayer.play().then(() => {
+                    console.log("Đang phát nhạc:", songSrc);
+                }).catch(error => {
+                    console.error("Không thể phát nhạc:", error);
+                });
+              
             }
         }
     </script>

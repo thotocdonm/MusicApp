@@ -1927,6 +1927,8 @@
     <None Include="ConnectionStrings.config" />
     <Content Include="jungkook.jpg" />
     <Content Include="LICENSE.txt" />
+    <Content Include="Public\Images\Golden_jungkook.jfif" />
+    <Content Include="Public\Songs\Jung Kook %28정국%29 - Seven %28feat. Latto%29 %28Explicit Ver.%29.mp3" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />

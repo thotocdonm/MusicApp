@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Testing1" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="music" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Table Name="dbo.mic_favourite_songs" Member="mic_favourite_songs">
     <Type Name="mic_favourite_song">
       <Column Name="favourite_song_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -22,7 +22,10 @@
       <Column Name="created_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="modified_by" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="modified_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="avatar" Type="System.String" DbType="NChar(500)" CanBeNull="true" />
+      <Column Name="playlist_url" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Association Name="mic_playlist_mic_song_playlist" Member="mic_song_playlists" ThisKey="playlist_id" OtherKey="playlist_id" Type="mic_song_playlist" />
+      <Association Name="mic_playlist_mic_user_playlist" Member="mic_user_playlists" ThisKey="playlist_id" OtherKey="playlist_id" Type="mic_user_playlist" />
     </Type>
   </Table>
   <Table Name="dbo.mic_singers" Member="mic_singers">
@@ -34,7 +37,10 @@
       <Column Name="created_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="modified_by" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="modified_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="mic_singer_mic_song_singer" Member="mic_song_singers" ThisKey="singer_id" OtherKey="singer_id" Type="mic_song_singer" />
+      <Column Name="avatar" Type="System.String" DbType="NChar(500)" CanBeNull="true" />
+      <Column Name="singer_url" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Association Name="mic_singer_mic_song" Member="mic_songs" ThisKey="singer_id" OtherKey="singer_id" Type="mic_song" />
     </Type>
   </Table>
   <Table Name="dbo.mic_song_comments" Member="mic_song_comments">
@@ -66,8 +72,8 @@
   <Table Name="dbo.mic_song_playlists" Member="mic_song_playlists">
     <Type Name="mic_song_playlist">
       <Column Name="song_playlist_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="song_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="playlist_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="song_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="playlist_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="is_deleted" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
       <Column Name="created_by" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="created_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
@@ -77,24 +83,9 @@
       <Association Name="mic_song_mic_song_playlist" Member="mic_song" ThisKey="song_id" OtherKey="song_id" Type="mic_song" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.mic_song_singers" Member="mic_song_singers">
-    <Type Name="mic_song_singer">
-      <Column Name="song_singer_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="song_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="singer_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="is_deleted" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
-      <Column Name="created_by" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="created_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="modified_by" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="modified_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="mic_singer_mic_song_singer" Member="mic_singer" ThisKey="singer_id" OtherKey="singer_id" Type="mic_singer" IsForeignKey="true" />
-      <Association Name="mic_song_mic_song_singer" Member="mic_song" ThisKey="song_id" OtherKey="song_id" Type="mic_song" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.mic_songs" Member="mic_songs">
     <Type Name="mic_song">
       <Column Name="song_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="code" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="name" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="is_deleted" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
       <Column Name="created_by" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
@@ -102,11 +93,32 @@
       <Column Name="modified_by" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="modified_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="note" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="views" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="thumbnail" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="song_url" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="song_src" Type="System.String" DbType="NChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="singer_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="type" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="language" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Association Name="mic_song_mic_favourite_song" Member="mic_favourite_songs" ThisKey="song_id" OtherKey="song_id" Type="mic_favourite_song" />
       <Association Name="mic_song_mic_song_comment" Member="mic_song_comments" ThisKey="song_id" OtherKey="song_id" Type="mic_song_comment" />
       <Association Name="mic_song_mic_song_like" Member="mic_song_likes" ThisKey="song_id" OtherKey="song_id" Type="mic_song_like" />
       <Association Name="mic_song_mic_song_playlist" Member="mic_song_playlists" ThisKey="song_id" OtherKey="song_id" Type="mic_song_playlist" />
-      <Association Name="mic_song_mic_song_singer" Member="mic_song_singers" ThisKey="song_id" OtherKey="song_id" Type="mic_song_singer" />
+      <Association Name="mic_singer_mic_song" Member="mic_singer" ThisKey="singer_id" OtherKey="singer_id" Type="mic_singer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mic_user_playlists" Member="mic_user_playlists">
+    <Type Name="mic_user_playlist">
+      <Column Name="user_playlist_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="playlist_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="is_deleted" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
+      <Column Name="created_by" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="created_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="modified_by" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="modified_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="mic_playlist_mic_user_playlist" Member="mic_playlist" ThisKey="playlist_id" OtherKey="playlist_id" Type="mic_playlist" IsForeignKey="true" />
+      <Association Name="mic_user_mic_user_playlist" Member="mic_user" ThisKey="user_id" OtherKey="user_id" Type="mic_user" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.mic_users" Member="mic_users">
@@ -123,9 +135,11 @@
       <Column Name="created_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="modified_by" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="modified_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="user_url" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Association Name="mic_user_mic_favourite_song" Member="mic_favourite_songs" ThisKey="user_id" OtherKey="user_id" Type="mic_favourite_song" />
       <Association Name="mic_user_mic_song_comment" Member="mic_song_comments" ThisKey="user_id" OtherKey="user_id" Type="mic_song_comment" />
       <Association Name="mic_user_mic_song_like" Member="mic_song_likes" ThisKey="user_id" OtherKey="user_id" Type="mic_song_like" />
+      <Association Name="mic_user_mic_user_playlist" Member="mic_user_playlists" ThisKey="user_id" OtherKey="user_id" Type="mic_user_playlist" />
     </Type>
   </Table>
 </Database>

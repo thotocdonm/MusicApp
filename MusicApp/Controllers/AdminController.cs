@@ -1,14 +1,16 @@
 ﻿using MusicApp.Models;
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MusicApp.Controllers
 {
     public class AdminController : Controller
     {
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=PC;Initial Catalog=music;Integrated Security=True;Encrypt=True;TrustServerCertificate=True");
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-H3FAVBH;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
         // GET: Admin
         public ActionResult Index()
         {
@@ -61,8 +63,7 @@ namespace MusicApp.Controllers
         {
             {
                 var singerSongs = from singer in db.mic_singers
-                                  join songSinger in db.mic_song_singers on singer.singer_id equals songSinger.singer_id
-                                  join song in db.mic_songs on songSinger.song_id equals song.song_id
+                                  join song in db.mic_songs on singer.singer_id equals song.singer_id
                                   where song.is_deleted == '0'
                                   select new SingerSongViewModel
                                   {
@@ -71,9 +72,20 @@ namespace MusicApp.Controllers
                                       SingerName = singer.name,
                                       CreatedTime = song.created_time.GetValueOrDefault()
                                   };
+                var singers = from singer in db.mic_singers
+                              select new Singer
+                              {
+                                  SingerId = singer.singer_id,
+                                  SingerName = singer.name,
+                              };
+                var viewModel = new MusicViewModel
+                {
+                    Songs = singerSongs,
+                    Singers = singers
+                };
 
 
-                return View(singerSongs.ToList());
+                return View(viewModel);
             }
       
         }
@@ -87,5 +99,73 @@ namespace MusicApp.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public ActionResult SaveSong(HttpPostedFileBase musicFile, HttpPostedFileBase thumbnailFile, string song_name, string singerSelect, string newSingerName, string language, string genre)
+        {
+            int singerId;
+            mic_song newSong = new mic_song();
+
+            // Kiểm tra nếu người dùng nhập ca sĩ mới
+            if (!string.IsNullOrEmpty(newSingerName))
+            {
+                // Thêm ca sĩ mới vào bảng mic_singer
+                mic_singer newSinger = new mic_singer { name = newSingerName, is_deleted='0',created_time=DateTime.Now };
+                db.mic_singers.InsertOnSubmit(newSinger);
+                db.SubmitChanges();
+
+                // Lấy Id của ca sĩ vừa thêm
+                singerId = newSinger.singer_id;
+            }
+            else
+            {
+                // Nếu người dùng chọn ca sĩ có sẵn, lấy Id của ca sĩ đó
+                singerId = int.Parse(singerSelect); // Giả sử singerSelect chứa Id của ca sĩ đã chọn
+            }
+
+            // Tạo đối tượng Song và gán các thuộc tính
+            var song = new addSong
+            {
+                SongName = song_name,
+                SingerId = singerId,
+                Language = language,
+                Genre = genre
+            };
+
+            // Lưu tên file nhạc vào CSDL và file vào thư mục
+            if (musicFile != null && musicFile.ContentLength > 0)
+            {
+                var musicFileName = Path.GetFileName(musicFile.FileName);
+                var musicPath = Path.Combine(Server.MapPath("~/Public/Songs"), musicFileName);
+                musicFile.SaveAs(musicPath);
+                song.MusicFileName = musicFileName;
+            }
+
+            // Lưu tên file ảnh vào CSDL và file vào thư mục
+            if (thumbnailFile != null && thumbnailFile.ContentLength > 0)
+            {
+                var thumbnailFileName = Path.GetFileName(thumbnailFile.FileName);
+                var thumbnailPath = Path.Combine(Server.MapPath("~/Public/Images"), thumbnailFileName);
+                thumbnailFile.SaveAs(thumbnailPath);
+                song.ThumbnailFileName = thumbnailFileName;
+            }
+
+            // Thêm đối tượng Song vào bảng mic_song
+            newSong.name = song.SongName;
+            newSong.thumbnail = song.ThumbnailFileName;
+            newSong.created_time = DateTime.Now;
+            newSong.language = language;
+            newSong.type = genre;
+            newSong.is_deleted = '0';
+            newSong.singer_id = singerId;
+            newSong.song_url = Guid.NewGuid().ToString();
+            newSong.song_src = song.MusicFileName;
+            db.mic_songs.InsertOnSubmit(newSong);
+            db.SubmitChanges();
+
+
+            return RedirectToAction("Music");
+        }
+
+
     }
 }
