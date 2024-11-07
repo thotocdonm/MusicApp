@@ -9,7 +9,7 @@ namespace MusicApp.Controllers
 {
     public class AdminController : Controller
     {
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-UOULN0V\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True");
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=LAPTOP-DK8CPN92\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
         // GET: Admin
         public ActionResult Index()
         {

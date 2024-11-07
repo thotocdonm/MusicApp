@@ -293,7 +293,14 @@
         const songSrc = @Html.Raw(Json.Encode(Model.DetailSong.SongSrc));
         const songId = @Html.Raw(Json.Encode(Model.DetailSong.SongId)); // Unique ID for the song
 
-
+        const songData = {
+            id: songId,
+            title: songTitle,
+            artist: artistName,
+            albumArt: albumArt,
+            src: songSrc
+        };
+        console.log('run stored')
         // Check if the same song is already playing in the footer
         if (songId === currentSongId && audio.paused === false) {
             // Pause if the song is already playing
@@ -301,15 +308,12 @@
             $toggleButton.find('i').removeClass('bi-pause-fill').addClass('bi-play-fill');
         } else {
             // Play the song and update footer
-            $(document).trigger('playSong', {
-                id: songId,
-                title: songTitle,
-                artist: artistName,
-                albumArt: albumArt,
-                src: songSrc
-            });
+          
+            sessionStorage.setItem('currentSong', JSON.stringify(songData));
             currentSongId = songId;
             $toggleButton.find('i').removeClass('bi-playe-fill').addClass('bi-pause-fill');
+            $(document).trigger('playSong');
+            console.log('runinto sess',sessionStorage.getItem('currentSong'));
         }
     });
 

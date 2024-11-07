@@ -59,23 +59,18 @@
 
     }
         // Listen for the playSong event
-        
+
+
+
         let isPlaying = false;
-        $(document).on('playSong', function (event, data) {
-
-            if (currentSongId === data.id) {
-                if (audio.paused) {
-                    audio.play(); // Resume if paused
-                    $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
-                    isPlaying = true;
-                    $(document).trigger('footerSongPlaying');
-                }
-                return; // Exit if the same song is already playing
-            }
-
+        const data = JSON.parse(sessionStorage.getItem('currentSong'));
+        const currentTime = JSON.parse(sessionStorage.getItem('currentTime'));
+        console.log('current',currentTime)
+        console.log(data);
+        if (data) {
             // Update the current song ID
             currentSongId = data.id;
-
+           
             // Update footer with the current song's details
             $('.album-art').attr('src', "/Public/Images/" + data.albumArt);
             $('.song-title').text(data.title);
@@ -91,9 +86,20 @@
 
             });
 
+            if (currentTime) {
+                
+                audio.currentTime = currentTime;
+            };
+
             // Play the song
+          
             audio.play();
             isPlaying = true;
+
+            // Update sessionStorage with the current time during playback
+            audio.addEventListener("timeupdate", function () {
+                sessionStorage.setItem("currentTime", audio.currentTime);
+            });
 
             // Show the footer if hidden
             $('#musicPlayerFooter').show();
@@ -110,37 +116,97 @@
                 }
             }, 1000);
 
-            // Handle pause functionality
-            $('#play-btn').off('click').on('click', function () {
-    if (audio.paused) {
-        audio.play();
-        $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
-        $(document).trigger('footerSongPlaying'); // Notify that the song is playing
-    
-    } else {
-        audio.pause();
-        $('#play-btn i').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
-        $(document).trigger('footerSongPaused'); // Notify that the song is paused
-    }
-});
+            
+        }
 
-            // Handle progress bar change
-            $('.progress-input').on('input', function () {
-                audio.currentTime = $(this).val();
-            });
+        // Handle pause functionality
+        $('#play-btn').off('click').on('click', function () {
+            if (audio.paused) {
+                audio.play();
+                console.log('audio play')
+                $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
+                $(document).trigger('footerSongPlaying'); // Notify that the song is playing
 
-            // Handle volume control
-            $('.volume-input').on('input', function () {
-                audio.volume = $(this).val() / 100; // Convert to 0-1 range
-            });
-            $(document).on('pauseSong', function () {
+            } else {
                 audio.pause();
+                console.log('audio pause')
                 $('#play-btn i').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
                 $(document).trigger('footerSongPaused'); // Notify that the song is paused
-            });
-
+            }
         });
 
+        // Handle progress bar change
+        $('.progress-input').on('input', function () {
+            audio.currentTime = $(this).val();
+        });
+
+        // Handle volume control
+        $('.volume-input').on('input', function () {
+            audio.volume = $(this).val() / 100; // Convert to 0-1 range
+        });
+        $(document).on('pauseSong', function () {
+            audio.pause();
+            $('#play-btn i').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
+            $(document).trigger('footerSongPaused'); // Notify that the song is paused
+        });
+
+        $(document).on('playSong', function (event) {
+        
+                // Update the current song ID
+            let data = JSON.parse(sessionStorage.getItem('currentSong'));
+            const currentTime = JSON.parse(sessionStorage.getItem('currentTime'));
+                console.log('data: ',data)
+                currentSongId = data.id;
+
+                // Update footer with the current song's details
+                $('.album-art').attr('src', "/Public/Images/" + data.albumArt);
+                $('.song-title').text(data.title);
+                $('.artist-name').text(data.artist);
+
+                // Set audio source
+                audio.src = "/Public/Songs/" + data.src;
+
+                // Update the total time based on the audio duration
+                audio.addEventListener('loadedmetadata', function () {
+                    $('.total-time').text(formatTime(audio.duration));
+                    $('.progress-input').attr('max', audio.duration);
+
+                });
+
+                if (currentTime) {
+
+                    audio.currentTime = currentTime;
+                };
+
+                // Play the song
+              
+                audio.play();
+                isPlaying = true;
+
+                // Update sessionStorage with the current time during playback
+                audio.addEventListener("timeupdate", function () {
+                    sessionStorage.setItem("currentTime", audio.currentTime);
+                });
+
+                // Show the footer if hidden
+                $('#musicPlayerFooter').show();
+
+                // Update the control button to pause
+                $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
+
+                setInterval(() => {
+                    if (isPlaying) {
+                        $('.current-time').text(formatTime(audio.currentTime));
+                        $('.progress-input').val(audio.currentTime);
+                        updateRangeBackground($('.progress-input'));
+
+                    }
+                }, 1000);
+            
+         
+
+        })
+       
         function formatTime(seconds) {
             const minutes = Math.floor(seconds / 60);
             const secs = Math.floor(seconds % 60);
