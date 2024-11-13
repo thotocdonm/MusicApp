@@ -99,72 +99,7 @@ namespace MusicApp.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public ActionResult SaveSong(HttpPostedFileBase musicFile, HttpPostedFileBase thumbnailFile, string song_name, string singerSelect, string newSingerName, string language, string genre)
-        {
-            int singerId;
-            mic_song newSong = new mic_song();
-
-            // Kiểm tra nếu người dùng nhập ca sĩ mới
-            if (!string.IsNullOrEmpty(newSingerName))
-            {
-                // Thêm ca sĩ mới vào bảng mic_singer
-                mic_singer newSinger = new mic_singer { name = newSingerName, is_deleted='0',created_time=DateTime.Now };
-                db.mic_singers.InsertOnSubmit(newSinger);
-                db.SubmitChanges();
-
-                // Lấy Id của ca sĩ vừa thêm
-                singerId = newSinger.singer_id;
-            }
-            else
-            {
-                // Nếu người dùng chọn ca sĩ có sẵn, lấy Id của ca sĩ đó
-                singerId = int.Parse(singerSelect); // Giả sử singerSelect chứa Id của ca sĩ đã chọn
-            }
-
-            // Tạo đối tượng Song và gán các thuộc tính
-            var song = new addSong
-            {
-                SongName = song_name,
-                SingerId = singerId,
-                Language = language,
-                Genre = genre
-            };
-
-            // Lưu tên file nhạc vào CSDL và file vào thư mục
-            if (musicFile != null && musicFile.ContentLength > 0)
-            {
-                var musicFileName = Path.GetFileName(musicFile.FileName);
-                var musicPath = Path.Combine(Server.MapPath("~/Public/Songs"), musicFileName);
-                musicFile.SaveAs(musicPath);
-                song.MusicFileName = musicFileName;
-            }
-
-            // Lưu tên file ảnh vào CSDL và file vào thư mục
-            if (thumbnailFile != null && thumbnailFile.ContentLength > 0)
-            {
-                var thumbnailFileName = Path.GetFileName(thumbnailFile.FileName);
-                var thumbnailPath = Path.Combine(Server.MapPath("~/Public/Images"), thumbnailFileName);
-                thumbnailFile.SaveAs(thumbnailPath);
-                song.ThumbnailFileName = thumbnailFileName;
-            }
-
-            // Thêm đối tượng Song vào bảng mic_song
-            newSong.name = song.SongName;
-            newSong.thumbnail = song.ThumbnailFileName;
-            newSong.created_time = DateTime.Now;
-            newSong.language = language;
-            newSong.type = genre;
-            newSong.is_deleted = '0';
-            newSong.singer_id = singerId;
-            newSong.song_url = Guid.NewGuid().ToString();
-            newSong.song_src = song.MusicFileName;
-            db.mic_songs.InsertOnSubmit(newSong);
-            db.SubmitChanges();
-
-
-            return RedirectToAction("Music");
-        }
+        
 
 
     }
