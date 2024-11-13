@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MusicApp.Models
 {
@@ -28,19 +26,32 @@ namespace MusicApp.Models
     {
         public int SongId { get; set; }
         public string SongTitle { get; set; }
+        public int Views { get; set; }
+        public int SingerId { get; set; }
         public string SingerName { get; set; }
+        public string SongSrc { get; set; }
+
+        public string SongThumbnail { get; set; }
+        public string Duration { get; set; }
         public DateTime? CreatedTime { get; set; }
     }
-
-    public class addSong
+    public class DetailSong
     {
-        public int Id { get; set; }
-        public string SongName { get; set; }
+        public int SongId { get; set; }
+        public string SongTitle { get; set; }
+        public int Views { get; set; }
         public int SingerId { get; set; }
-        public string Language { get; set; }
-        public string Genre { get; set; }
-        public string MusicFileName { get; set; }   
-        public string ThumbnailFileName { get; set; } 
+        public string SingerName { get; set; }
+        public string SongSrc { get; set; }
+
+        public string SongThumbnail { get; set; }
+        public string Duration { get; set; }
+    }
+
+    public class DetailSongView
+    {
+        public DetailSong DetailSong { get; set; }
+        public IEnumerable<DetailSong> PopularSongs { get; set; }
     }
 
 

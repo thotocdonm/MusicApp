@@ -1,18 +1,14 @@
 ﻿using MusicApp.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
-using System.Configuration;
 
 namespace MusicApp.Controllers
 {
     public class AuthController : Controller
     {
 
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-H3FAVBH;Initial Catalog=music;Integrated Security=True;Encrypt=True;TrustServerCertificate=True");
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-H3FAVBH;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
         public ActionResult Register()
         {
             return View("Register");
@@ -26,14 +22,14 @@ namespace MusicApp.Controllers
             string phoneNumber = form["mobile_number"];
             string fullName = form["full_name"];
             var user = db.mic_users.FirstOrDefault(x => x.login_name == username);
-            if(user != null)
+            if (user != null)
             {
                 TempData["ErrorMessage"] = "Username already exists!";
                 return View();
             }
             else
             {
-                if(password != confirmpassword)
+                if (password != confirmpassword)
                 {
                     TempData["ErrorMessage"] = "Confirm password does not match the password!";
                     return View();
@@ -91,10 +87,10 @@ namespace MusicApp.Controllers
             }
             else
             {
-                ModelState.AddModelError("","Please input your information.");
+                ModelState.AddModelError("", "Please input your information.");
             }
-            
-            
+
+
 
             return View();
         }
