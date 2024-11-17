@@ -23,12 +23,11 @@
 .fade-out-image {
     width: 100%;
     height: 100px; /* Cố định chiều cao cho ảnh */
-    transition: opacity ease; /* Thêm thời gian chuyển tiếp cho hiệu ứng */
+    transition: opacity ease, transform 0.1s ease;/* Thêm thời gian chuyển tiếp cho hiệu ứng */
 }
 
 .gradient_background {
     height: 100vh;
-    background: linear-gradient(to bottom, #2a2d2d, #121212);
     border-radius: 10px;
     overflow: hidden;
 }

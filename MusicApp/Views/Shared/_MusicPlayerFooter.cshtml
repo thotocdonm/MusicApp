@@ -75,6 +75,9 @@
         let currentSongIndex = 0;
         let isPlaying = false;
         $(document).on('playSong', function (event, data) {
+            if (window.songIndex != null) { 
+                currentSongIndex = window.songIndex ;
+            }
             console.log(data.id, currentSongId);
             if (currentSongId === data.id) {
                 if (audio.paused) {
