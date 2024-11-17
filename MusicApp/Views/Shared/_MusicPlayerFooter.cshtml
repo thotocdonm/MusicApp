@@ -42,26 +42,40 @@
 
           const $rangeInputs = $('input[type="range"]');
 
-    $rangeInputs.each(function () {
-        updateRangeBackground($(this)); // Initial background update
-    });
+        $rangeInputs.each(function () {
+            updateRangeBackground($(this)); // Initial background update
+        });
 
-    $rangeInputs.on('input', function () {
-        updateRangeBackground($(this));
-    });
+        $rangeInputs.on('input', function () {
+            updateRangeBackground($(this));
+        });
 
-    function updateRangeBackground($rangeElement) {
-        const min = $rangeElement.attr('min') || 0;
-        const max = $rangeElement.attr('max') || 100;
-        const value = ($rangeElement.val() - min) / (max - min) * 100;
-        $rangeElement.css('--val', value + '%'); // Update custom CSS variable
+        function updateRangeBackground($rangeElement) {
+            const min = $rangeElement.attr('min') || 0;
+            const max = $rangeElement.attr('max') || 100;
+            const value = ($rangeElement.val() - min) / (max - min) * 100;
+            $rangeElement.css('--val', value + '%'); // Update custom CSS variable
 
-    }
+        }
+        audio.addEventListener('ended', function() {
+        // Get next song index
+            currentSongIndex = currentSongIndex + 1;
+            console.log(currentSongIndex);
+            if (currentSongIndex >= window.listSong.length) {
+                currentSongIndex = 0;
+            }
+            
+            // Find and trigger click on next song element
+            const nextSongElement = document.querySelector(`[data-index="${currentSongIndex}"]`);
+            if (nextSongElement) {
+                nextSongElement.click(); // This will trigger togglePlayPause
+            }
+        });
         // Listen for the playSong event
-        
+        let currentSongIndex = 0;
         let isPlaying = false;
         $(document).on('playSong', function (event, data) {
-
+            console.log(data.id, currentSongId);
             if (currentSongId === data.id) {
                 if (audio.paused) {
                     audio.play(); // Resume if paused
@@ -71,6 +85,7 @@
                 }
                 return; // Exit if the same song is already playing
             }
+
 
             // Update the current song ID
             currentSongId = data.id;
@@ -82,12 +97,12 @@
 
             // Set audio source
             audio.src = "/Public/Songs/" + data.src;
+            console.log(audio.src);
 
             // Update the total time based on the audio duration
             audio.addEventListener('loadedmetadata', function () {
                 $('.total-time').text(formatTime(audio.duration));
                 $('.progress-input').attr('max', audio.duration);
-
             });
 
             // Play the song
@@ -100,6 +115,7 @@
             // Update the control button to pause
             $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
 
+            
             setInterval(() => {
                 if (isPlaying) {
                     $('.current-time').text(formatTime(audio.currentTime));
@@ -111,17 +127,17 @@
 
             // Handle pause functionality
             $('#play-btn').off('click').on('click', function () {
-    if (audio.paused) {
-        audio.play();
-        $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
-        $(document).trigger('footerSongPlaying'); // Notify that the song is playing
-    
-    } else {
-        audio.pause();
-        $('#play-btn i').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
-        $(document).trigger('footerSongPaused'); // Notify that the song is paused
-    }
-});
+                if (audio.paused) {
+                    audio.play();
+                    $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
+                    $(document).trigger('footerSongPlaying'); // Notify that the song is playing
+                
+                } else {
+                    audio.pause();
+                    $('#play-btn i').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
+                    $(document).trigger('footerSongPaused'); // Notify that the song is paused
+                }
+            });
 
             // Handle progress bar change
             $('.progress-input').on('input', function () {
@@ -139,7 +155,30 @@
             });
 
         });
+        $('.bi-skip-start-fill').click(function() {
+            currentSongIndex = currentSongIndex - 1;
+            if (currentSongIndex < 0 ) {
+                currentSongIndex = 0;
+            } else {
+                const prevSongElement = document.querySelector(`[data-index="${currentSongIndex}"]`);
+                if (prevSongElement) {
+                    prevSongElement.click();
+                }
+            }
+        });
 
+        $('.bi-skip-end-fill').click(function() {
+            currentSongIndex = currentSongIndex + 1;
+            console.log(currentSongIndex);
+            if (currentSongIndex >= window.listSong.length) {
+                currentSongIndex = 0;
+            } 
+                const nextSongElement = document.querySelector(`[data-index="${currentSongIndex}"]`);
+                if (nextSongElement) {
+                    nextSongElement.click();
+                }
+            
+        });
         function formatTime(seconds) {
             const minutes = Math.floor(seconds / 60);
             const secs = Math.floor(seconds % 60);

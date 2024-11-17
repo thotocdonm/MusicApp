@@ -1,7 +1,7 @@
 ﻿@model MusicApp.Models.MusicViewModel
 @{
     ViewBag.Title = "Details";
-    int index = 1;
+    int index = 0;
 }
 @Scripts.Render("~/Scripts/global.js")
 <!DOCTYPE html>
@@ -94,12 +94,10 @@
                 <h2 style="color:white">Popular</h2>
                 @foreach (var song in Model.Songs)
                 {
-
-
-                    <div class="row g-0 popular-track track-container" data-index="1" data-audio="@Url.Content("~/Public/Songs/Jung Kook (정국) - Seven (feat. Latto) (Explicit Ver.).mp3")" onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
+                    <div id="song-@index" data-index="@index" class="row g-0 popular-track track-container" data-song='@Html.Raw(Json.Encode(song))' onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
                         <div class="col-11 col-sm-8" style="display:flex; gap:16px; align-items:center;">
                             <div style="color: #b3b3b3;" class="track-index">
-                                <p class="index-text">@index</p>
+                                <p class="index-text" style="margin-top:1em">@index</p>
                                 <i class="bi bi-play-fill d-none"></i>
                                 <i class="bi bi-pause-fill d-none"></i>
                                 <div class="bar-wave d-none" style="display: flex; gap: 2px; align-items: center;">
@@ -111,10 +109,10 @@
                             <div style="height:40px; width:40px;">
                                 <img src="@Url.Content("~/Public/Images/"+song.SongThumbnail)" class="rounded-1" style="height: 100%; width: 100%;" alt="..." />
                             </div>
-                            <span style="color:white;">@song.SongTitle</span>
+                            <span class="titleSong" style="color:white;">@song.SongTitle</span>
                         </div>
-                        <div class="col-3 d-none d-sm-block" style="color: #b3b3b3;">@song.Views</div>
-                        <div class="col-1" style="color: #b3b3b3;">@song.Duration</div>
+                        <div class="col-3 d-none d-sm-block viewSong" style="color: #b3b3b3;">@song.Views</div>
+                        <div class="col-1 durationSong" style="color: #b3b3b3;">@song.Duration</div>
                     </div>
                     index++;
                 }
@@ -147,23 +145,12 @@
                 }
             });
         });
-
-        function changeIcon(icon) {
-            icon.classList.toggle('bi-play-circle-fill');
-            icon.classList.toggle('bi-pause-circle-fill');
-        }
-
-        //Khi hover qua từng dòng nhạc và bấm vào thì đổi icon
-
-
-        let currentPlaying = null;
-        const audioPlayer = document.getElementById("audioPlayer");
-
         function showIcon(element) {
             const playIcon = element.querySelector(".track-index .bi-play-fill");
             const pauseIcon = element.querySelector(".track-index .bi-pause-fill");
             const indexText = element.querySelector(".track-index .index-text");
             const waveIcon = element.querySelector(".track-index .bar-wave");
+
             if (element === currentPlaying) {
                 // Nếu div đang phát, hiển thị icon "pause"
                 indexText.classList.add("d-none");
@@ -197,105 +184,140 @@
                 waveIcon.classList.add("d-none");
             }
         }
-
+            // Store the current song ID
+            const $toggleButton = $('#toggleIcon');
+            const test = $('#musicPlayerFooter');
+            currentSongId = null;
+        let currentPlaying = null;
+        let currentElement = null;
         function togglePlayPause(element) {
             const playIcon = element.querySelector(".track-index .bi-play-fill");
             const pauseIcon = element.querySelector(".track-index .bi-pause-fill");
             const indexText = element.querySelector(".track-index .index-text");
             const waveIcon = element.querySelector(".track-index .bar-wave");
-            const songSrc = element.getAttribute("data-audio");
-
-            // Lặp qua từng bài hát và gán sự kiện click
-
-
+            const titleSong = element.querySelector(".titleSong");
             // Nếu hiện tại là div đang phát
             if (currentPlaying) {
                 const currentPlayIcon = currentPlaying.querySelector(".track-index .bi-play-fill");
                 const currentPauseIcon = currentPlaying.querySelector(".track-index .bi-pause-fill");
                 const currentIndexText = currentPlaying.querySelector(".track-index .index-text");
                 const currentwaveIcon = currentPlaying.querySelector(".track-index .bar-wave");
+                const currenttitleSong = currentPlaying.querySelector(".titleSong");
                 // Chuyển trạng thái bài hát đang phát về số ban đầu
                 currentPauseIcon.classList.add("d-none");
                 currentPlayIcon.classList.add("d-none");
                 currentIndexText.classList.remove("d-none");
                 currentwaveIcon.classList.add("d-none");
-
-                audioPlayer.pause(); // Dừng bài hát hiện tại
+                currenttitleSong.style.color = "white";
             }
-
             // Cập nhật trạng thái cho bài hát mới được phát
-            if (currentPlaying === element) {
+            if (currentPlaying === element && !audio.paused) {
                 // Nếu bài đang phát được nhấn lại, dừng phát
+                $(document).trigger('pauseSong');
+                $('#toggleIcon').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
                 pauseIcon.classList.add("d-none");
                 playIcon.classList.remove("d-none");
                 indexText.classList.add("d-none");
                 waveIcon.classList.add("d-none");
+                titleSong.style.color = "white";
                 currentPlaying = null;
-                audioPlayer.pause(); // Dừng phát
+                //currentSongId = null;
             } else {
-                // Nếu là div mới, hiển thị "pause" và cập nhật currentPlaying
+                $('#toggleIcon').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
                 playIcon.classList.add("d-none");
                 pauseIcon.classList.remove("d-none");
                 indexText.classList.add("d-none");
                 waveIcon.classList.add("d-none");
+                titleSong.style.color = "#3be477";
+
+                // Cập nhật currentPlaying với phần tử hiện tại
                 currentPlaying = element;
-
-
-                // Phát nhạc bài mới
-                audioPlayer.querySelector("source").src = songSrc;
-                audioPlayer.load();
-                audioPlayer.play().then(() => {
-                    console.log("Đang phát nhạc:", songSrc);
-                }).catch(error => {
-                    console.error("Không thể phát nhạc:", error);
-                });
+                currentElement = element;
 
             }
-        }
-        @*$(document).ready(function () {
-        // Store the current song ID
-            const $toggleButton = $('#toggle-button');
-            const test = $('#musicPlayerFooter');
-            currentSongId = null;
 
 
-        $toggleButton.click(function () {
-            // Get song details from data attributes
-            const songTitle = @Html.Raw(Json.Encode(Model.DetailSong.SongTitle));
-            const artistName = @Html.Raw(Json.Encode(Model.DetailSong.SingerName));
-            const albumArt = @Html.Raw(Json.Encode(Model.DetailSong.SongThumbnail));
-            const songSrc = @Html.Raw(Json.Encode(Model.DetailSong.SongSrc));
-            const songId = @Html.Raw(Json.Encode(Model.DetailSong.SongId)); // Unique ID for the song
+            window.listSong = @Html.Raw(Json.Encode(Model.Songs));
+            window.songIndex = parseInt(currentPlaying.getAttribute("data-index")) ;
+            const song = JSON.parse(currentPlaying.getAttribute("data-song"));
+            const songTitle = song.SongTitle;
+            const artistName = song.SingerName;
+            const albumArt = song.SongThumbnail;
+            const songSrc = song.SongSrc.trimEnd();
+            const songId = song.SongId; // Unique ID for the song
 
-
-            // Check if the same song is already playing in the footer
-            if (songId === currentSongId && audio.paused === false) {
-                // Pause if the song is already playing
+            
+            if (songId === currentSongId && !audio.paused) {
+                    // Nếu bài hát đang phát, tạm dừng
                 $(document).trigger('pauseSong');
-                $toggleButton.find('i').removeClass('bi-pause-fill').addClass('bi-play-fill');
+                
             } else {
-                // Play the song and update footer
+                // Nếu là bài hát khác, phát bài mới
+                console.log('chay vao day');
                 $(document).trigger('playSong', {
                     id: songId,
-                    title: songTitle,
-                    artist: artistName,
-                    albumArt: albumArt,
-                    src: songSrc
+                    title: song.SongTitle,
+                    artist: song.SingerName,
+                    albumArt: song.SongThumbnail,
+                    src: song.SongSrc
                 });
                 currentSongId = songId;
-                $toggleButton.find('i').removeClass('bi-playe-fill').addClass('bi-pause-fill');
             }
-        });
+            
 
-        // Listen for play/pause updates from the footer player to sync button states
-        $(document).on('footerSongPaused', function () {
-            $toggleButton.find('i').removeClass('bi-pause-fill').addClass('bi-play-fill');
-        });
+            $(document).on('footerSongPaused', function () {
+                $('#toggleIcon').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
+                if (currentPlaying) {
+                    const playIcon = currentPlaying.querySelector(".track-index .bi-play-fill");
+                    const pauseIcon = currentPlaying.querySelector(".track-index .bi-pause-fill");
+                    const waveIcon = currentPlaying.querySelector(".track-index .bar-wave");
+                    const indexText = currentPlaying.querySelector(".track-index .index-text");
 
-        $(document).on('footerSongPlaying', function () {
-            $toggleButton.find('i').removeClass('bi-play-fill').addClass('bi-pause-fill');
-        });
-    });*@
+                    // Đặt lại trạng thái bài hát đang phát
+                    pauseIcon.classList.add("d-none");
+                    playIcon.classList.remove("d-none");
+                    waveIcon.classList.add("d-none");
+                    indexText.classList.add("d-none");
+                }
+                currentPlaying = null;
+                
+
+            });
+
+            $(document).on('footerSongPlaying', function () {
+
+                $('#toggleIcon').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
+                currentPlaying = currentElement;
+                const playIcon = currentPlaying.querySelector(".track-index .bi-play-fill");
+                const pauseIcon = currentPlaying.querySelector(".track-index .bi-pause-fill");
+                const waveIcon = currentPlaying.querySelector(".track-index .bar-wave");
+                const indexText = currentPlaying.querySelector(".track-index .index-text");
+
+                // Đặt lại trạng thái bài hát đang phát
+                pauseIcon.classList.add("d-none");
+                playIcon.classList.add("d-none");
+                waveIcon.classList.remove("d-none");
+                indexText.classList.add("d-none");
+            });
+
+
+        }
+
+        function changeIcon(icon) {
+            //icon.classList.toggle('bi-play-circle-fill');
+            //icon.classList.toggle('bi-pause-circle-fill');
+            if (currentElement) {
+                togglePlayPause(currentElement); // Gọi hàm togglePlayPause cho bài hát hiện tại
+            } else {
+                const firstItem = document.querySelector('.track-container');
+                if (firstItem) {
+                    togglePlayPause(firstItem);
+                }
+            }
+        }
+
+
+
     </script>
 </body>
 </html>

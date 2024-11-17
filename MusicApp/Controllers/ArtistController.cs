@@ -34,6 +34,7 @@ namespace MusicApp.Controllers
                                   CreatedTime = song.created_time.GetValueOrDefault(),
                                   Views = (int)song.views,
                                   SongThumbnail = song.thumbnail,
+                                  SongSrc = song.song_src,
                                   Duration = GetAudioDuration(Server.MapPath("~/Public/Songs/" + song.song_src))
                               };
 

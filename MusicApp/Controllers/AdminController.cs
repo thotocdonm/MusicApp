@@ -266,7 +266,6 @@ namespace MusicApp.Controllers
                     System.IO.File.Delete(oldThumbnailFilePath);
                 }
 
-                return View(singerSongs.ToList());
             }
 
             db.SubmitChanges();
