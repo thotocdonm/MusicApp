@@ -1,3 +1,4 @@
+
 ﻿@model MusicApp.Models.MusicViewModel
 @{
     ViewBag.Title = "Details";
@@ -77,11 +78,13 @@
                 <img id="bgArtist" src="~/Assets/img/jungkook.jpg" alt="Jungkook_img" class="fade-out-image" style="width: 100%; height: 100%;" />
             </div>
 
+
             <div style="position: absolute; margin-left: 20px; padding-top: 110px;">
                 <h1 style="color:white; font-weight: bold; font-size:100px">Jung Kook</h1>
                 <p style="color:white; font-size:15px">19,576,629 monthly listeners</p>
             </div>
         </div>
+
 
         <div style="background-color: rgba(25, 20, 20,0.2);padding-top:30px; padding-left: 20px; width: 100%; display: flex; gap: 30px; max-width: 100%; flex-direction: column; height:100%">
             <div style="display: flex; align-items: center; gap: 30px; width:100%">
@@ -125,13 +128,16 @@
 
     <script>
         
+
         $(document).ready(function () {
             const image = $(".fade-out-image"); // Sử dụng jQuery để tìm ảnh
             const fadeOutContainer = $(".fade-out-container");
 
             fadeOutContainer.on("scroll", function () {
                 const scrollTop = fadeOutContainer.scrollTop(); // Lấy vị trí cuộn của div
+
                 const fadePoint = 250; // Điều chỉnh giá trị này theo nhu cầu
+
 
                 if (scrollTop < fadePoint) {
                     const scale = 1.1 - (scrollTop / (fadePoint * 10));
@@ -143,6 +149,7 @@
                 } else {
                     image.css({
                         "opacity": 0,
+
                         "transform": "scale(0.9)" // Kích thước nhỏ nhất khi cuộn đến fadePoint
                     });
                 }
@@ -351,4 +358,5 @@
     </script>
 </body>
 </html>
+
 

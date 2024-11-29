@@ -3,19 +3,161 @@
     ViewBag.Title = "PlaylistView";
 }
 
+<style>
+
+    .playlist {
+        background: #121212;
+        height: 100%;
+        border-radius: 10px;
+        padding: 20px;
+        .head
+
+    {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #939393;
+        .bi-layout-sidebar-reverse
+
+    {
+        font-size: 20px;
+        font-weight: bold
+    }
+
+    .head-child {
+        display: flex;
+        align-items: center;
+        cursor: pointer
+    }
+
+        .head-child:hover {
+            color: white;
+        }
+
+    .bi-plus-lg {
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .bi-plus-lg:hover {
+            color: white;
+        }
+
+    }
+    .custom-dropdown {
+        background-color: #292929;
+        color: #fff;
+        border: none;
+    }
+
+        .custom-dropdown .dropdown-item {
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px 10px;
+        }
+
+            .custom-dropdown .dropdown-item:hover {
+                background-color: #333;
+                color: #1DB954;
+            }
+    .playlist-card {
+        cursor: pointer;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        background-color: #333;
+        color: #ddd;
+        padding: 10px;
+        border-radius: 8px;
+        width: 100%;
+        font-family: Arial, sans-serif;
+    }
+
+    .icon1 {
+        width: 40px;
+        height: 40px;
+        background-color: #555;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
+
+        .icon1 img {
+            width: 24px;
+            height: 24px;
+        }
+
+    .playlist-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .playlist-info .title {
+            font-size: 16px;
+            color: #fff;
+            margin: 0;
+        }
+
+        .playlist-info .author {
+            font-size: 12px;
+            color: #aaa;
+            margin: 0;
+        }
+</style>
+
+
 <div class="playlist">
     <div class="head">
-        <div class="head-child"><i class="bi bi-layout-sidebar-reverse"></i>
-        <span style="margin-left: 10px; font-size: 18px;font-weight: bold">Thư viện</span></div>
-        <div><i class="bi bi-plus-lg"></i></div>
+        <div class="head-child">
+            <i class="bi bi-layout-sidebar-reverse"></i>
+            <span style="margin-left: 10px; font-size: 18px;font-weight: bold">Thư viện</span>
+        </div>
+        <div>
+            <i class="bi bi-plus-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></i>
+            <div class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item">
+                    <div class="d-flex align-items-center">
+                        <span>
+                            <i class="bi bi-patch-plus" style="font-size:18px"></i>
+                        </span>
+                        <div>
+                            &nbsp;
+                            Tạo danh sách phát mới
+                        </div>
+
+                    </div>
+                </a>
+            </div>
+        </div>
+
     </div>
     <div class="search">
-        <div class="search-child">
-            <i class="bi bi-search"></i>
+        <div class="search-child input-wrapper">
+            <label for="search-input1"><i class="bi bi-search icon"></i></label>
+            <input id="search-input1" type="text" placeholder="Tìm kiếm trong thư viện" />
         </div>
         <div class="filter">
-           <span style="margin-right: 10px;font-weight: 500">Gần đây</span> <i class="bi bi-list-ul"></i>
+            <span style="margin-right: 10px;font-weight: 500!important; font-size: 16px">Gần đây</span> <i class="bi bi-list-ul"></i>
         </div>
     </div>
+    <div class="playlist-card" onclick="redirectToPage()">
+        <div class="icon1">
+            <i class="bi bi-music-note-beamed" style="font-size: 18px"></i>
+        </div>
+        <div class="playlist-info">
+            <p class="title">Danh sách phát của tôi #1</p>
+            <p class="author">Danh sách phát</p>
+        </div>
+    </div>
+
+    <script>
+        function redirectToPage() {
+            window.location.href = "/playlist/details";
+        }
+    </script>
 </div>
 

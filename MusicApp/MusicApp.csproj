@@ -158,11 +158,14 @@
     <Compile Include="Controllers\ArtistController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\SongController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Class1.cs" />
+    <Compile Include="Models\AddUser.cs" />
+    <Compile Include="Models\EditUser.cs" />
     <Compile Include="Models\DataClasses1.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -173,7 +176,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\css\Artist.css" />
+
     <Content Include="Assets\css\artist2.css" />
+
     <Content Include="Assets\css\sb-admin-2.css" />
     <Content Include="Assets\css\sb-admin-2.min.css" />
     <Content Include="Assets\css\shared.css" />
@@ -2164,10 +2169,12 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include=".gitignore" />
+    <None Include="ConnectionStrings.config" />
     <Content Include="Views\Admin\Artist.cshtml" />
     <Content Include="Views\Artist\DetailArtist.cshtml" />
-    <Content Include="Views\Artist\Test.cshtml" />
+
     <None Include="Views\Shared\_FooterMain.cshtml" />
+    <None Include="Views\Playlist\Details.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2193,6 +2200,7 @@
     <Content Include="Views\Admin\Dashboard.cshtml" />
     <Content Include="Views\Song\Details.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\test\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

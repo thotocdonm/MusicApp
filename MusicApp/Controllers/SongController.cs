@@ -7,7 +7,9 @@ namespace MusicApp.Controllers
 {
     public class SongController : Controller
     {
+
         private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-H3FAVBH;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
+
 
         public string GetAudioDuration(string filePath)
         {
