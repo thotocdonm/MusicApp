@@ -4,6 +4,7 @@
     ViewBag.Title = "User";
 }
 
+
 <script>
     function confirmDelete(userId) {
         if (confirm("Bạn có chắc chắn muốn xóa người dùng này không?")) {
@@ -20,6 +21,7 @@
         });
     </script>
 }
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -38,7 +40,7 @@
             $('#mobile_number').val(mobileNumber);
             $('#role').val(role);
         });
-    });
+
 </script>
 
 <div class="d-flex justify-content-between">
@@ -62,6 +64,7 @@
     <tbody>
         @foreach (var user in Model)
         {
+
             <tr>
                 <td>@user.user_id</td>
                 <td>@user.login_name</td>
@@ -77,6 +80,68 @@
                     </a>
                 </td>
             </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.user_id</td>
+                    <td>@user.login_name</td>
+                    <td>@user.email</td>
+                    <td>@user.mobile_number</td>
+                    <td>@user.role</td>
+                    <td>
+                        <a class="bi bi-pencil" href="#" data-bs-toggle="modal" data-bs-target="#myModal"
+                           data-id="@user.user_id"
+                           data-login-name="@user.login_name"
+                           data-email="@user.email"
+                           data-mobile-number="@user.mobile_number"
+                           data-role="@user.role" 
+                           style="color: yellow;"></a>
+                        <a class="bi bi-trash" href="/Admin/Delete?id=@user.user_id" style="color: red;"></a>
+                    </td>
+                </tr>
+            }
+            <!-- Modal-->
+            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            @using (Html.BeginForm("Edit", "Admin", FormMethod.Post))
+                            {
+                                <div style="display: flex; justify-content: space-between;margin-bottom: 10px;">
+                                    <label name="user_id">ID</label>
+                                    <input type="text" id="id" name="user_id" style="width: 65%;" readonly />
+                                </div>
+                                <div style="display: flex;justify-content: space-between; margin-bottom: 10px;">
+                                    <label name="login_name">Tên Đăng Nhập</label>
+                                    <input type="text" id="login_name" name="login_name" style="width: 65%;" />
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                    <label name="email">Email</label>
+                                    <input type="text" id="email" name="email" style="width: 65%;" />
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                    <label name="mobile_number">SĐT</label>
+                                    <input type="text" id="mobile_number" name="mobile_number" style="width: 65%;" />
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; ">
+                                    <label name="role">Role</label>
+                                    <input type="text" id="role" name="role" style="width: 65%;" />
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                             }
+
+                            </div>
+
         }
     </tbody>
 </table>
@@ -170,9 +235,16 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
+
                     </div>
                 }
             </div>
+
+        </tbody>
+    </table>
+
+
         </div>
     </div>
 </div>
+

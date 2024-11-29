@@ -1,12 +1,18 @@
 ﻿
 
-@model IEnumerable<MusicApp.Models.SingerSongViewModel>
+@model MusicApp.Models.MusicViewModel
 
 @{
     ViewBag.Title = "Music";
 }
 
 <h2>Music List</h2>
+
+<div style="display:flex;justify-content:end;padding: 10px 5px">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSongModal">
+        Add a Song
+    </button>
+</div>
 
 <table class="table">
     <thead>
@@ -19,7 +25,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var song in Model)
+        @foreach (var song in Model.Songs)
         {
             <tr>
                 <td>@song.SongId</td>
@@ -27,10 +33,303 @@
                 <td>@song.SingerName</td>
                 <td>@(song.CreatedTime.HasValue ? song.CreatedTime.Value.ToString("MM/dd/yyyy") : "N/A")</td>
                 <td>
-                    <a href="/Admin/Edit/@song.SongId" class="btn btn-primary">Edit</a>
-                    <a href="/Admin/Delete/@song.SongId" class="btn btn-danger">Delete</a>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editSongModal"
+                            data-song-id="@song.SongId" data-song-title="@song.SongTitle" data-singer-id="@song.SingerId">
+                        Edit
+                    </button>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" data-song-id="@song.SongId">
+                        Delete
+                    </button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<!-- Add Song Modal -->
+<div class="modal fade" id="addSongModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add a song</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("UploadSong", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div style="display: flex; justify-content: space-between;margin-bottom: 10px;">
+                        <label name="song_name">Song Name</label>
+                        <input type="text" id="id" name="song_name" style="width: 65%;" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="languageSelect" class="form-label">Language</label>
+                        <select class="form-select" id="languageSelect" name="language" required>
+                            <option value="Vietnamese">Vietnamese</option>
+                            <option value="Japanese">Japanese</option>
+                            <option value="Korean">Korean</option>
+                        </select>
+                    </div>
+
+                    <!-- Genre Select -->
+                    <div class="mb-3">
+                        <label for="genreSelect" class="form-label">Genre</label>
+                        <select class="form-select" id="genreSelect" name="genre" required>
+                            <option value="Pop">Pop</option>
+                            <option value="Indie">Indie</option>
+                            <option value="Rock">Rock</option>
+                        </select>
+                    </div>
+
+                    <label for="musicFile">Select Music File:</label>
+                    <input type="file" name="musicFile" accept="audio/*" required /><br /><br />
+
+                    <label for="thumbnailFile">Select Thumbnail Image:</label>
+                    <input type="file" name="thumbnailFile" accept="image/*" onchange="previewImage(event)" required /><br /><br />
+
+                    <img id="imagePreview" src="#" alt="Image Preview" style="display:none; width:200px; height:200px;" /><br /><br />
+
+                    <label for="singerSelect">Select Singer:</label>
+                    <select name="singerSelect" id="singerSelect" class="form-control" >
+                        <option value="">-- Select an Existing Singer --</option>
+                        @foreach (var singer in Model.Singers)
+                        {
+                            <option value="@singer.SingerId">@singer.SingerName</option>
+                        }
+                    </select>
+
+                    <label for="newSingerName">Or Add New Singer:</label>
+                    <input type="text" name="newSingerName" id="newSingerName" class="form-control" />
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" onclick="return validateForm()">Save</button>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirm Modal -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this song? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Song Modal -->
+<div class="modal fade" id="editSongModal" tabindex="-1" aria-labelledby="editSongLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editSongLabel">Edit Song</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("EditSong", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <!-- Song ID (Hidden) -->
+                    <input type="hidden" id="editSongId" name="songId" />
+
+                    <!-- Song Title -->
+                    <label for="editSongTitle">Song Title</label>
+                    <input type="text" id="editSongTitle" name="songTitle" class="form-control" required />
+
+                    <div class="mb-3">
+                        <label for="languageSelect" class="form-label">Language</label>
+                        <select class="form-select" id="languageSelect" name="language" required>
+                            <option value="Vietnamese">Vietnamese</option>
+                            <option value="Japanese">Japanese</option>
+                            <option value="Korean">Korean</option>
+                        </select>
+                    </div>
+
+                    <!-- Genre Select -->
+                    <div class="mb-3">
+                        <label for="genreSelect" class="form-label">Genre</label>
+                        <select class="form-select" id="genreSelect" name="genre" required>
+                            <option value="Pop">Pop</option>
+                            <option value="Indie">Indie</option>
+                            <option value="Rock">Rock</option>
+                        </select>
+                    </div>
+
+
+                    <!-- Music File -->
+                    <label for="editMusicFile">Update Music File (Optional)</label>
+                    <input type="file" id="editMusicFile" name="musicFile" accept="audio/*" class="form-control" />
+
+                    <!-- Thumbnail Image -->
+                    <label for="editThumbnailFile">Update Thumbnail Image (Optional)</label>
+                    <input type="file" id="editThumbnailFile" name="thumbnailFile" accept="image/*" class="form-control"  onchange="previewImageEdit(event)" />
+
+                    <img id="imagePreviewEdit" src="#" alt="Image Preview" style="display:none; width:200px; height:200px;" /><br /><br />
+
+                    <!-- Singer Select -->
+                    <label for="editSingerSelect">Select Singer</label>
+                    <select id="editSingerSelect" name="singerId" class="form-control" required>
+                        <option value="">-- Select an Existing Singer --</option>
+                        @foreach (var singer in Model.Singers)
+                        {
+                            <option value="@singer.SingerId">@singer.SingerName</option>
+                        }
+                    </select>
+
+                    <label for="editNewSingerName">Or Add New Singer:</label>
+                    <input type="text" name="editNewSingerName" id="editNewSingerName" class="form-control" required />
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImage(event) {
+        var imagePreview = document.getElementById('imagePreview');
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function () {
+            imagePreview.src = reader.result;
+            imagePreview.style.display = "block"; // Show the image preview
+        };
+
+        if (file) {
+            reader.readAsDataURL(file); // Convert the file to a base64 string for preview
+        } else {
+            imagePreview.src = "#";
+            imagePreview.style.display = "none"; // Hide the preview if no file is selected
+        }
+    }
+
+    function previewImageEdit(event) {
+        var imagePreview = document.getElementById('imagePreviewEdit');
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function () {
+            imagePreview.src = reader.result;
+            imagePreview.style.display = "block"; // Show the image preview
+        };
+
+        if (file) {
+            reader.readAsDataURL(file); // Convert the file to a base64 string for preview
+        } else {
+            imagePreview.src = "#";
+            imagePreview.style.display = "none"; // Hide the preview if no file is selected
+        }
+    }
+
+    $(document).ready(function () {
+        var songIdToDelete;
+
+        // When the delete button is clicked, set the song ID in the modal
+        $('#deleteConfirmModal').on('show.bs.modal', function (event) {
+            var button = event.relatedTarget; // Button that triggered the modal
+            songIdToDelete = button.getAttribute('data-song-id'); // Extract song ID from data attribute
+        });
+
+        // When confirm delete button is clicked
+        $('#confirmDeleteBtn').on('click', function () {
+            $.ajax({
+                type: 'POST', // Use POST to call your delete action
+                url: '/Admin/DeleteSong', // The URL for the delete action
+                data: { songId: songIdToDelete }, // Send the song ID in the request body
+                success: function (response) {
+                    // Optionally handle a successful response (e.g., show a success message)
+                    $('#deleteConfirmModal').modal('hide'); // Hide the modal
+                    // Refresh or update the song list on the page without refreshing
+                    location.reload(); // Simple way to refresh the list (or implement your own logic)
+                },
+                error: function (xhr, status, error) {
+                    // Optionally handle an error response (e.g., show an error message)
+                    console.error("Error deleting song:", error);
+                    alert("There was an error deleting the song. Please try again.");
+                }
+            });
+        });
+
+        //Passing data into edit modal
+        $('#editSongModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var songId = button.data('song-id');
+            var songTitle = button.data('song-title');
+            var singerId = button.data('singer-id');
+
+            var modal = $(this);
+            modal.find('#editSongId').val(songId);
+            modal.find('#editSongTitle').val(songTitle);
+            modal.find('#editSingerSelect').val(singerId).change();
+        });
+
+
+      
+    });
+
+    $(document).ready(function () {
+        console.log('ready')
+        // Disable the text input if a singer is selected in the dropdown
+        let firstInput = $('#singerSelect')
+        let secondInput = $('#newSingerName');
+        let thirdInput = $('#editSingerSelect');
+        let fourthInput = $('#editNewSingerName');
+
+
+        firstInput.on("input propertychange change", event => secondInput.prop('disabled', event.currentTarget.value !== ""))
+        secondInput.on("input propertychange change", event => firstInput.prop('disabled', event.currentTarget.value !== ""))
+
+        thirdInput.on("input propertychange change", event => fourthInput.prop('disabled', event.currentTarget.value !== ""))
+        fourthInput.on("input propertychange change", event => thirdInput.prop('disabled', event.currentTarget.value !== ""))
+    });
+
+    // Validation function to ensure at least one input is filled
+    function validateForm() {
+        if (!$('#singerSelect').val() && !$('#newSingerName').val().trim()) {
+            alert("Please select an existing singer or enter a new singer name.");
+            return false; // Prevent form submission if both are empty
+        }
+        return true; // Proceed with form submission if one field is filled
+    }
+
+    $(document).ready(function () {
+        // Clear data in the Add and Edit modals when they are closed
+        $('#addSongModal, #editSongModal').on('hidden.bs.modal', function () {
+            // Clear all input fields inside the modal
+            $(this).find('input[type="text"], input[type="file"], select').val('');
+
+            // Re-enable the select and text inputs
+            $('#singerSelect').prop('disabled', false);
+            $('#newSingerName').prop('disabled', false);
+
+            $(this).find('#imagePreviewEdit').attr('src', '');
+            $(this).find('#imagePreviewEdit').css('display', 'none'); 
+
+            $(this).find('#imagePreview').attr('src', '');
+            $(this).find('#imagePreview').css('display', 'none'); 
+        });
+    });
+
+
+
+
+</script>
+
