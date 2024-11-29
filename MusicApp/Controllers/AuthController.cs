@@ -97,11 +97,10 @@ namespace MusicApp.Controllers
 
 
 
-        [HttpPost]
         public ActionResult Logout()
         {
             Session.Clear();
-            return RedirectToAction("Login", "Auth");
+            return RedirectToAction("Index", "Home");
         }
 
     }

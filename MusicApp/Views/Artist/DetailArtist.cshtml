@@ -182,6 +182,7 @@
                 indexText.classList.add("d-none");
                 playIcon.classList.remove("d-none");
                 waveIcon.classList.add("d-none");
+                pauseIcon.classList.add("d-none");
             }
         }
 
@@ -191,7 +192,7 @@
             const indexText = element.querySelector(".track-index .index-text");
             const waveIcon = element.querySelector(".track-index .bar-wave");
             // Nếu là div đang phát, trở về số ban đầu nhưng giữ trạng thái "pause" khi hover lại
-            if (element === currentPlaying) {
+            if (element === currentPlaying && !audio.paused) {
                 indexText.classList.add("d-none");
                 playIcon.classList.add("d-none");
                 pauseIcon.classList.add("d-none");
@@ -210,6 +211,7 @@
             currentSongId = null;
         let currentPlaying = null;
         let currentElement = null;
+        let currentSelected = null;
         function togglePlayPause(element) {
             const playIcon = element.querySelector(".track-index .bi-play-fill");
             const pauseIcon = element.querySelector(".track-index .bi-pause-fill");
@@ -217,7 +219,7 @@
             const waveIcon = element.querySelector(".track-index .bar-wave");
             const titleSong = element.querySelector(".titleSong");
             // Nếu hiện tại là div đang phát
-            if (currentPlaying) {
+            if (currentPlaying && currentPlaying !== element) {
                 const currentPlayIcon = currentPlaying.querySelector(".track-index .bi-play-fill");
                 const currentPauseIcon = currentPlaying.querySelector(".track-index .bi-pause-fill");
                 const currentIndexText = currentPlaying.querySelector(".track-index .index-text");
@@ -229,9 +231,12 @@
                 currentIndexText.classList.remove("d-none");
                 currentwaveIcon.classList.add("d-none");
                 currenttitleSong.style.color = "white";
+                currentIndexText.style.color = "white";
             }
+            
             // Cập nhật trạng thái cho bài hát mới được phát
             if (currentPlaying === element && !audio.paused) {
+                const currenttitleSong = currentPlaying.querySelector(".titleSong");
                 // Nếu bài đang phát được nhấn lại, dừng phát
                 $(document).trigger('pauseSong');
                 $('#toggleIcon').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
@@ -239,21 +244,26 @@
                 playIcon.classList.remove("d-none");
                 indexText.classList.add("d-none");
                 waveIcon.classList.add("d-none");
-                titleSong.style.color = "white";
                 currentPlaying = null;
-                //currentSongId = null;
-            } else {
+            } else{
+                if (currentSelected) {
+                    const currenttitleSong = currentSelected.querySelector(".titleSong");
+                    const currentIndexText = currentSelected.querySelector(".track-index .index-text");
+                    currenttitleSong.style.color = "white";
+                    currentIndexText.style.color = "white";
+                }
                 $('#toggleIcon').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
                 playIcon.classList.add("d-none");
-                pauseIcon.classList.remove("d-none");
+                pauseIcon.classList.add("d-none");
                 indexText.classList.add("d-none");
-                waveIcon.classList.add("d-none");
+                waveIcon.classList.remove("d-none");
                 titleSong.style.color = "#3be477";
+                indexText.style.color = "#3be477";
 
-                // Cập nhật currentPlaying với phần tử hiện tại
+                // Update currentPlaying and currentElement
                 currentPlaying = element;
                 currentElement = element;
-
+                currentSelected = element;
             }
 
 
@@ -287,21 +297,18 @@
 
             $(document).on('footerSongPaused', function () {
                 $('#toggleIcon').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
-                if (currentPlaying) {
-                    const playIcon = currentPlaying.querySelector(".track-index .bi-play-fill");
-                    const pauseIcon = currentPlaying.querySelector(".track-index .bi-pause-fill");
-                    const waveIcon = currentPlaying.querySelector(".track-index .bar-wave");
-                    const indexText = currentPlaying.querySelector(".track-index .index-text");
+                currentPlaying = currentElement;
+                console.log(currentPlaying);
+                const playIcon = currentPlaying.querySelector(".track-index .bi-play-fill");
+                const pauseIcon = currentPlaying.querySelector(".track-index .bi-pause-fill");
+                const waveIcon = currentPlaying.querySelector(".track-index .bar-wave");
+                const indexText = currentPlaying.querySelector(".track-index .index-text");
 
                     // Đặt lại trạng thái bài hát đang phát
-                    pauseIcon.classList.add("d-none");
-                    playIcon.classList.remove("d-none");
-                    waveIcon.classList.add("d-none");
-                    indexText.classList.add("d-none");
-                }
-                currentPlaying = null;
-                
-
+                pauseIcon.classList.add("d-none");
+                playIcon.classList.add("d-none");
+                waveIcon.classList.add("d-none");
+                indexText.classList.remove("d-none");
             });
 
             $(document).on('footerSongPlaying', function () {
@@ -312,12 +319,15 @@
                 const pauseIcon = currentPlaying.querySelector(".track-index .bi-pause-fill");
                 const waveIcon = currentPlaying.querySelector(".track-index .bar-wave");
                 const indexText = currentPlaying.querySelector(".track-index .index-text");
+                const titleSong = currentPlaying.querySelector(".titleSong");
 
-                // Đặt lại trạng thái bài hát đang phát
+                // Update current song's appearance
                 pauseIcon.classList.add("d-none");
                 playIcon.classList.add("d-none");
                 waveIcon.classList.remove("d-none");
                 indexText.classList.add("d-none");
+                titleSong.style.color = "#3be477";
+                indexText.style.color = "#3be477";
             });
 
 

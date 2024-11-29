@@ -122,6 +122,15 @@ body {
     border: none;
 }
 
+.btnLogout {
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 30px;
+    background: white;
+    border: none;
+}
+
 }
 
 
@@ -373,7 +382,6 @@ body {
 
 {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     height: 60px;
     img
