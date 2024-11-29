@@ -1,0 +1,79 @@
+﻿.image-container {
+    width: 100%;
+    height: 100%; /* Thay đổi này để khớp với kích thước ảnh */
+    overflow: hidden; /* Ẩn phần ảnh bị thừa */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    overflow: hidden;
+}
+
+    .image-container img {
+        width: 100%;
+        height: 100%; /* Giữ nguyên kích thước ảnh */
+        object-fit: cover; /* Giữ nguyên tỉ lệ và chỉ hiển thị phần ảnh trong khung */
+        filter: brightness(0.7) contrast(0.9) grayscale(0.1);
+        transform: scale(1.1)
+    }
+
+.fade-out-container {
+    position: relative;
+    height: 290px; /* Đảm bảo chiều cao cụ thể */
+}
+
+.fade-out-image {
+    width: 100%;
+    height: 100px; /* Cố định chiều cao cho ảnh */
+    transition: opacity ease; /* Thêm thời gian chuyển tiếp cho hiệu ứng */
+}
+
+.gradient_background {
+    height: 100vh;
+    background: linear-gradient(to bottom, #2a2d2d, #121212);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.follow-btn {
+    border-radius: 30px; /* Làm tròn nút */
+    padding: 5px 20px; /* Tăng khoảng cách trong nút */
+    font-weight: bold; /* Làm đậm chữ */
+}
+
+.play-btn:hover {
+    background-color: #3be477 !important;
+    cursor: pointer;
+}
+
+.like-btn:hover {
+    color: #fff !important;
+    cursor: pointer;
+}
+
+.artist-sec:hover {
+    background-color: hsla(0, 0%, 100%, .1) !important;
+    cursor: pointer;
+}
+
+.popular-track {
+    padding: 5px 16px !important;
+}
+
+    .popular-track:hover {
+        background-color: hsla(0, 0%, 100%, .1) !important;
+    }
+
+.custom-dropdown {
+    background-color: #292929; /* Black background */
+    color: #fff; /* White text */
+    border: none; /* Remove border */
+}
+
+    .custom-dropdown .dropdown-item {
+        color: #fff; /* White text for each item */
+        padding: 10px 20px; /* Adjust padding to match Spotify's look */
+    }
+
+        .custom-dropdown .dropdown-item:hover {
+            background-color: #333; /* Dark gray hover effect */
+            color: #1DB954; /* Spotify green color on hover */
+        }
