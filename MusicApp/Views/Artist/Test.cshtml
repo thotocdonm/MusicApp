@@ -1,0 +1,395 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/Assets/css/artist2.css" rel="stylesheet" />
+    <style>
+        .wave-icon {
+            display: flex;
+            gap: 2px;
+            align-items: center;
+        }
+
+        .wave-bar {
+            width: 3px;
+            height: 8px;
+            background-color: #1ed760;
+            animation: wave-animation 0.6s infinite ease-in-out;
+        }
+
+            /* Tạo độ cao khác nhau cho các cột */
+            .wave-bar:nth-child(1) {
+                animation-delay: 0.1s;
+                height: 8px;
+            }
+
+            .wave-bar:nth-child(2) {
+                animation-delay: 0.2s;
+                height: 12px;
+            }
+
+            .wave-bar:nth-child(3) {
+                animation-delay: 0.3s;
+                height: 8px;
+            }
+
+        /* Hiệu ứng chuyển động */
+        @@keyframes wave-animation {
+            0%, 100% {
+                transform: scaleY(1);
+            }
+
+            50% {
+                transform: scaleY(1.5);
+            }
+        }
+
+        .btnPlay_Pause {
+            color: #1ed760;
+            font-size: 28px;
+            line-height: 0;
+            font-size: 60px
+        }
+
+            .btnPlay_Pause:hover {
+                transform: scale(1.05);
+                border-radius: 50px;
+                color: #3be477;
+                font-size: 28px;
+                line-height: 0;
+                font-size: 60px
+            }
+
+        .track-index {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="gradient_background" style="display: flex; flex-direction: column;max-height:100%; max-width:100%">
+        <div style="display:flex; position:relative; width:100%; height:40%">
+            <div class="image-container" style="height: 100%; width: 100%;  ">
+                <img src="~/Assets/img/jungkook.jpg" alt="Jungkook_img" class="fade-out-image" style="width: 100%; height: 100%;" />
+            </div>
+
+            <div style="position: absolute; margin-left: 20px; padding-top: 110px;">
+                <h1 style="color:white; font-weight: bold; font-size:100px">Jung Kook</h1>
+                <p style="color:white; font-size:15px">19,576,629 monthly listeners</p>
+            </div>
+        </div>
+
+        <div style="background-color: rgba(25, 20, 20,0.2);padding-top:30px; padding-left: 20px; width: 100%; display: flex; gap: 30px; max-width: 100%; flex-direction: column">
+            <div style="display: flex; align-items: center; gap: 30px; width:100%">
+                <i id="toggleIcon" class="bi bi-play-circle-fill btnPlay_Pause" onclick="changeIcon(this)"></i>
+                <button class="btn btn-outline-light follow-btn">Follow</button>
+                <i class="bi bi-three-dots" style="color: #b3b3b3"></i>
+            </div>
+
+            <div style=" width: 100%">
+                <h2 style="color:white">Popular</h2>
+                <div class="row g-0 popular-track track-container" data-index="1" onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
+                    <div class="col-11 col-sm-8" style="display:flex; gap:16px; align-items:center;">
+                        <div style="color: #b3b3b3;" class="track-index">
+                            <span class="index-text">1</span>
+                            <i class="bi bi-play-fill d-none"></i>
+                            <i class="bi bi-pause-fill d-none"></i>
+                        </div>
+                        <div style="height:40px; width:40px;">
+                            <img src="https://i.scdn.co/image/ab67616d00001e02741fd4807f442af3f7359316" class="rounded-1" style="height: 100%; width: 100%;" alt="..." />
+                        </div>
+                        <span style="color:white;">Seven (feat. Latto) (Explicit Ver.)</span>
+                    </div>
+                    <div class="col-3 d-none d-sm-block" style="color: #b3b3b3;">2,001,923,921</div>
+                    <div class="col-1" style="color: #b3b3b3;">3:03</div>
+                </div>
+
+                <div class="row g-0 popular-track track-container" data-index="2" onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
+                    <div class="col-11 col-sm-8" style="display:flex; gap:16px; align-items:center;">
+                        <div style="color: #b3b3b3;" class="track-index">
+                            <span class="index-text">2</span>
+                            <i class="bi bi-play-fill d-none"></i>
+                            <i class="bi bi-pause-fill d-none"></i>
+                            <div class="wave-icon d-none">
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                            </div>
+                        </div>
+                        <div style="height:40px; width:40px;">
+                            <img src="https://i.scdn.co/image/ab67616d00001e02741fd4807f442af3f7359316" class="rounded-1" style="height: 100%; width: 100%;" alt="..." />
+                        </div>
+                        <span style="color:white;">Standing Next to You</span>
+                    </div>
+                    <div class="col-3 d-none d-sm-block" style="color: #b3b3b3;">974,264,615</div>
+                    <div class="col-1" style="color: #b3b3b3;">3:26</div>
+                </div>
+
+                <div class="row g-0 popular-track track-container" data-index="3" onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
+                    <div class="col-11 col-sm-8" style="display:flex; gap:16px; align-items:center;">
+                        <div style="color: #b3b3b3;" class="track-index">
+                            <span class="index-text">3</span>
+                            <i class="bi bi-play-fill d-none"></i>
+                            <i class="bi bi-pause-fill d-none"></i>
+                        </div>
+                        <div style="height:40px; width:40px;">
+                            <img src="https://i.scdn.co/image/ab67616d00001e0299583bb32b47e87d55c6064b" class="rounded-1" style="height: 100%; width: 100%;" alt="..." />
+                        </div>
+                        <span style="color:white;">3D (feat. Jack Harlow)</span>
+                    </div>
+                    <div class="col-3 d-none d-sm-block" style="color: #b3b3b3;">691,272,133</div>
+                    <div class="col-1" style="color: #b3b3b3;">3:21</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--<div id="spotify-layout" class=" rounded-3 text-white col-12" style="background: #191414;overflow-y:auto; height:100%">
+        <div class="pb-4 px-4 row g-0" style="display:flex;gap:10px;padding-top:6em;align-items:end;flex-wrap:wrap">
+            <div class="col-md-3 justify-content-center align-items-center" style="display:flex">
+                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="img-thumbnail img-fluid song-img"
+                     style="height: 232px; width: 232px; box-shadow: 0 4px 60px rgba(0, 0, 0, .5);object-fit:contain" alt="..." />
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px" class="col-md-7">
+                <div class="fw-bold fs-6">
+                    Song
+                </div>
+                <div style="font-size: calc(3vw + 3vh + 2vmin); white-space: nowrap; width: 100%; font-weight: bold">
+                    Kaikai Kitan
+                </div>
+                <div class="fw-bold fs-6">
+                    Artist
+                    <span><i class="bi bi-dot"></i></span>
+                    2018
+                    <span><i class="bi bi-dot"></i></span>
+                    4:35
+                    <span><i class="bi bi-dot"></i></span>
+                    8,500,000
+                </div>
+            </div>
+
+        </div>
+        <div class="p-5" style="background-color: rgba(25, 20, 20,0.2)">
+            <div style="display:flex;gap:10px;padding:24px">
+                <div id="toggle-button" class="rounded-circle play-btn" style="background-color:#1db954;height:56px;width:56px;display:flex;align-items:center;justify-content:center">
+                    <i id="play-icon" class="bi bi-play-fill" style="color:black; font-size:28px; line-height:0;"></i>
+                </div>
+                <div style="height:56px;width:56px;display:flex;align-items:center;justify-content:center">
+                    <i class="bi bi-plus-circle like-btn" style="color:gray; font-size:28px; line-height:0;"></i>
+                </div>
+                <div style="height:56px;width:56px;display:flex;align-items:center;justify-content:center">
+                    <i class="bi bi-three-dots like-btn" style="color:gray; font-size:28px; line-height:0;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></i>-->
+    @*DropdownMenu*@
+    <!--<div class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" style="display:flex;align-items:center;">
+                            <span>
+                                <i class="bi bi-plus" style="font-size:28px"></i>
+                            </span>
+                            &nbsp;
+                            Add to playlist
+                        </a>
+                        <a class="dropdown-item" href="#" style="display: flex; align-items: center;">
+                            <span>
+                                <i class="bi bi-heart" style="font-size:28px"></i>
+                            </span>
+                            &nbsp;
+                            Add to Liked Songs
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div style="display:flex;gap:10px;flex-direction:column;padding:0px 24px">
+                <div style="display:flex;gap:10px;align-items:center; " class="artist-sec p-2">
+                    <div style="height:80px;width:80px">
+                        <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="rounded-circle"
+                             style="height: 100%; width: 100%; box-shadow: 0 4px 60px rgba(0, 0, 0, .5);object-fit:contain" alt="..." />
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:5px;" class="fw-bold fs-6">
+                        <div>
+                            Artist
+                        </div>
+                        <div>
+                            Artist
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div style="display:flex;flex-direction:column;gap:5px;padding:24px;">
+                <div style="color: #b3b3b3">
+                    Popular Tracks by
+                </div>
+                <h3>
+                    Artist
+                </h3>
+                <div>
+                    <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
+                        <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
+                            <div style="color: #b3b3b3" class="track-index">
+                                1
+                            </div>
+                            <div style="height:40px;width:40px">
+                                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="rounded-1"
+                                     style="height: 100%; width: 100%;" alt="..." />
+                            </div>
+                            <span>Kaikai Kitan</span>
+                        </div>
+                        <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
+                            130,000,000
+                        </div>
+                        <div class="col-1" style="color: #b3b3b3">
+                            4:15
+                        </div>
+                    </div>
+                    <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
+                        <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
+                            <div style="color: #b3b3b3" class="track-index">
+                                2
+                            </div>
+                            <div style="height:40px;width:40px">
+                                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="rounded-1"
+                                     style="height: 100%; width: 100%;" alt="..." />
+                            </div>
+                            <span>Kaikai Kitan</span>
+                        </div>
+                        <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
+                            130,000,000
+                        </div>
+                        <div class="col-1" style="color: #b3b3b3">
+                            4:15
+                        </div>
+                    </div>
+                    <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
+                        <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
+                            <div style="color: #b3b3b3" class="track-index">
+                                3
+                            </div>
+                            <div style="height:40px;width:40px">
+                                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="rounded-1"
+                                     style="height: 100%; width: 100%;" alt="..." />
+                            </div>
+                            <span>Kaikai Kitan</span>
+                        </div>
+                        <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
+                            130,000,000
+                        </div>
+                        <div class="col-1" style="color: #b3b3b3">
+                            4:15
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>-->
+
+
+    <script>
+        $(document).ready(function () {
+            const image = $(".fade-out-image"); // Sử dụng jQuery để tìm ảnh
+            const fadeOutContainer = $(".fade-out-container");
+
+            fadeOutContainer.on("scroll", function () {
+                const scrollTop = fadeOutContainer.scrollTop(); // Lấy vị trí cuộn của div
+                const fadePoint = 150; // Điều chỉnh giá trị này theo nhu cầu
+
+                if (scrollTop < fadePoint) {
+                    const scale = 1.1 - (scrollTop / (fadePoint * 10));
+                    const opacity = 1 - scrollTop / fadePoint;
+                    image.css({
+                        "opacity": opacity,
+                        "transform": `scale(${scale})` // Áp dụng scale
+                    });
+                } else {
+                    image.css({
+                        "opacity": 0,
+                        "transform": "scale(0.9)" // Kích thước nhỏ nhất khi cuộn đến fadePoint
+                    });
+                }
+            });
+        });
+
+        function changeIcon(icon) {
+            icon.classList.toggle('bi-play-circle-fill');
+            icon.classList.toggle('bi-pause-circle-fill');
+        }
+
+        //Khi hover qua từng dòng nhạc và bấm vào thì đổi icon
+        let currentPlaying = null;
+
+        function showIcon(element) {
+            const playIcon = element.querySelector(".track-index .bi-play-fill");
+            const pauseIcon = element.querySelector(".track-index .bi-pause-fill");
+            const indexText = element.querySelector(".track-index .index-text");
+            const waveIcon = element.querySelector(".track-index .wave-icon");
+            if (element === currentPlaying) {
+                // Nếu div đang phát, hiển thị icon "pause"
+                indexText.classList.add("d-none");
+                playIcon.classList.add("d-none");
+                pauseIcon.classList.remove("d-none");
+                waveIcon.classList.add("d-none");
+            } else {
+                // Nếu div chưa phát, hiển thị icon "play"
+                indexText.classList.add("d-none");
+                playIcon.classList.remove("d-none");
+            }
+        }
+
+        function resetIcon(element) {
+            const playIcon = element.querySelector(".track-index .bi-play-fill");
+            const pauseIcon = element.querySelector(".track-index .bi-pause-fill");
+            const indexText = element.querySelector(".track-index .index-text");
+            const waveIcon = element.querySelector(".track-index .wave-icon");
+            // Nếu là div đang phát, trở về số ban đầu nhưng giữ trạng thái "pause" khi hover lại
+            if (element === currentPlaying) {
+                indexText.classList.add("d-none");
+                playIcon.classList.add("d-none");
+                pauseIcon.classList.add("d-none");
+                waveIcon.classList.remove("d-none");
+            } else {
+                // Nếu không, hiển thị lại số và ẩn icon "play"
+                indexText.classList.remove("d-none");
+                playIcon.classList.add("d-none");
+                pauseIcon.classList.add("d-none");
+                waveIcon.classList.add("d-none");
+            }
+        }
+
+        function togglePlayPause(element) {
+            const playIcon = element.querySelector(".track-index .bi-play-fill");
+            const pauseIcon = element.querySelector(".track-index .bi-pause-fill");
+            const indexText = element.querySelector(".track-index .index-text");
+
+            
+            // Nếu hiện tại là div đang phát, chuyển về trạng thái dừng
+            if (currentPlaying === element) {
+                pauseIcon.classList.toggle("d-none");
+                playIcon.classList.toggle("d-none");
+
+                if (pauseIcon.classList.contains("d-none")) {
+                    indexText.classList.add("d-none");
+                    playIcon.classList.remove("d-none");
+                    currentPlaying = null;
+                }
+            } else {
+                // Nếu là div mới, hiển thị "pause" và cập nhật currentPlaying
+                playIcon.classList.add("d-none");
+                pauseIcon.classList.remove("d-none");
+                indexText.classList.add("d-none");
+                currentPlaying = element;
+            }
+        }
+
+    </script>
+</body>
+</html>
+

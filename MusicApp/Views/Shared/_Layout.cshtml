@@ -9,6 +9,10 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Assets/css/shared.css" rel="stylesheet" />
     <link href="~/Assets/css/Artist.css" rel="stylesheet" />
+
+    <link rel="icon" href="~/Assets/img/icons8-spotify-24.png" type="image/x-icon" />
+
+
     @Scripts.Render("~/bundles/modernizr")
     <!-- jQuery CDN -->
     <!-- Color Thief CDN -->
@@ -26,7 +30,7 @@
                 @Html.Partial("_PlaylistView")
             </div>
 
-            <div class="col-md-9" style="height: 100%; flex: 1;overflow-y: auto; overflow-x: hidden">
+            <div class="col-md-9 fade-out-container" style="height: 100%; flex: 1;overflow-y: auto; overflow-x: hidden">
                 <div id="mainContent">
                     @RenderBody()
                 </div>

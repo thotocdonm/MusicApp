@@ -1,4 +1,5 @@
 ﻿using MusicApp.Models;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -7,7 +8,9 @@ namespace MusicApp.Controllers
     public class AuthController : Controller
     {
 
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=LAPTOP-DK8CPN92\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
+
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-H3FAVBH;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
+
         public ActionResult Register()
         {
             return View("Register");
@@ -96,11 +99,10 @@ namespace MusicApp.Controllers
 
 
 
-        [HttpPost]
         public ActionResult Logout()
         {
             Session.Clear();
-            return RedirectToAction("Login", "Auth");
+            return RedirectToAction("Index", "Home");
         }
 
     }

@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,7 +11,7 @@ namespace MusicApp.Controllers
     public class AdminController : Controller
     {
 
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=LAPTOP-DK8CPN92\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-H3FAVBH;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
 
         // GET: Admin
         public ActionResult Index()
@@ -350,10 +351,6 @@ namespace MusicApp.Controllers
                     System.IO.File.Delete(oldThumbnailFilePath);
                 }
 
-                var thumbnailFileName = Path.GetFileName(thumbnailFile.FileName);
-                var thumbnailFilePath = Path.Combine(Server.MapPath("~/Public/Images"), thumbnailFileName);
-                thumbnailFile.SaveAs(thumbnailFilePath);
-                song.thumbnail = thumbnailFileName;
             }
 
             db.SubmitChanges();
@@ -365,5 +362,15 @@ namespace MusicApp.Controllers
         {
             return View();
         }
+
+
+        public ActionResult Artist()
+        {
+            return View();
+        }
+        
+
+
+
     }
 }

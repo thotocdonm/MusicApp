@@ -176,6 +176,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\css\Artist.css" />
+
+    <Content Include="Assets\css\artist2.css" />
+
     <Content Include="Assets\css\sb-admin-2.css" />
     <Content Include="Assets\css\sb-admin-2.min.css" />
     <Content Include="Assets\css\shared.css" />
@@ -1959,6 +1962,8 @@
     <None Include="ConnectionStrings.config" />
     <Content Include="jungkook.jpg" />
     <Content Include="LICENSE.txt" />
+    <Content Include="Public\Images\Golden_jungkook.jfif" />
+    <Content Include="Public\Songs\Jung Kook %28정국%29 - Seven %28feat. Latto%29 %28Explicit Ver.%29.mp3" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -2167,6 +2172,7 @@
     <None Include="ConnectionStrings.config" />
     <Content Include="Views\Admin\Artist.cshtml" />
     <Content Include="Views\Artist\DetailArtist.cshtml" />
+
     <None Include="Views\Shared\_FooterMain.cshtml" />
     <None Include="Views\Playlist\Details.cshtml" />
     <Content Include="Web.config" />

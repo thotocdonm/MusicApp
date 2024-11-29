@@ -30,9 +30,6 @@ namespace MusicApp.Models
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void Insertmic_song(mic_song instance);
-    partial void Updatemic_song(mic_song instance);
-    partial void Deletemic_song(mic_song instance);
     partial void Insertmic_favourite_song(mic_favourite_song instance);
     partial void Updatemic_favourite_song(mic_favourite_song instance);
     partial void Deletemic_favourite_song(mic_favourite_song instance);
@@ -51,6 +48,9 @@ namespace MusicApp.Models
     partial void Insertmic_song_playlist(mic_song_playlist instance);
     partial void Updatemic_song_playlist(mic_song_playlist instance);
     partial void Deletemic_song_playlist(mic_song_playlist instance);
+    partial void Insertmic_song(mic_song instance);
+    partial void Updatemic_song(mic_song instance);
+    partial void Deletemic_song(mic_song instance);
     partial void Insertmic_user_playlist(mic_user_playlist instance);
     partial void Updatemic_user_playlist(mic_user_playlist instance);
     partial void Deletemic_user_playlist(mic_user_playlist instance);
@@ -81,14 +81,6 @@ namespace MusicApp.Models
 				base(connection, mappingSource)
 		{
 			OnCreated();
-		}
-		
-		public System.Data.Linq.Table<mic_song> mic_songs
-		{
-			get
-			{
-				return this.GetTable<mic_song>();
-			}
 		}
 		
 		public System.Data.Linq.Table<mic_favourite_song> mic_favourite_songs
@@ -139,6 +131,14 @@ namespace MusicApp.Models
 			}
 		}
 		
+		public System.Data.Linq.Table<mic_song> mic_songs
+		{
+			get
+			{
+				return this.GetTable<mic_song>();
+			}
+		}
+		
 		public System.Data.Linq.Table<mic_user_playlist> mic_user_playlists
 		{
 			get
@@ -153,557 +153,6 @@ namespace MusicApp.Models
 			{
 				return this.GetTable<mic_user>();
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mic_songs")]
-	public partial class mic_song : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _song_id;
-		
-		private string _name;
-		
-		private char _is_deleted;
-		
-		private string _created_by;
-		
-		private System.Nullable<System.DateTime> _created_time;
-		
-		private string _modified_by;
-		
-		private System.Nullable<System.DateTime> _modified_time;
-		
-		private string _note;
-		
-		private System.Nullable<long> _views;
-		
-		private string _thumbnail;
-		
-		private string _song_url;
-		
-		private string _song_src;
-		
-		private int _singer_id;
-		
-		private string _type;
-		
-		private string _language;
-		
-		private EntitySet<mic_favourite_song> _mic_favourite_songs;
-		
-		private EntitySet<mic_song_comment> _mic_song_comments;
-		
-		private EntitySet<mic_song_like> _mic_song_likes;
-		
-		private EntitySet<mic_song_playlist> _mic_song_playlists;
-		
-		private EntityRef<mic_singer> _mic_singer;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onsong_idChanging(int value);
-    partial void Onsong_idChanged();
-    partial void OnnameChanging(string value);
-    partial void OnnameChanged();
-    partial void Onis_deletedChanging(char value);
-    partial void Onis_deletedChanged();
-    partial void Oncreated_byChanging(string value);
-    partial void Oncreated_byChanged();
-    partial void Oncreated_timeChanging(System.Nullable<System.DateTime> value);
-    partial void Oncreated_timeChanged();
-    partial void Onmodified_byChanging(string value);
-    partial void Onmodified_byChanged();
-    partial void Onmodified_timeChanging(System.Nullable<System.DateTime> value);
-    partial void Onmodified_timeChanged();
-    partial void OnnoteChanging(string value);
-    partial void OnnoteChanged();
-    partial void OnviewsChanging(System.Nullable<long> value);
-    partial void OnviewsChanged();
-    partial void OnthumbnailChanging(string value);
-    partial void OnthumbnailChanged();
-    partial void Onsong_urlChanging(string value);
-    partial void Onsong_urlChanged();
-    partial void Onsong_srcChanging(string value);
-    partial void Onsong_srcChanged();
-    partial void Onsinger_idChanging(int value);
-    partial void Onsinger_idChanged();
-    partial void OntypeChanging(string value);
-    partial void OntypeChanged();
-    partial void OnlanguageChanging(string value);
-    partial void OnlanguageChanged();
-    #endregion
-		
-		public mic_song()
-		{
-			this._mic_favourite_songs = new EntitySet<mic_favourite_song>(new Action<mic_favourite_song>(this.attach_mic_favourite_songs), new Action<mic_favourite_song>(this.detach_mic_favourite_songs));
-			this._mic_song_comments = new EntitySet<mic_song_comment>(new Action<mic_song_comment>(this.attach_mic_song_comments), new Action<mic_song_comment>(this.detach_mic_song_comments));
-			this._mic_song_likes = new EntitySet<mic_song_like>(new Action<mic_song_like>(this.attach_mic_song_likes), new Action<mic_song_like>(this.detach_mic_song_likes));
-			this._mic_song_playlists = new EntitySet<mic_song_playlist>(new Action<mic_song_playlist>(this.attach_mic_song_playlists), new Action<mic_song_playlist>(this.detach_mic_song_playlists));
-			this._mic_singer = default(EntityRef<mic_singer>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_song_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int song_id
-		{
-			get
-			{
-				return this._song_id;
-			}
-			set
-			{
-				if ((this._song_id != value))
-				{
-					this.Onsong_idChanging(value);
-					this.SendPropertyChanging();
-					this._song_id = value;
-					this.SendPropertyChanged("song_id");
-					this.Onsong_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(255)")]
-		public string name
-		{
-			get
-			{
-				return this._name;
-			}
-			set
-			{
-				if ((this._name != value))
-				{
-					this.OnnameChanging(value);
-					this.SendPropertyChanging();
-					this._name = value;
-					this.SendPropertyChanged("name");
-					this.OnnameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_deleted", DbType="Char(1) NOT NULL")]
-		public char is_deleted
-		{
-			get
-			{
-				return this._is_deleted;
-			}
-			set
-			{
-				if ((this._is_deleted != value))
-				{
-					this.Onis_deletedChanging(value);
-					this.SendPropertyChanging();
-					this._is_deleted = value;
-					this.SendPropertyChanged("is_deleted");
-					this.Onis_deletedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created_by", DbType="NVarChar(50)")]
-		public string created_by
-		{
-			get
-			{
-				return this._created_by;
-			}
-			set
-			{
-				if ((this._created_by != value))
-				{
-					this.Oncreated_byChanging(value);
-					this.SendPropertyChanging();
-					this._created_by = value;
-					this.SendPropertyChanged("created_by");
-					this.Oncreated_byChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created_time", DbType="DateTime")]
-		public System.Nullable<System.DateTime> created_time
-		{
-			get
-			{
-				return this._created_time;
-			}
-			set
-			{
-				if ((this._created_time != value))
-				{
-					this.Oncreated_timeChanging(value);
-					this.SendPropertyChanging();
-					this._created_time = value;
-					this.SendPropertyChanged("created_time");
-					this.Oncreated_timeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_modified_by", DbType="NVarChar(50)")]
-		public string modified_by
-		{
-			get
-			{
-				return this._modified_by;
-			}
-			set
-			{
-				if ((this._modified_by != value))
-				{
-					this.Onmodified_byChanging(value);
-					this.SendPropertyChanging();
-					this._modified_by = value;
-					this.SendPropertyChanged("modified_by");
-					this.Onmodified_byChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_modified_time", DbType="DateTime")]
-		public System.Nullable<System.DateTime> modified_time
-		{
-			get
-			{
-				return this._modified_time;
-			}
-			set
-			{
-				if ((this._modified_time != value))
-				{
-					this.Onmodified_timeChanging(value);
-					this.SendPropertyChanging();
-					this._modified_time = value;
-					this.SendPropertyChanged("modified_time");
-					this.Onmodified_timeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_note", DbType="NVarChar(255)")]
-		public string note
-		{
-			get
-			{
-				return this._note;
-			}
-			set
-			{
-				if ((this._note != value))
-				{
-					this.OnnoteChanging(value);
-					this.SendPropertyChanging();
-					this._note = value;
-					this.SendPropertyChanged("note");
-					this.OnnoteChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_views", DbType="BigInt")]
-		public System.Nullable<long> views
-		{
-			get
-			{
-				return this._views;
-			}
-			set
-			{
-				if ((this._views != value))
-				{
-					this.OnviewsChanging(value);
-					this.SendPropertyChanging();
-					this._views = value;
-					this.SendPropertyChanged("views");
-					this.OnviewsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_thumbnail", DbType="NVarChar(500)")]
-		public string thumbnail
-		{
-			get
-			{
-				return this._thumbnail;
-			}
-			set
-			{
-				if ((this._thumbnail != value))
-				{
-					this.OnthumbnailChanging(value);
-					this.SendPropertyChanging();
-					this._thumbnail = value;
-					this.SendPropertyChanged("thumbnail");
-					this.OnthumbnailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_song_url", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
-		public string song_url
-		{
-			get
-			{
-				return this._song_url;
-			}
-			set
-			{
-				if ((this._song_url != value))
-				{
-					this.Onsong_urlChanging(value);
-					this.SendPropertyChanging();
-					this._song_url = value;
-					this.SendPropertyChanged("song_url");
-					this.Onsong_urlChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_song_src", DbType="NChar(500) NOT NULL", CanBeNull=false)]
-		public string song_src
-		{
-			get
-			{
-				return this._song_src;
-			}
-			set
-			{
-				if ((this._song_src != value))
-				{
-					this.Onsong_srcChanging(value);
-					this.SendPropertyChanging();
-					this._song_src = value;
-					this.SendPropertyChanged("song_src");
-					this.Onsong_srcChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_singer_id", DbType="Int NOT NULL")]
-		public int singer_id
-		{
-			get
-			{
-				return this._singer_id;
-			}
-			set
-			{
-				if ((this._singer_id != value))
-				{
-					if (this._mic_singer.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onsinger_idChanging(value);
-					this.SendPropertyChanging();
-					this._singer_id = value;
-					this.SendPropertyChanged("singer_id");
-					this.Onsinger_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string type
-		{
-			get
-			{
-				return this._type;
-			}
-			set
-			{
-				if ((this._type != value))
-				{
-					this.OntypeChanging(value);
-					this.SendPropertyChanging();
-					this._type = value;
-					this.SendPropertyChanged("type");
-					this.OntypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_language", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string language
-		{
-			get
-			{
-				return this._language;
-			}
-			set
-			{
-				if ((this._language != value))
-				{
-					this.OnlanguageChanging(value);
-					this.SendPropertyChanging();
-					this._language = value;
-					this.SendPropertyChanged("language");
-					this.OnlanguageChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_song_mic_favourite_song", Storage="_mic_favourite_songs", ThisKey="song_id", OtherKey="song_id")]
-		public EntitySet<mic_favourite_song> mic_favourite_songs
-		{
-			get
-			{
-				return this._mic_favourite_songs;
-			}
-			set
-			{
-				this._mic_favourite_songs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_song_mic_song_comment", Storage="_mic_song_comments", ThisKey="song_id", OtherKey="song_id")]
-		public EntitySet<mic_song_comment> mic_song_comments
-		{
-			get
-			{
-				return this._mic_song_comments;
-			}
-			set
-			{
-				this._mic_song_comments.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_song_mic_song_like", Storage="_mic_song_likes", ThisKey="song_id", OtherKey="song_id")]
-		public EntitySet<mic_song_like> mic_song_likes
-		{
-			get
-			{
-				return this._mic_song_likes;
-			}
-			set
-			{
-				this._mic_song_likes.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_song_mic_song_playlist", Storage="_mic_song_playlists", ThisKey="song_id", OtherKey="song_id")]
-		public EntitySet<mic_song_playlist> mic_song_playlists
-		{
-			get
-			{
-				return this._mic_song_playlists;
-			}
-			set
-			{
-				this._mic_song_playlists.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_singer_mic_song", Storage="_mic_singer", ThisKey="singer_id", OtherKey="singer_id", IsForeignKey=true)]
-		public mic_singer mic_singer
-		{
-			get
-			{
-				return this._mic_singer.Entity;
-			}
-			set
-			{
-				mic_singer previousValue = this._mic_singer.Entity;
-				if (((previousValue != value) 
-							|| (this._mic_singer.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._mic_singer.Entity = null;
-						previousValue.mic_songs.Remove(this);
-					}
-					this._mic_singer.Entity = value;
-					if ((value != null))
-					{
-						value.mic_songs.Add(this);
-						this._singer_id = value.singer_id;
-					}
-					else
-					{
-						this._singer_id = default(int);
-					}
-					this.SendPropertyChanged("mic_singer");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_mic_favourite_songs(mic_favourite_song entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_song = this;
-		}
-		
-		private void detach_mic_favourite_songs(mic_favourite_song entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_song = null;
-		}
-		
-		private void attach_mic_song_comments(mic_song_comment entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_song = this;
-		}
-		
-		private void detach_mic_song_comments(mic_song_comment entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_song = null;
-		}
-		
-		private void attach_mic_song_likes(mic_song_like entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_song = this;
-		}
-		
-		private void detach_mic_song_likes(mic_song_like entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_song = null;
-		}
-		
-		private void attach_mic_song_playlists(mic_song_playlist entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_song = this;
-		}
-		
-		private void detach_mic_song_playlists(mic_song_playlist entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_song = null;
 		}
 	}
 	
@@ -2233,9 +1682,9 @@ namespace MusicApp.Models
 		
 		private System.Nullable<System.DateTime> _modified_time;
 		
-		private EntityRef<mic_song> _mic_song;
-		
 		private EntityRef<mic_playlist> _mic_playlist;
+		
+		private EntityRef<mic_song> _mic_song;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2261,8 +1710,8 @@ namespace MusicApp.Models
 		
 		public mic_song_playlist()
 		{
-			this._mic_song = default(EntityRef<mic_song>);
 			this._mic_playlist = default(EntityRef<mic_playlist>);
+			this._mic_song = default(EntityRef<mic_song>);
 			OnCreated();
 		}
 		
@@ -2434,40 +1883,6 @@ namespace MusicApp.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_song_mic_song_playlist", Storage="_mic_song", ThisKey="song_id", OtherKey="song_id", IsForeignKey=true)]
-		public mic_song mic_song
-		{
-			get
-			{
-				return this._mic_song.Entity;
-			}
-			set
-			{
-				mic_song previousValue = this._mic_song.Entity;
-				if (((previousValue != value) 
-							|| (this._mic_song.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._mic_song.Entity = null;
-						previousValue.mic_song_playlists.Remove(this);
-					}
-					this._mic_song.Entity = value;
-					if ((value != null))
-					{
-						value.mic_song_playlists.Add(this);
-						this._song_id = value.song_id;
-					}
-					else
-					{
-						this._song_id = default(int);
-					}
-					this.SendPropertyChanged("mic_song");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_playlist_mic_song_playlist", Storage="_mic_playlist", ThisKey="playlist_id", OtherKey="playlist_id", IsForeignKey=true)]
 		public mic_playlist mic_playlist
 		{
@@ -2502,6 +1917,40 @@ namespace MusicApp.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_song_mic_song_playlist", Storage="_mic_song", ThisKey="song_id", OtherKey="song_id", IsForeignKey=true)]
+		public mic_song mic_song
+		{
+			get
+			{
+				return this._mic_song.Entity;
+			}
+			set
+			{
+				mic_song previousValue = this._mic_song.Entity;
+				if (((previousValue != value) 
+							|| (this._mic_song.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._mic_song.Entity = null;
+						previousValue.mic_song_playlists.Remove(this);
+					}
+					this._mic_song.Entity = value;
+					if ((value != null))
+					{
+						value.mic_song_playlists.Add(this);
+						this._song_id = value.song_id;
+					}
+					else
+					{
+						this._song_id = default(int);
+					}
+					this.SendPropertyChanged("mic_song");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2520,6 +1969,557 @@ namespace MusicApp.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mic_songs")]
+	public partial class mic_song : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _song_id;
+		
+		private string _name;
+		
+		private char _is_deleted;
+		
+		private string _created_by;
+		
+		private System.Nullable<System.DateTime> _created_time;
+		
+		private string _modified_by;
+		
+		private System.Nullable<System.DateTime> _modified_time;
+		
+		private string _note;
+		
+		private System.Nullable<long> _views;
+		
+		private string _thumbnail;
+		
+		private string _song_url;
+		
+		private string _song_src;
+		
+		private int _singer_id;
+		
+		private string _type;
+		
+		private string _language;
+		
+		private EntitySet<mic_favourite_song> _mic_favourite_songs;
+		
+		private EntitySet<mic_song_comment> _mic_song_comments;
+		
+		private EntitySet<mic_song_like> _mic_song_likes;
+		
+		private EntitySet<mic_song_playlist> _mic_song_playlists;
+		
+		private EntityRef<mic_singer> _mic_singer;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onsong_idChanging(int value);
+    partial void Onsong_idChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void Onis_deletedChanging(char value);
+    partial void Onis_deletedChanged();
+    partial void Oncreated_byChanging(string value);
+    partial void Oncreated_byChanged();
+    partial void Oncreated_timeChanging(System.Nullable<System.DateTime> value);
+    partial void Oncreated_timeChanged();
+    partial void Onmodified_byChanging(string value);
+    partial void Onmodified_byChanged();
+    partial void Onmodified_timeChanging(System.Nullable<System.DateTime> value);
+    partial void Onmodified_timeChanged();
+    partial void OnnoteChanging(string value);
+    partial void OnnoteChanged();
+    partial void OnviewsChanging(System.Nullable<long> value);
+    partial void OnviewsChanged();
+    partial void OnthumbnailChanging(string value);
+    partial void OnthumbnailChanged();
+    partial void Onsong_urlChanging(string value);
+    partial void Onsong_urlChanged();
+    partial void Onsong_srcChanging(string value);
+    partial void Onsong_srcChanged();
+    partial void Onsinger_idChanging(int value);
+    partial void Onsinger_idChanged();
+    partial void OntypeChanging(string value);
+    partial void OntypeChanged();
+    partial void OnlanguageChanging(string value);
+    partial void OnlanguageChanged();
+    #endregion
+		
+		public mic_song()
+		{
+			this._mic_favourite_songs = new EntitySet<mic_favourite_song>(new Action<mic_favourite_song>(this.attach_mic_favourite_songs), new Action<mic_favourite_song>(this.detach_mic_favourite_songs));
+			this._mic_song_comments = new EntitySet<mic_song_comment>(new Action<mic_song_comment>(this.attach_mic_song_comments), new Action<mic_song_comment>(this.detach_mic_song_comments));
+			this._mic_song_likes = new EntitySet<mic_song_like>(new Action<mic_song_like>(this.attach_mic_song_likes), new Action<mic_song_like>(this.detach_mic_song_likes));
+			this._mic_song_playlists = new EntitySet<mic_song_playlist>(new Action<mic_song_playlist>(this.attach_mic_song_playlists), new Action<mic_song_playlist>(this.detach_mic_song_playlists));
+			this._mic_singer = default(EntityRef<mic_singer>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_song_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int song_id
+		{
+			get
+			{
+				return this._song_id;
+			}
+			set
+			{
+				if ((this._song_id != value))
+				{
+					this.Onsong_idChanging(value);
+					this.SendPropertyChanging();
+					this._song_id = value;
+					this.SendPropertyChanged("song_id");
+					this.Onsong_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(255)")]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_deleted", DbType="Char(1) NOT NULL")]
+		public char is_deleted
+		{
+			get
+			{
+				return this._is_deleted;
+			}
+			set
+			{
+				if ((this._is_deleted != value))
+				{
+					this.Onis_deletedChanging(value);
+					this.SendPropertyChanging();
+					this._is_deleted = value;
+					this.SendPropertyChanged("is_deleted");
+					this.Onis_deletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created_by", DbType="NVarChar(50)")]
+		public string created_by
+		{
+			get
+			{
+				return this._created_by;
+			}
+			set
+			{
+				if ((this._created_by != value))
+				{
+					this.Oncreated_byChanging(value);
+					this.SendPropertyChanging();
+					this._created_by = value;
+					this.SendPropertyChanged("created_by");
+					this.Oncreated_byChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created_time", DbType="DateTime")]
+		public System.Nullable<System.DateTime> created_time
+		{
+			get
+			{
+				return this._created_time;
+			}
+			set
+			{
+				if ((this._created_time != value))
+				{
+					this.Oncreated_timeChanging(value);
+					this.SendPropertyChanging();
+					this._created_time = value;
+					this.SendPropertyChanged("created_time");
+					this.Oncreated_timeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_modified_by", DbType="NVarChar(50)")]
+		public string modified_by
+		{
+			get
+			{
+				return this._modified_by;
+			}
+			set
+			{
+				if ((this._modified_by != value))
+				{
+					this.Onmodified_byChanging(value);
+					this.SendPropertyChanging();
+					this._modified_by = value;
+					this.SendPropertyChanged("modified_by");
+					this.Onmodified_byChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_modified_time", DbType="DateTime")]
+		public System.Nullable<System.DateTime> modified_time
+		{
+			get
+			{
+				return this._modified_time;
+			}
+			set
+			{
+				if ((this._modified_time != value))
+				{
+					this.Onmodified_timeChanging(value);
+					this.SendPropertyChanging();
+					this._modified_time = value;
+					this.SendPropertyChanged("modified_time");
+					this.Onmodified_timeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_note", DbType="NVarChar(255)")]
+		public string note
+		{
+			get
+			{
+				return this._note;
+			}
+			set
+			{
+				if ((this._note != value))
+				{
+					this.OnnoteChanging(value);
+					this.SendPropertyChanging();
+					this._note = value;
+					this.SendPropertyChanged("note");
+					this.OnnoteChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_views", DbType="BigInt")]
+		public System.Nullable<long> views
+		{
+			get
+			{
+				return this._views;
+			}
+			set
+			{
+				if ((this._views != value))
+				{
+					this.OnviewsChanging(value);
+					this.SendPropertyChanging();
+					this._views = value;
+					this.SendPropertyChanged("views");
+					this.OnviewsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_thumbnail", DbType="NVarChar(500)")]
+		public string thumbnail
+		{
+			get
+			{
+				return this._thumbnail;
+			}
+			set
+			{
+				if ((this._thumbnail != value))
+				{
+					this.OnthumbnailChanging(value);
+					this.SendPropertyChanging();
+					this._thumbnail = value;
+					this.SendPropertyChanged("thumbnail");
+					this.OnthumbnailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_song_url", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
+		public string song_url
+		{
+			get
+			{
+				return this._song_url;
+			}
+			set
+			{
+				if ((this._song_url != value))
+				{
+					this.Onsong_urlChanging(value);
+					this.SendPropertyChanging();
+					this._song_url = value;
+					this.SendPropertyChanged("song_url");
+					this.Onsong_urlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_song_src", DbType="NChar(500) NOT NULL", CanBeNull=false)]
+		public string song_src
+		{
+			get
+			{
+				return this._song_src;
+			}
+			set
+			{
+				if ((this._song_src != value))
+				{
+					this.Onsong_srcChanging(value);
+					this.SendPropertyChanging();
+					this._song_src = value;
+					this.SendPropertyChanged("song_src");
+					this.Onsong_srcChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_singer_id", DbType="Int NOT NULL")]
+		public int singer_id
+		{
+			get
+			{
+				return this._singer_id;
+			}
+			set
+			{
+				if ((this._singer_id != value))
+				{
+					if (this._mic_singer.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onsinger_idChanging(value);
+					this.SendPropertyChanging();
+					this._singer_id = value;
+					this.SendPropertyChanged("singer_id");
+					this.Onsinger_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string type
+		{
+			get
+			{
+				return this._type;
+			}
+			set
+			{
+				if ((this._type != value))
+				{
+					this.OntypeChanging(value);
+					this.SendPropertyChanging();
+					this._type = value;
+					this.SendPropertyChanged("type");
+					this.OntypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_language", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string language
+		{
+			get
+			{
+				return this._language;
+			}
+			set
+			{
+				if ((this._language != value))
+				{
+					this.OnlanguageChanging(value);
+					this.SendPropertyChanging();
+					this._language = value;
+					this.SendPropertyChanged("language");
+					this.OnlanguageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_song_mic_favourite_song", Storage="_mic_favourite_songs", ThisKey="song_id", OtherKey="song_id")]
+		public EntitySet<mic_favourite_song> mic_favourite_songs
+		{
+			get
+			{
+				return this._mic_favourite_songs;
+			}
+			set
+			{
+				this._mic_favourite_songs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_song_mic_song_comment", Storage="_mic_song_comments", ThisKey="song_id", OtherKey="song_id")]
+		public EntitySet<mic_song_comment> mic_song_comments
+		{
+			get
+			{
+				return this._mic_song_comments;
+			}
+			set
+			{
+				this._mic_song_comments.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_song_mic_song_like", Storage="_mic_song_likes", ThisKey="song_id", OtherKey="song_id")]
+		public EntitySet<mic_song_like> mic_song_likes
+		{
+			get
+			{
+				return this._mic_song_likes;
+			}
+			set
+			{
+				this._mic_song_likes.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_song_mic_song_playlist", Storage="_mic_song_playlists", ThisKey="song_id", OtherKey="song_id")]
+		public EntitySet<mic_song_playlist> mic_song_playlists
+		{
+			get
+			{
+				return this._mic_song_playlists;
+			}
+			set
+			{
+				this._mic_song_playlists.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_singer_mic_song", Storage="_mic_singer", ThisKey="singer_id", OtherKey="singer_id", IsForeignKey=true)]
+		public mic_singer mic_singer
+		{
+			get
+			{
+				return this._mic_singer.Entity;
+			}
+			set
+			{
+				mic_singer previousValue = this._mic_singer.Entity;
+				if (((previousValue != value) 
+							|| (this._mic_singer.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._mic_singer.Entity = null;
+						previousValue.mic_songs.Remove(this);
+					}
+					this._mic_singer.Entity = value;
+					if ((value != null))
+					{
+						value.mic_songs.Add(this);
+						this._singer_id = value.singer_id;
+					}
+					else
+					{
+						this._singer_id = default(int);
+					}
+					this.SendPropertyChanged("mic_singer");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_mic_favourite_songs(mic_favourite_song entity)
+		{
+			this.SendPropertyChanging();
+			entity.mic_song = this;
+		}
+		
+		private void detach_mic_favourite_songs(mic_favourite_song entity)
+		{
+			this.SendPropertyChanging();
+			entity.mic_song = null;
+		}
+		
+		private void attach_mic_song_comments(mic_song_comment entity)
+		{
+			this.SendPropertyChanging();
+			entity.mic_song = this;
+		}
+		
+		private void detach_mic_song_comments(mic_song_comment entity)
+		{
+			this.SendPropertyChanging();
+			entity.mic_song = null;
+		}
+		
+		private void attach_mic_song_likes(mic_song_like entity)
+		{
+			this.SendPropertyChanging();
+			entity.mic_song = this;
+		}
+		
+		private void detach_mic_song_likes(mic_song_like entity)
+		{
+			this.SendPropertyChanging();
+			entity.mic_song = null;
+		}
+		
+		private void attach_mic_song_playlists(mic_song_playlist entity)
+		{
+			this.SendPropertyChanging();
+			entity.mic_song = this;
+		}
+		
+		private void detach_mic_song_playlists(mic_song_playlist entity)
+		{
+			this.SendPropertyChanging();
+			entity.mic_song = null;
 		}
 	}
 	
