@@ -4,7 +4,7 @@
 }
 
 <div class="header">
-    <div>
+    <div onclick="redirectToHomePage()">
         <i class="bi bi-spotify"></i>
     </div>
     <div class="search">
@@ -20,5 +20,11 @@
         <button type="button" class="btn register">Đăng ký</button>
         <button type="button" class="btn sign-in">Đăng nhập</button>
     </div>
+
+    <script>
+    function redirectToHomePage() {
+        window.location.href = "/";
+    }
+    </script>
 </div>
 

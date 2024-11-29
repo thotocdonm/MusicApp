@@ -18,6 +18,8 @@ namespace MusicApp.Controllers
             string username = form["username"];
             string password = form["password"];
             string confirmpassword = form["ConfirmPassword"];
+            string phoneNumber = form["mobile_number"];
+            string fullName = form["full_name"];
             var user = db.mic_users.FirstOrDefault(x => x.login_name == username);
             if (user != null)
             {
@@ -34,11 +36,18 @@ namespace MusicApp.Controllers
                 else
                 {
                     mic_user newuser = new mic_user();
+                    DateTime currentTime = DateTime.Now;
                     int cost = 10;
                     string hashPassword = BCrypt.Net.BCrypt.HashPassword(password, cost);
                     newuser.login_name = username;
                     newuser.password = hashPassword;
+                    newuser.full_name = fullName;
+                    newuser.mobile_number = phoneNumber;
                     newuser.role = "user";
+                    newuser.is_deleted = '0';
+                    newuser.email = username;
+                    newuser.created_by = username;
+                    newuser.created_time = currentTime;
                     TempData["SuccessMessage"] = "Sign up successful!";
                     db.mic_users.InsertOnSubmit(newuser);
                     db.SubmitChanges();

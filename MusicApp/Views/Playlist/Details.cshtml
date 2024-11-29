@@ -1,10 +1,6 @@
-﻿
-@model MusicApp.Models.DetailSongView
-@{
+﻿@{
     ViewBag.Title = "Details";
-    int trackIndex = 1;
 }
-@Scripts.Render("~/Scripts/global.js")
 
 <!DOCTYPE html>
 <html>
@@ -41,19 +37,21 @@
             }
 
         .custom-dropdown {
-            background-color: #292929; /* Black background */
-            color: #fff; /* White text */
-            border: none; /* Remove border */
+            background-color: #292929;
+            color: #fff;
+            border: none;
         }
 
             .custom-dropdown .dropdown-item {
-                color: #fff; /* White text for each item */
-                padding: 10px 20px; /* Adjust padding to match Spotify's look */
+                color: #fff;
+                cursor: pointer;
+                font-size: 14px;
+                padding: 5px 15px;
             }
 
                 .custom-dropdown .dropdown-item:hover {
-                    background-color: #333; /* Dark gray hover effect */
-                    color: #1DB954; /* Spotify green color on hover */
+                    background-color: #333;
+                    color: #1DB954;
                 }
     </style>
 
@@ -62,24 +60,24 @@
     <div id="spotify-layout" class=" rounded-3 text-white col-12" style="background: #191414;overflow-y:auto; height:100%">
         <div class="pb-4 px-4 row g-0" style="display:flex;gap:10px;padding-top:6em;align-items:center;flex-wrap:wrap">
             <div class="col-md-3 justify-content-center align-items-center" style="display:flex">
-                <img id="thumbnail" src="~/Public/Images/@Model.DetailSong.SongThumbnail" class="img-thumbnail img-fluid song-img"
+                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="img-thumbnail img-fluid song-img"
                      style="height: 232px; width: 232px; box-shadow: 0 4px 60px rgba(0, 0, 0, .5);object-fit:contain" alt="..." />
             </div>
             <div style="display:flex;flex-direction:column;gap:10px" class="col-md-7">
                 <div class="fw-bold fs-6">
-                    Song
+                    Playlist
                 </div>
-
-                <div style="font-size: calc(3vw + 3vh + 2vmin); white-space: nowrap; width: 100%; font-weight: bold">
-                    @Model.DetailSong.SongTitle
-
+                <div style="font-size: calc(3vw + 3vh + 2vmin); width: 100%; font-weight: bold">
+                    Danh sách phát của tôi
                 </div>
                 <div class="fw-bold fs-6">
-                    @Model.DetailSong.SingerName
+                    Artist
                     <span><i class="bi bi-dot"></i></span>
-                    @Model.DetailSong.Duration
+                    2018
                     <span><i class="bi bi-dot"></i></span>
-                    @Model.DetailSong.Views
+                    4:35
+                    <span><i class="bi bi-dot"></i></span>
+                    8,500,000
                 </div>
             </div>
 
@@ -90,25 +88,31 @@
                     <i id="play-icon" class="bi bi-play-fill" style="color:black; font-size:28px; line-height:0;"></i>
                 </div>
                 <div style="height:56px;width:56px;display:flex;align-items:center;justify-content:center">
-                    <i class="bi bi-plus-circle like-btn" style="color:gray; font-size:28px; line-height:0;"></i>
-                </div>
-                <div style="height:56px;width:56px;display:flex;align-items:center;justify-content:center">
                     <i class="bi bi-three-dots like-btn" style="color:gray; font-size:28px; line-height:0;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></i>
                     @*DropdownMenu*@
                     <div class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#" style="display:flex;align-items:center;">
-                            <span>
-                                <i class="bi bi-plus" style="font-size:28px"></i>
-                            </span>
-                            &nbsp;
-                            Add to playlist
+                            <div class="d-flex align-items-center">
+                                <span>
+                                    <i class="bi bi-pencil-fill" style="font-size:18px"></i>
+                                </span>
+                                <div>
+                                    &nbsp;
+                                    Sửa thông tin chi tiết
+                                </div>
+                            </div>
                         </a>
                         <a class="dropdown-item" href="#" style="display: flex; align-items: center;">
-                            <span>
-                                <i class="bi bi-heart" style="font-size:28px"></i>
-                            </span>
-                            &nbsp;
-                            Add to Liked Songs
+                            <div class="d-flex align-items-center">
+                                <span>
+                                    <i class="bi bi-x-lg" style="font-size:18px"></i>
+                                </span>
+                                <div>
+                                    &nbsp;
+                                    Xóa
+                                </div>
+                               
+                                </div>
                         </a>
                     </div>
                 </div>
@@ -124,7 +128,7 @@
                             Artist
                         </div>
                         <div>
-                            @Model.DetailSong.SingerName
+                            Artist
                         </div>
                     </div>
                 </div>
@@ -135,33 +139,63 @@
                     Popular Tracks by
                 </div>
                 <h3>
-                    @Model.DetailSong.SingerName
+                    Artist
                 </h3>
                 <div>
-                    @foreach (var song in Model.PopularSongs)
-                    {
-                        <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
-                            <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
-                                <div style="color: #b3b3b3" class="track-index">
-                                    @trackIndex
-                                </div>
-                                <div style="height:40px;width:40px">
-                                    <img id="thumbnail" src="~/Public/Images/@song.SongThumbnail" class="rounded-1"
-                                         style="height: 100%; width: 100%;" alt="..." />
-                                </div>
-                                <span>@song.SongTitle</span>
+                    <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
+                        <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
+                            <div style="color: #b3b3b3" class="track-index">
+                                1
                             </div>
-                            <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
-                                @song.Views
+                            <div style="height:40px;width:40px">
+                                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="rounded-1"
+                                     style="height: 100%; width: 100%;" alt="..." />
                             </div>
-                            <div class="col-1" style="color: #b3b3b3">
-                                @song.Duration
-                            </div>
+                            <span>Kaikai Kitan</span>
                         </div>
-                        trackIndex++;
-                    }
-
-
+                        <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
+                            130,000,000
+                        </div>
+                        <div class="col-1" style="color: #b3b3b3">
+                            4:15
+                        </div>
+                    </div>
+                    <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
+                        <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
+                            <div style="color: #b3b3b3" class="track-index">
+                                2
+                            </div>
+                            <div style="height:40px;width:40px">
+                                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="rounded-1"
+                                     style="height: 100%; width: 100%;" alt="..." />
+                            </div>
+                            <span>Kaikai Kitan</span>
+                        </div>
+                        <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
+                            130,000,000
+                        </div>
+                        <div class="col-1" style="color: #b3b3b3">
+                            4:15
+                        </div>
+                    </div>
+                    <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
+                        <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
+                            <div style="color: #b3b3b3" class="track-index">
+                                3
+                            </div>
+                            <div style="height:40px;width:40px">
+                                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="rounded-1"
+                                     style="height: 100%; width: 100%;" alt="..." />
+                            </div>
+                            <span>Kaikai Kitan</span>
+                        </div>
+                        <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
+                            130,000,000
+                        </div>
+                        <div class="col-1" style="color: #b3b3b3">
+                            4:15
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -192,6 +226,19 @@
             }
         });
 
+        //Toggle play song btn
+        //$(document).ready(function () {
+        //    $('#toggle-button').click(function () {
+        //        var icon = $('#play-icon');
+
+        //        // Check the current icon and toggle it
+        //        if (icon.hasClass('bi-play-fill')) {
+        //            icon.removeClass('bi-play-fill').addClass('bi-pause-fill'); // Change to pause icon
+        //        } else {
+        //            icon.removeClass('bi-pause-fill').addClass('bi-play-fill'); // Change back to play icon
+        //        }
+        //    });
+        //});
 
         //Toggle play song btn on Track list
         $(document).ready(function () {
@@ -280,54 +327,6 @@
         });
 
 
-        $(document).ready(function () {
-        // Store the current song ID
-            const $toggleButton = $('#toggle-button');
-            const test = $('#musicPlayerFooter');
-            currentSongId = null;
-
-
-    $toggleButton.click(function () {
-        // Get song details from data attributes
-        const songTitle = @Html.Raw(Json.Encode(Model.DetailSong.SongTitle));
-        const artistName = @Html.Raw(Json.Encode(Model.DetailSong.SingerName));
-        const albumArt = @Html.Raw(Json.Encode(Model.DetailSong.SongThumbnail));
-        const songSrc = @Html.Raw(Json.Encode(Model.DetailSong.SongSrc));
-        const songId = @Html.Raw(Json.Encode(Model.DetailSong.SongId)); // Unique ID for the song
-
-        const songData = {
-            id: songId,
-            title: songTitle,
-            artist: artistName,
-            albumArt: albumArt,
-            src: songSrc
-        };
-        console.log('run stored')
-        // Check if the same song is already playing in the footer
-        if (songId === currentSongId && audio.paused === false) {
-            // Pause if the song is already playing
-            $(document).trigger('pauseSong');
-            $toggleButton.find('i').removeClass('bi-pause-fill').addClass('bi-play-fill');
-        } else {
-            // Play the song and update footer
-          
-            sessionStorage.setItem('currentSong', JSON.stringify(songData));
-            currentSongId = songId;
-            $toggleButton.find('i').removeClass('bi-playe-fill').addClass('bi-pause-fill');
-            $(document).trigger('playSong');
-            console.log('runinto sess',sessionStorage.getItem('currentSong'));
-        }
-    });
-
-    // Listen for play/pause updates from the footer player to sync button states
-    $(document).on('footerSongPaused', function () {
-        $toggleButton.find('i').removeClass('bi-pause-fill').addClass('bi-play-fill');
-    });
-
-    $(document).on('footerSongPlaying', function () {
-        $toggleButton.find('i').removeClass('bi-play-fill').addClass('bi-pause-fill');
-    });
-});
 
 
 

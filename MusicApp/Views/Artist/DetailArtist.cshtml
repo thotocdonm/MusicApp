@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "DetailArtist";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/Assets/css/Artist.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="gradient_background" style="display: flex; flex-direction: column;position:relative">
+        <div style="display:flex; position:relative; width:100%; ">
+            <div class="image-container" style="height:290px; ">
+                <!-- Make sure this div is scrollable -->
+                <img src="~/Assets/img/jungkook.jpg" alt="Jungkook_img" class="fade-out-image" style="width: 100%; height: 100%;" />
+            </div>
+            <div style="position: absolute; margin-left: 20px; padding-top: 110px;">
+                <h1 style="color:white; font-weight: bold; font-size:100px">Jung Kook</h1>
+                <p style="color:white; font-size:15px">19,576,629 monthly listeners</p>
+            </div>
+        </div>
+
+        <div style="background-color: rgba(25, 20, 20,0.2); z-index:2; margin-top: 290px; height: calc(100% - 290px); padding-top: 20px; padding-left: 20px; width: 100%; position: absolute;display:grid;grid-row-gap:3px ">
+            <div style="display: flex; align-items: center; gap: 30px">
+                <i class="bi bi-play-circle-fill" style="color: #1ed760; font-size: 28px; line-height: 0; font-size: 60px"></i>
+                <button class="btn btn-outline-light follow-btn">Follow</button>
+                <i class="bi bi-three-dots" style="color: #b3b3b3"></i>
+            </div>
+            <h2 style="color:white">Popular</h2>
+            <div>
+                <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
+                    <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
+                        <div style="color: #b3b3b3" class="track-index">
+                            1
+                        </div>
+                        <div style="height:40px;width:40px">
+                            <img id="thumbnail" src="https://i.scdn.co/image/ab67616d00001e02741fd4807f442af3f7359316" class="rounded-1"
+                                 style="height: 100%; width: 100%;" alt="..." />
+                        </div>
+                        <span style="color:white">Seven (feat. Latto) (Explicit Ver.)</span>
+                    </div>
+                    <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
+                        2,001,923,921
+                    </div>
+                    <div class="col-1" style="color: #b3b3b3">
+                        3:03
+                    </div>
+                </div>
+                <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
+                    <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
+                        <div style="color: #b3b3b3" class="track-index">
+                            2
+                        </div>
+                        <div style="height:40px;width:40px">
+                            <img id="thumbnail" src="https://i.scdn.co/image/ab67616d00001e02741fd4807f442af3f7359316" class="rounded-1"
+                                 style="height: 100%; width: 100%;" alt="..." />
+                        </div>
+                        <span style="color:white">Standing Next to You</span>
+                    </div>
+                    <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
+                        974,264,615
+                    </div>
+                    <div class="col-1" style="color: #b3b3b3">
+                        3:26
+                    </div>
+                </div>
+                <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
+                    <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
+                        <div style="color: #b3b3b3" class="track-index">
+                            3
+                        </div>
+                        <div style="height:40px;width:40px">
+                            <img id="thumbnail" src="https://i.scdn.co/image/ab67616d00001e0299583bb32b47e87d55c6064b" class="rounded-1"
+                                 style="height: 100%; width: 100%;" alt="..." />
+                        </div>
+                        <span style="color:white">3D (feat. Jack Harlow)</span>
+                    </div>
+                    <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
+                        691,272,133
+                    </div>
+                    <div class="col-1" style="color: #b3b3b3">
+                        3:21
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            const image = $(".fade-out-image"); // Sử dụng jQuery để tìm ảnh
+            const fadeOutContainer = $(".fade-out-container");
+
+            fadeOutContainer.on("scroll", function () {
+                const scrollTop = fadeOutContainer.scrollTop(); // Lấy vị trí cuộn của div
+                const fadePoint = 150; // Điều chỉnh giá trị này theo nhu cầu
+
+                if (scrollTop < fadePoint) {
+                    const scale = 1.1 - (scrollTop / (fadePoint * 10));
+                    const opacity = 1 - scrollTop / fadePoint;
+                    image.css({
+                        "opacity": opacity,
+                        "transform": `scale(${scale})` // Áp dụng scale
+                    });
+                } else {
+                    image.css({
+                        "opacity": 0,
+                        "transform": "scale(0.5)" // Kích thước nhỏ nhất khi cuộn đến fadePoint
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
