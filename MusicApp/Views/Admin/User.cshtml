@@ -4,99 +4,175 @@
     ViewBag.Title = "User";
 }
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>$(document).ready(function () {
-        $('#myModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Lấy nút đã click (nút Edit)
+<script>
+    function confirmDelete(userId) {
+        if (confirm("Bạn có chắc chắn muốn xóa người dùng này không?")) {
+            window.location.href = '/Admin/DeleteUser?id=' + userId;
+        }
+    }
+</script>
 
-            // Lấy thông tin từ các thuộc tính data-*
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            alert("@TempData["SuccessMessage"]");
+        });
+    </script>
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#myModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget);
             var userId = button.data('id');
             var loginName = button.data('login-name');
             var email = button.data('email');
             var mobileNumber = button.data('mobile-number');
             var role = button.data('role');
 
-            // Điền thông tin vào các trường trong modal
             $('#id').val(userId);
             $('#login_name').val(loginName);
             $('#email').val(email);
             $('#mobile_number').val(mobileNumber);
             $('#role').val(role);
         });
-    });</script>
-<h2>User</h2>
-<form action="" medthod="post">
-    <table class="table">
-        <thead>
+    });
+</script>
+
+<div class="d-flex justify-content-between">
+    <h2>User</h2>
+    <button class="btn" href="#" data-bs-toggle="modal" data-bs-target="#AddModal" style="box-shadow: none">
+        <i class="bi bi-person-add"></i>
+    </button>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">UserID</th>
+            <th scope="col">Tên Đăng Nhập</th>
+            <th scope="col">Email</th>
+            <th scope="col">SĐT</th>
+            <th scope="col">Role</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
             <tr>
-                <th scope="col">UserID</th>
-                <th scope="col">Tên Đăng Nhập</th>
-                <th scope="col">Email</th>
-                <th scope="col">SĐT</th>
-                <th scope="col">Role</th>
-                <th scope="col">Action</th>
+                <td>@user.user_id</td>
+                <td>@user.login_name</td>
+                <td>@user.email</td>
+                <td>@user.mobile_number</td>
+                <td>@user.role</td>
+                <td>
+                    <a class="bi bi-pencil" href="#" data-bs-toggle="modal" data-bs-target="#myModal"
+                       data-id="@user.user_id" data-login-name="@user.login_name" data-email="@user.email"
+                       data-mobile-number="@user.mobile_number" data-role="@user.role" style="color: yellow;">
+                    </a>
+                    <a class="bi bi-trash" href="javascript:void(0);" onclick="confirmDelete('@user.user_id')" style="color: red;">
+                    </a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in Model)
-            {
-                <tr>
-                    <td>@user.user_id</td>
-                    <td>@user.login_name</td>
-                    <td>@user.email</td>
-                    <td>@user.mobile_number</td>
-                    <td>@user.role</td>
-                    <td>
-                        <a class="bi bi-pencil" href="#" data-bs-toggle="modal" data-bs-target="#myModal"
-                           data-id="@user.user_id"
-                           data-login-name="@user.login_name"
-                           data-email="@user.email"
-                           data-mobile-number="@user.mobile_number"
-                           data-role="@user.role" 
-                           style="color: yellow;"></a>
-                        <a class="bi bi-trash" href="/Admin/Delete?id=@user.user_id" style="color: red;"></a>
-                    </td>
-                </tr>
-            }
-            <!-- Modal-->
-            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="/Admin/Edit" method="post">
-                                <div style="display: flex; justify-content: space-between;margin-bottom: 10px;">
-                                    <label name="id">ID</label>
-                                    <input type="text" id="id" name="id" style="width: 65%;" readonly />
-                                </div>
-                                <div style="display: flex;justify-content: space-between; margin-bottom: 10px;">
-                                    <label name="login_name">Tên Đăng Nhập</label>
-                                    <input type="text" id="login_name" name="login_name" style="width: 65%;" />
-                                </div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                                    <label name="email">Email</label>
-                                    <input type="text" id="email" name="email" style="width: 65%;" />
-                                </div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                                    <label name="mobile_number">SĐT</label>
-                                    <input type="text" id="mobile_number" name="mobile_number" style="width: 65%;" />
-                                </div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;" ">
-                                    <label name="role">Role</label>
-                                    <input type="text" id="role" name="role" style="width: 65%;" />
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+        }
+    </tbody>
+</table>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        </tbody>
-    </table>
-</form>
+            <div class="modal-body">
+                @using (Html.BeginForm("EditUser", "Admin", FormMethod.Post))
+                {
+                    <div class="form-group mb-3">
+                        <label>ID</label>
+                        <input type="text" id="id" name="id" class="form-control" readonly />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Tên Đăng Nhập</label>
+                        <input type="text" id="login_name" name="login_name" class="form-control" />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Email</label>
+                        <input type="text" id="email" name="email" class="form-control" />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>SĐT</label>
+                        <input type="text" id="mobile_number" name="mobile_number" class="form-control" />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Role</label>
+                        <select class="form-select" id="role" name="role" required>
+                            <option selected disabled value="">Choose...</option>
+                            <option>Admin</option>
+                            <option>User</option>
+                        </select>
+                        <div class="invalid-tooltip">Please select a valid role.</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("AddUser", "Admin", FormMethod.Post))
+                {
+                    <div class="form-group mb-3">
+                        <label for="new_login_name">Tên Đăng Nhập</label>
+                        <input type="text" id="new_login_name" name="new_login_name" class="form-control" required />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="new_full_name">Tên Đầy Đủ</label>
+                        <input type="text" id="new_full_name" name="new_full_name" class="form-control" required />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="new_email">Email</label>
+                        <input type="email" id="new_email" name="new_email" class="form-control" required />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="new_mobile_number">SĐT</label>
+                        <input type="text" id="new_mobile_number" name="new_mobile_number" class="form-control" required />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="new_password">Mật Khẩu</label>
+                        <input type="password" id="new_password" name="new_password" class="form-control" required />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Role</label>
+                        <select class="form-select" id="new_role" name="new_role" required>
+                            <option selected disabled value="">Choose...</option>
+                            <option>Admin</option>
+                            <option>User</option>
+                        </select>
+                        <div class="invalid-tooltip">Please select a valid role.</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
