@@ -1,10 +1,7 @@
 
-﻿using MusicApp.Models;
+using MusicApp.Models;
 using NAudio.Wave;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MusicApp.Controllers
@@ -12,7 +9,7 @@ namespace MusicApp.Controllers
     public class ArtistController : Controller
     {
 
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-H3FAVBH;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-UOULN0V\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
 
         public string GetAudioDuration(string filePath)
         {

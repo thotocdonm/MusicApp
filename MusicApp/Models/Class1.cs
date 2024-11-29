@@ -28,7 +28,6 @@ namespace MusicApp.Models
 
 
 
-        public int SingerId { get; set; }
 
 
         public string SongTitle { get; set; }
@@ -43,12 +42,11 @@ namespace MusicApp.Models
         public DateTime? CreatedTime { get; set; }
 
 
-    public class MusicViewModel
-    {
-        public IEnumerable<SingerSongViewModel> Songs { get; set; }
-        public IEnumerable<Singer> Singers { get; set; }
+
+
 
     }
+
     public class DetailSong
     {
         public int SongId { get; set; }
@@ -67,6 +65,4 @@ namespace MusicApp.Models
         public DetailSong DetailSong { get; set; }
         public IEnumerable<DetailSong> PopularSongs { get; set; }
     }
-
-
 }
