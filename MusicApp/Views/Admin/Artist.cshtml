@@ -1,7 +1,85 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Artist";
 }
 
-<h2>Artist</h2>
+@model List<MusicApp.Models.mic_singer>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#myModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Lấy nút đã click để mở modal
+            var singerId = button.data('id');
+            var singerName = button.data('singer_name');
+            var avatar = button.data('avatar');
+
+            // Điền thông tin vào các trường trong modal
+            $('#id').val(singerId);
+            $('#singer_name').val(singerName);
+            $('#avatar').val(avatar);
+        });
+    });
+</script>
+
+<form action="/Admin/SingerEdit" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Singer ID</th>
+                <th scope="col">Tên Ca Sĩ</th>
+                <th scope="col">Avatar</th>
+                <th scope="col">Hành Động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var singer in Model)
+            {
+                <tr>
+                    <td>@singer.singer_id</td>
+                    <td>@singer.name</td>
+                    <td>
+                        <img src="" alt="Avatar" style="width:50px; height:50px;" />
+                    </td>
+                    <td>
+                        <a class="bi bi-pencil" href="#" data-bs-toggle="modal" data-bs-target="#myModal"
+                           data-id="@singer.singer_id"
+                           data-singer_name="@singer.name"
+                           @*data-avatar="@singer.avatar"*@
+                           style="color: yellow;">Sửa</a>
+                        <a class="bi bi-trash" href="/Admin/SingerDelete?id=@singer.singer_id" style="color: red;">Xóa</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sửa Thông Tin Ca Sĩ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/Admin/SingerEdit" method="post">
+                    <input type="hidden" id="id" name="singer_id" />
+                    <div class="mb-3">
+                        <label for="singer_name" class="form-label">Tên Ca Sĩ</label>
+                        <input type="text" class="form-control" id="singer_name" name="name" />
+                    </div>
+                    @*<div class="mb-3">
+                        <label for="avatar" class="form-label">Avatar</label>
+                        <input type="text" class="form-control" id="avatar" name="avatar" />
+                    </div>*@
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

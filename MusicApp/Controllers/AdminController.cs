@@ -8,7 +8,7 @@ namespace MusicApp.Controllers
 {
     public class AdminController : Controller
     {
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=Dienmoi\\MSSQLSERVER01;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=LAPTOP-1FVGCU0O\\MINHQUANG2;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
         // GET: Admin
         public ActionResult Index()
         {
@@ -20,7 +20,64 @@ namespace MusicApp.Controllers
             var x = db.mic_users.Where(user => user.is_deleted == '0').ToList();
             return View(x);
         }
+
+
+        // GET: Admin/Artist
+        public ActionResult Artist()
+        {
+            var singers = db.mic_singers.Where(singer => singer.is_deleted == '0').ToList();
+            return View(singers);
+        }
+
+        public ActionResult SingerDelete()
+        {
+            int id = int.Parse(Request.QueryString["ID"]);
+            var singer = db.mic_singers.FirstOrDefault(x => x.singer_id == id);
+
+            if (singer != null)
+            {
+                singer.is_deleted = '1';
+                db.SubmitChanges();
+            }
+
+            // Tải lại danh sách ca sĩ đã được lọc
+            var singers = db.mic_singers.Where(x => x.is_deleted == '0').ToList();
+            return View("Artist", singers);
+        }
+
+        public ActionResult SingerEdit()
+        {
+            var singers = db.mic_singers.ToList();
+            return View(singers);
+        }
+
+        [HttpPost]
+        public ActionResult SingerEdit(mic_singer singer)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingSinger = db.mic_singers.FirstOrDefault(u => u.singer_id == singer.singer_id);
+
+                if (existingSinger != null)
+                {
+                    existingSinger.name = singer.name;
+                    // Uncomment if you have an avatar field to update
+                    // existingSinger.avatar = singer.avatar;
+
+                    db.SubmitChanges();
+                }
+
+                return RedirectToAction("Artist", "Admin");
+            }
+
+            return View(singer);
+        }
+
+
+
+
         public ActionResult DeleteUser()
+
         {
             int id = int.Parse(Request.QueryString["ID"]);
             mic_user mic_User = db.mic_users.FirstOrDefault(x => x.user_id == id);
@@ -105,11 +162,6 @@ namespace MusicApp.Controllers
         }
 
         public ActionResult Dashboard()
-        {
-            return View();
-        }
-
-        public ActionResult Artist()
         {
             return View();
         }
