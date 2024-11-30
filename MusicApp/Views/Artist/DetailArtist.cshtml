@@ -348,6 +348,7 @@
             if (currentElement) {
                 togglePlayPause(currentElement); // Gọi hàm togglePlayPause cho bài hát hiện tại
             } else {
+                sessionStorage.clear();
                 const firstItem = document.querySelector('.track-container');
                 if (firstItem) {
                     togglePlayPause(firstItem);
