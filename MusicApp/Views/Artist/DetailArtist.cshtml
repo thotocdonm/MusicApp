@@ -178,7 +178,7 @@
             const indexText = element.querySelector(".track-index .index-text");
             const waveIcon = element.querySelector(".track-index .bar-wave");
 
-            if (element === currentPlaying) {
+            if (element === currentPlaying && !audio.paused) {
                 // Nếu div đang phát, hiển thị icon "pause"
                 indexText.classList.add("d-none");
                 playIcon.classList.add("d-none");
@@ -264,9 +264,9 @@
                 }
                 $('#toggleIcon').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
                 playIcon.classList.add("d-none");
-                pauseIcon.classList.add("d-none");
+                pauseIcon.classList.remove("d-none");
                 indexText.classList.add("d-none");
-                waveIcon.classList.remove("d-none");
+                waveIcon.classList.add("d-none");
                 titleSong.style.color = "#3be477";
                 indexText.style.color = "#3be477";
 

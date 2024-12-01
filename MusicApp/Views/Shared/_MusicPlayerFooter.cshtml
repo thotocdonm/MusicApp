@@ -40,7 +40,84 @@
 
 
     $(document).ready(function () {
+        window.addEventListener('pageshow', function (event) {
+            // Check if navigating back (from bfcache)
+            if (event.persisted) {
+                let isPlaying = false;
+                const data = JSON.parse(sessionStorage.getItem('currentSong'));
+                const currentTime = JSON.parse(sessionStorage.getItem('currentTime'));
+                const savedVolume = sessionStorage.getItem('audioVolume') || 0.5; // Default to 50%
 
+                console.log('current', currentTime)
+                console.log(data);
+                if (data) {
+                  
+                    // Update the current song ID
+                    currentSongId = data.id;
+
+                    // Update footer with the current song's details
+                    $('.album-art').attr('src', "/Public/Images/" + data.albumArt);
+                    $('.song-title').text(data.title);
+                    $('.artist-name').text(data.artist);
+
+                    // Set audio source
+                    audio.preload = "auto";
+                    audio.src = "/Public/Songs/" + data.src;
+                    audio.load();
+                    // Update the total time based on the audio duration
+                    audio.addEventListener('loadedmetadata', function () {
+                        $('.total-time').text(formatTime(audio.duration));
+                        $('.progress-input').attr('max', audio.duration);
+
+                    });
+
+                    if (currentTime) {
+
+                        audio.currentTime = currentTime;
+                    };
+
+                    audio.volume = savedVolume;
+
+                    // Update volume slider to match saved volume
+                    $('.volume-input').val(audio.volume * 100);
+
+                    // Play the song
+                    audio.addEventListener('canplay', function () {
+                        console.log("Audio is ready to play");
+                        audio.play();
+                    }, { once: true });
+                    isPlaying = true;
+
+                    // Update sessionStorage with the current time during playback
+                    audio.addEventListener("timeupdate", function () {
+                        sessionStorage.setItem("currentTime", audio.currentTime);
+                    });
+
+                    $('.volume-input').on('input', function () {
+                        const newVolume = $(this).val() / 100; // Convert slider value to 0-1 range
+                        audio.volume = newVolume;
+                        sessionStorage.setItem('audioVolume', newVolume); // Save to sessionStorage
+                    });
+
+                    // Show the footer if hidden
+                    $('#musicPlayerFooter').show();
+
+                    // Update the control button to pause
+                    $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
+
+                    setInterval(() => {
+                        if (isPlaying) {
+                            $('.current-time').text(formatTime(audio.currentTime));
+                            $('.progress-input').val(audio.currentTime);
+                            updateRangeBackground($('.progress-input'));
+                            updateRangeBackground($('.volume-input'));
+                        }
+                    }, 1000);
+
+
+                }
+            }
+        });
         const $rangeInputs = $('input[type="range"]');
 
         $rangeInputs.each(function () {
@@ -92,8 +169,9 @@
             $('.artist-name').text(data.artist);
 
             // Set audio source
+            audio.preload = "auto";
             audio.src = "/Public/Songs/" + data.src;
-
+            audio.load();
             // Update the total time based on the audio duration
             audio.addEventListener('loadedmetadata', function () {
                 $('.total-time').text(formatTime(audio.duration));
@@ -131,7 +209,7 @@
             $('#musicPlayerFooter').show();
 
             // Update the control button to pause
-            $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
+            $('#play-btn i').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
 
             setInterval(() => {
                 if (isPlaying) {
@@ -148,7 +226,7 @@
         // Handle pause functionality
         $('#play-btn').off('click').on('click', function () {
             if (audio.paused) {
-                audio.play();
+                audio.play().catch(err => console.warn('Play blocked:', err));
                 console.log('audio play')
                 $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
                 $(document).trigger('footerSongPlaying'); // Notify that the song is playing
