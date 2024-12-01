@@ -10,7 +10,7 @@ namespace MusicApp.Controllers
     public class AdminController : Controller
     {
 
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-H3FAVBH;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-UOULN0V\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
 
         // GET: Admin
         public ActionResult Index()
@@ -48,24 +48,30 @@ namespace MusicApp.Controllers
             return View("Artist", singers);
         }
 
-        public ActionResult SingerEdit()
-        {
-            var singers = db.mic_singers.ToList();
-            return View(singers);
-        }
-
         [HttpPost]
-        public ActionResult SingerEdit(mic_singer singer)
+        public ActionResult SingerEdit(string singer_name, int singer_id, HttpPostedFileBase avatarFile)
         {
             if (ModelState.IsValid)
             {
-                var existingSinger = db.mic_singers.FirstOrDefault(u => u.singer_id == singer.singer_id);
+                var existingSinger = db.mic_singers.FirstOrDefault(u => u.singer_id == singer_id);
 
                 if (existingSinger != null)
                 {
-                    existingSinger.name = singer.name;
-                    // Uncomment if you have an avatar field to update
-                    // existingSinger.avatar = singer.avatar;
+                    long unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                    string id = Guid.NewGuid().ToString();
+                    // Check if the music file is uploaded
+
+                    string artistFilePath = null;
+                    string artistFileName = null;
+                    if (avatarFile != null && avatarFile.ContentLength > 0)
+                    {
+                        artistFileName = $"{Path.GetFileNameWithoutExtension(avatarFile.FileName)}_{unixTimestamp}{Path.GetExtension(avatarFile.FileName)}";
+                        artistFileName = artistFileName.Replace(" ", "_");
+                        artistFilePath = Path.Combine(Server.MapPath("~/Public/Images"), artistFileName);
+                        avatarFile.SaveAs(artistFilePath);
+                    }
+                    existingSinger.name = singer_name;
+                    existingSinger.avatar = artistFileName;
 
                     db.SubmitChanges();
                 }
@@ -73,7 +79,41 @@ namespace MusicApp.Controllers
                 return RedirectToAction("Artist", "Admin");
             }
 
-            return View(singer);
+            return RedirectToAction("Artist", "Admin");
+        }
+
+        [HttpPost]
+        public ActionResult AddSinger(string singer_name, HttpPostedFileBase avatarFile)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingSinger = db.mic_singers.FirstOrDefault(u => u.name == singer_name);
+
+                if (existingSinger == null)
+                {
+                    long unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                    string id = Guid.NewGuid().ToString();
+                    // Check if the music file is uploaded
+
+                    string artistFilePath = null;
+                    string artistFileName = null;
+                    if (avatarFile != null && avatarFile.ContentLength > 0)
+                    {
+                        artistFileName = $"{Path.GetFileNameWithoutExtension(avatarFile.FileName)}_{unixTimestamp}{Path.GetExtension(avatarFile.FileName)}";
+                        artistFileName = artistFileName.Replace(" ", "_");
+                        artistFilePath = Path.Combine(Server.MapPath("~/Public/Images"), artistFileName);
+                        avatarFile.SaveAs(artistFilePath);
+                    }
+                    var newSinger = new mic_singer { name = singer_name, is_deleted = '0', created_time = DateTime.Now, singer_url = Guid.NewGuid().ToString(), avatar = artistFileName };
+                    db.mic_singers.InsertOnSubmit(newSinger);
+
+                    db.SubmitChanges();
+                }
+
+                return RedirectToAction("Artist", "Admin");
+            }
+
+            return RedirectToAction("Artist", "Admin");
         }
 
 
@@ -216,7 +256,7 @@ namespace MusicApp.Controllers
                 else
                 {
                     // Create a new singer
-                    var newSinger = new mic_singer { name = newSingerName, is_deleted = '0', created_time = DateTime.Now };
+                    var newSinger = new mic_singer { name = newSingerName, is_deleted = '0', created_time = DateTime.Now, singer_url = Guid.NewGuid().ToString() };
                     db.mic_singers.InsertOnSubmit(newSinger);
                     db.SubmitChanges();
                     singerId = newSinger.singer_id;
@@ -310,7 +350,7 @@ namespace MusicApp.Controllers
                 else
                 {
                     // Create a new singer
-                    var newSinger = new mic_singer { name = editNewSingerName, is_deleted = '0', created_time = DateTime.Now };
+                    var newSinger = new mic_singer { name = editNewSingerName, is_deleted = '0', created_time = DateTime.Now, singer_url = Guid.NewGuid().ToString() };
                     db.mic_singers.InsertOnSubmit(newSinger);
                     db.SubmitChanges();
                     song.singer_id = newSinger.singer_id;

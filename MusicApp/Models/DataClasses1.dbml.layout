@@ -79,7 +79,7 @@
         <classShapeMoniker Id="7ddc19e7-536d-4cdd-b64c-e32536553f98" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 4.84695556640625); (5.75 : 4.84695556640625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.75 : 4.84695556640625); (4.69791666666667 : 4.84695556640625 : JumpStart); (4.86458333333333 : 4.84695556640625 : JumpEnd); (5.75 : 4.84695556640625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasses1DataContext/mic_singer/mic_singer_mic_song" />
       <nodes>
         <classShapeMoniker Id="744e41b9-d364-4962-897b-bca559546e80" />

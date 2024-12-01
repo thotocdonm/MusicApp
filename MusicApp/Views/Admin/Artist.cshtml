@@ -14,13 +14,19 @@
             var avatar = button.data('avatar');
 
             // Điền thông tin vào các trường trong modal
-            $('#id').val(singerId);
+            $('#singer_id').val(singerId);
             $('#singer_name').val(singerName);
             $('#avatar').val(avatar);
         });
     });
 </script>
 
+
+<div style="display:flex;justify-content:end;padding: 10px 5px">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addArtistModal">
+        Add a Artist
+    </button>
+</div>
 <form action="/Admin/SingerEdit" method="post">
     <table class="table">
         <thead>
@@ -38,15 +44,15 @@
                     <td>@singer.singer_id</td>
                     <td>@singer.name</td>
                     <td>
-                        <img src="" alt="Avatar" style="width:50px; height:50px;" />
+                        <img src="~/Public/Images/@singer.avatar" alt="Avatar" style="width:50px; height:50px;" />
                     </td>
                     <td>
                         <a class="bi bi-pencil" href="#" data-bs-toggle="modal" data-bs-target="#myModal"
                            data-id="@singer.singer_id"
                            data-singer_name="@singer.name"
                            @*data-avatar="@singer.avatar"*@
-                           style="color: yellow;">Sửa</a>
-                        <a class="bi bi-trash" href="/Admin/SingerDelete?id=@singer.singer_id" style="color: red;">Xóa</a>
+                           style="color: yellow;"></a>
+                        <a class="bi bi-trash" href="/Admin/SingerDelete?id=@singer.singer_id" style="color: red;"></a>
                     </td>
                 </tr>
             }
@@ -55,7 +61,7 @@
     </table>
 </form>
 
-<!-- Modal -->
+<!-- EditModal -->
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -64,22 +70,80 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
             </div>
             <div class="modal-body">
-                <form action="/Admin/SingerEdit" method="post">
-                    <input type="hidden" id="id" name="singer_id" />
-                    <div class="mb-3">
-                        <label for="singer_name" class="form-label">Tên Ca Sĩ</label>
-                        <input type="text" class="form-control" id="singer_name" name="name" />
-                    </div>
-                    @*<div class="mb-3">
-                        <label for="avatar" class="form-label">Avatar</label>
-                        <input type="text" class="form-control" id="avatar" name="avatar" />
-                    </div>*@
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-primary">Lưu</button>
-                    </div>
-                </form>
+                @using (Html.BeginForm("SingerEdit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+            <input id="singer_id" name="singer_id" readonly />
+                <div class="mb-3">
+                    <label for="singer_name" class="form-label">Tên Ca Sĩ</label>
+                    <input type="text" class="form-control" id="singer_name" name="singer_name" />
+                </div>
+                @*<div class="mb-3">
+            <label for="avatar" class="form-label">Avatar</label>
+            <input type="text" class="form-control" id="avatar" name="avatar" />
+        </div>*@
+
+                <label for="avatarFile">Select Avatar Image:</label>
+                <input type="file" name="avatarFile" accept="image/*" onchange="previewImage(event)" /><br /><br />
+
+                <img id="imagePreview" src="#" alt="Image Preview" style="display:none; width:200px; height:200px;" /><br /><br />
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+                }
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="addArtistModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sửa Thông Tin Ca Sĩ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("AddSinger", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="mb-3">
+                        <label for="singer_name" class="form-label">Tên Ca Sĩ</label>
+                        <input type="text" class="form-control" id="singer_name" name="singer_name" />
+                    </div>
+                    @*<div class="mb-3">
+                <label for="avatar" class="form-label">Avatar</label>
+                <input type="text" class="form-control" id="avatar" name="avatar" />
+            </div>*@
+
+                    <label for="avatarFile">Select Avatar Image:</label>
+                    <input type="file" name="avatarFile" accept="image/*" onchange="previewImage(event)" required /><br /><br />
+
+                    <img id="imagePreview" src="#" alt="Image Preview" style="display:none; width:200px; height:200px;" /><br /><br />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                }
+                </div>
+        </div>
+    </div>
+</div>
+<script>
+    function previewImage(event) {
+        var imagePreview = document.getElementById('imagePreview');
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function () {
+            imagePreview.src = reader.result;
+            imagePreview.style.display = "block"; // Show the image preview
+        };
+
+        if (file) {
+            reader.readAsDataURL(file); // Convert the file to a base64 string for preview
+        } else {
+            imagePreview.src = "#";
+            imagePreview.style.display = "none"; // Hide the preview if no file is selected
+        }
+    }
+</script>
