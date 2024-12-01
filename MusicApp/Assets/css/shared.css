@@ -122,6 +122,7 @@ body {
     border: none;
 }
 
+
 .btnLogout {
     color: black;
     font-size: 18px;
@@ -159,6 +160,7 @@ body {
     color: #BBB8C0;
     font-size: 13px;
 }
+
 
 .input-wrapper .icon {
     position: absolute;
