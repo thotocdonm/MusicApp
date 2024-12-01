@@ -176,9 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\css\Artist.css" />
-
     <Content Include="Assets\css\artist2.css" />
-
     <Content Include="Assets\css\sb-admin-2.css" />
     <Content Include="Assets\css\sb-admin-2.min.css" />
     <Content Include="Assets\css\shared.css" />
@@ -2169,10 +2167,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include=".gitignore" />
-    <None Include="ConnectionStrings.config" />
     <Content Include="Views\Admin\Artist.cshtml" />
     <Content Include="Views\Artist\DetailArtist.cshtml" />
-
     <None Include="Views\Shared\_FooterMain.cshtml" />
     <None Include="Views\Playlist\Details.cshtml" />
     <Content Include="Web.config" />
@@ -2204,8 +2200,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Public\Images\" />
-    <Folder Include="Public\Songs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
