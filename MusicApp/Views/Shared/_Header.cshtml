@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Header";
+    bool isLoggedIn = Session["user_id"] != null;
 }
 
 <div class="header">
@@ -17,9 +18,13 @@
         </div>
     </div>
     <div>
-        <button type="button" class="btn register">Đăng ký</button>
-        <button type="button" class="btn sign-in">Đăng nhập</button>
+        <button type="button" class="btn register @(isLoggedIn ? "d-none" : "")" onclick="location.href='/Auth/Register/'">Đăng ký</button>
+        <button type="button" class="btn sign-in @(isLoggedIn ? "d-none" : "")" onclick="location.href='/Auth/Login/'">Đăng nhập</button>
+        <button type="button" class="btn btnLogout @(isLoggedIn ? "" : "d-none")" onclick="location.href='/Auth/Logout/'">Đăng xuất</button>
     </div>
+
+
+
 
     <script>
     function redirectToHomePage() {
@@ -27,4 +32,5 @@
     }
     </script>
 </div>
+
 
