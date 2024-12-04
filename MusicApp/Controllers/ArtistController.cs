@@ -39,9 +39,13 @@ namespace MusicApp.Controllers
                                   Duration = GetAudioDuration(Server.MapPath("~/Public/Songs/" + song.song_src))
                               };
 
-            var singers = (from singer in db.mic_singers
-                           where singer.singer_url == id
-                           select singer.name).FirstOrDefault();
+            var singers = (from s in db.mic_singers
+                           where s.singer_url == id
+                           select new Artist
+                           {
+                               SingerName = s.name,
+                               avatar = s.avatar,
+                           }).FirstOrDefault();
             var viewModel = new ArtistViewModel
             {
                 Songs = singerSongs,

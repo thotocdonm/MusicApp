@@ -23,10 +23,17 @@ namespace MusicApp.Models
 
         public String playlistName { get; set; }
     }
+
+    public class Artist
+    {
+        public int SingerId { get; set; }
+        public string SingerName { get; set; }
+        public string avatar { get; set; }
+    }
     public class ArtistViewModel
     {
         public IEnumerable<SingerSongViewModel> Songs { get; set; }
-        public string Singers { get; set; }
+        public Artist Singers { get; set; }
 
         public String playlistName { get; set; }
     }

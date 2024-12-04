@@ -9,7 +9,19 @@
 <head>
     <link href="~/Assets/css/artist2.css" rel="stylesheet" />
     <style>
+        ﻿.image-container {
+            width: 100%;
+            height: 100%; /* Thay đổi này để khớp với kích thước ảnh */
+            overflow: hidden; /* Ẩn phần ảnh bị thừa */
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            overflow: hidden;
+        }
 
+        .image-container img {
+            object-fit: cover; /* Giữ nguyên tỉ lệ và chỉ hiển thị phần ảnh trong khung */
+            transform: scale(1.1)
+        }
         .wave-bar {
             width: 3px;
             height: 8px;
@@ -72,14 +84,14 @@
 </head>
 <body>
     <div class="gradient_background" style="display: flex; flex-direction: column;max-height:100%; max-width:100%">
-        <div style="display:flex; position:relative; width:100%; height:40%">
-            <div class="image-container" style="height: 100%; width: 100%; overflow: hidden ">
-                <img id="bgArtist" src="~/Assets/img/jungkook.jpg" alt="Jungkook_img" class="fade-out-image" style="width: 100%; height: 100%;" />
+        <div style="display:flex; width:100%; height:40%; gap: 20px">
+            <div class="image-container" style="overflow: hidden; align-content: center; margin-left: 1rem">
+                <img id="bgArtist" src="~/Public/Images/@Model.Singers.avatar" alt="Jungkook_img" class="fade-out-image" style="width: 200px; height: 200px;" />
             </div>
 
 
-            <div style="position: absolute; margin-left: 20px; padding-top: 110px;">
-                <h1 style="color:white; font-weight: bold; font-size:100px">@Model.Singers</h1>
+            <div style="align-content:center">
+                <h1 style="color:white; font-weight: bold; font-size:100px">@Model.Singers.SingerName</h1>
                 <p style="color:white; font-size:15px">19,576,629 monthly listeners</p>
             </div>
         </div>
@@ -96,8 +108,6 @@
                 <h2 style="color:white">Popular</h2>
                 @foreach (var song in Model.Songs)
                 {
-                    if (song.SingerName == "JungKook")
-                    {
                         <div id="song-@index" data-index="@index" class="row g-0 popular-track track-container" data-song='@Html.Raw(Json.Encode(song))' onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
                             <div class="col-11 col-sm-8" style="display:flex; gap:16px; align-items:center;">
                                 <div style="color: #b3b3b3;" class="track-index">

@@ -8,10 +8,7 @@
 }
 
 .image-container img {
-    width: 100%;
-    height: 100%; /* Giữ nguyên kích thước ảnh */
     object-fit: cover; /* Giữ nguyên tỉ lệ và chỉ hiển thị phần ảnh trong khung */
-    filter: brightness(0.7) contrast(0.9) grayscale(0.1);
     transform: scale(1.1)
 }
 
