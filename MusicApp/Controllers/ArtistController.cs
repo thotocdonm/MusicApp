@@ -19,11 +19,11 @@ namespace MusicApp.Controllers
             }
         }
         // GET: Artist
-        public ActionResult DetailArtist()
+        public ActionResult DetailArtist(int id)
         {
             var singerSongs = from singer in db.mic_singers
                               join song in db.mic_songs on singer.singer_id equals song.singer_id
-                              where song.is_deleted == '0'
+                              where song.is_deleted == '0' && singer.singer_id == id
                               select new SingerSongViewModel
                               {
                                   SongId = song.song_id,
@@ -38,15 +38,11 @@ namespace MusicApp.Controllers
                               };
 
             var singers = from singer in db.mic_singers
-                          select new Singer
-                          {
-                              SingerId = singer.singer_id,
-                              SingerName = singer.name,
-                          };
+                          select singer.name;
             var viewModel = new MusicViewModel
             {
                 Songs = singerSongs,
-                Singers = singers
+                Singers = singers.ToString(),
             };
 
 

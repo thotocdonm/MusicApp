@@ -19,7 +19,7 @@ namespace MusicApp.Models
     public class MusicViewModel
     {
         public IEnumerable<SingerSongViewModel> Songs { get; set; }
-        public IEnumerable<Singer> Singers { get; set; }
+        public string Singers { get; set; }
     }
 
     public class SingerSongViewModel

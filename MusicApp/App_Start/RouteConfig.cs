@@ -14,6 +14,11 @@ namespace MusicApp
                 url: "song/{id}",
                 defaults: new { controller = "Song", action = "Details", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "Artist",
+                url: "Artist/{id}",
+                defaults: new { controller = "Artist", action = "DetailArtist", id = UrlParameter.Optional }
+            );
 
             routes.MapRoute(
                 name: "Default",
