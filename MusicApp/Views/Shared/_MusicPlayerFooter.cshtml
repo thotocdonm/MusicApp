@@ -253,8 +253,13 @@
             $('#play-btn i').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
             $(document).trigger('footerSongPaused'); // Notify that the song is paused
         });
-
-        $(document).on('playSong', function (event) {
+        $(document).on('playSong', function () {
+            audio.play();
+            $('#play-btn i').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
+            $(document).trigger('footerSongPlay'); // Notify that the song is paused
+        });
+   
+        $(document).on('playSongFirst', function (event) {
             if (window.songIndex != null) {
                 currentSongIndex = window.songIndex;
             }

@@ -10,12 +10,7 @@
 <html>
 <head>
     <style>
-        body {
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            color: #444444;
-            font-size: 9pt;
-            /*            background-color: #FAFAFA;*/
-        }
+  
 
         .play-btn:hover {
             background-color: #3be477 !important;
@@ -116,7 +111,7 @@
                 </div>
             </div>
             <div style="display:flex;gap:10px;flex-direction:column;padding:0px 24px">
-                <div style="display:flex;gap:10px;align-items:center; " class="artist-sec p-2">
+                <div style="display:flex;gap:10px;align-items:center; " class="artist-sec p-2" >
                     <div style="height:80px;width:80px">
                         <img id="thumbnail" src="@(!string.IsNullOrEmpty(Model.DetailSong.SingerThumbnailSrc) ? "/Public/Images/" + @Model.DetailSong.SingerThumbnailSrc : "/Public/Images/defaultSinger.png")" class="rounded-circle"
                              style="height: 100%; width: 100%; box-shadow: 0 4px 60px rgba(0, 0, 0, .5);object-fit:contain" alt="..." />
@@ -257,7 +252,7 @@
             sessionStorage.setItem('currentTime', 0);
             currentSongId = songId;
             $toggleButton.find('i').removeClass('bi-playe-fill').addClass('bi-pause-fill');
-            $(document).trigger('playSong');
+            $(document).trigger('playSongFirst');
             console.log('runinto sess',sessionStorage.getItem('currentSong'));
         }
     });
