@@ -3,8 +3,6 @@ using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MusicApp.Controllers
@@ -12,7 +10,7 @@ namespace MusicApp.Controllers
     public class PlaylistController : Controller
     {
 
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-1VP4FKU\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-UOULN0V\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
         // GET: Playlist
         public string GetAudioDuration(string filePath)
         {
@@ -51,11 +49,11 @@ namespace MusicApp.Controllers
 
 
 
-                viewModel = new MusicViewModel
-                {
-                    Songs = singerSongs ?? Enumerable.Empty<SingerSongViewModel>(),
-                    playlistName = playListName
-                };
+            viewModel = new MusicViewModel
+            {
+                Songs = singerSongs ?? Enumerable.Empty<SingerSongViewModel>(),
+                playlistName = playListName
+            };
 
 
             return View(viewModel);
@@ -99,8 +97,8 @@ namespace MusicApp.Controllers
         {
             try
             {
-                
-               mic_playlist playlist = new mic_playlist();
+
+                mic_playlist playlist = new mic_playlist();
                 playlist.name = title;
                 playlist.user_id = Convert.ToInt32(Session["user_id"]);
                 playlist.is_deleted = '0';

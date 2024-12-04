@@ -33,6 +33,9 @@ namespace MusicApp.Models
 
 
         public string SongTitle { get; set; }
+
+        public string SongGenre { get; set; }
+        public string SongLanguage { get; set; }
         public int Views { get; set; }
         public int SingerId { get; set; }
         public string SingerName { get; set; }
@@ -56,6 +59,8 @@ namespace MusicApp.Models
         public int Views { get; set; }
         public int SingerId { get; set; }
         public string SingerName { get; set; }
+
+        public string SingerThumbnailSrc { get; set; }
         public string SongSrc { get; set; }
 
         public string SongThumbnail { get; set; }

@@ -34,7 +34,7 @@
                 <td>@(song.CreatedTime.HasValue ? song.CreatedTime.Value.ToString("MM/dd/yyyy") : "N/A")</td>
                 <td>
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editSongModal"
-                            data-song-id="@song.SongId" data-song-title="@song.SongTitle" data-singer-id="@song.SingerId">
+                            data-song-id="@song.SongId" data-song-title="@song.SongTitle" data-singer-id="@song.SingerId" data-language="@song.SongLanguage" data-genre="@song.SongGenre">
                         Edit
                     </button>
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" data-song-id="@song.SongId">
@@ -274,11 +274,15 @@
             var songId = button.data('song-id');
             var songTitle = button.data('song-title');
             var singerId = button.data('singer-id');
+            var songGenre = button.data('genre');
+            var songLanguage = button.data('language')
 
             var modal = $(this);
             modal.find('#editSongId').val(songId);
             modal.find('#editSongTitle').val(songTitle);
             modal.find('#editSingerSelect').val(singerId).change();
+            modal.find('#languageSelect').val(songLanguage);
+            modal.find('#genreSelect').val(songGenre);
         });
 
 

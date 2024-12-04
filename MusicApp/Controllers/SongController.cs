@@ -25,6 +25,21 @@ namespace MusicApp.Controllers
 
 
         // GET: Song
+        [HttpPost]
+        public JsonResult IncreaseView(int songId)
+        {
+            var song = db.mic_songs.FirstOrDefault(p => p.song_id == songId && p.is_deleted == '0');
+            if (song == null)
+            {
+                return Json(new { success = false, message = "false" });
+            }
+
+            song.views = song.views + 1;
+
+            db.SubmitChanges();
+
+            return Json(new { success = true, message = "true" });
+        }
         public ActionResult Details(string id)
         {
             var detailSong = (from song in db.mic_songs
@@ -36,6 +51,7 @@ namespace MusicApp.Controllers
                                   SongSrc = song.song_src,
                                   SingerId = song.singer_id,
                                   SingerName = singer.name,
+                                  SingerThumbnailSrc = singer.avatar,
                                   SongTitle = song.name,
                                   Views = (int)song.views,
                                   SongThumbnail = song.thumbnail,

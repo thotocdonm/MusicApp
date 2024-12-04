@@ -11,7 +11,7 @@ namespace MusicApp
 
             routes.MapRoute(
                 name: "Song",
-                url: "song/{id}",
+                url: "song/{action}/{id}",
                 defaults: new { controller = "Song", action = "Details", id = UrlParameter.Optional }
             );
 

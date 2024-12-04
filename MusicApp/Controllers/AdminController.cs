@@ -197,6 +197,9 @@ namespace MusicApp.Controllers
                                       SongTitle = song.name,
                                       SingerName = singer.name,
                                       SingerId = singer.singer_id,
+                                      SongGenre = song.type,
+                                      SongLanguage = song.language,
+
                                       CreatedTime = song.created_time.GetValueOrDefault()
                                   };
 

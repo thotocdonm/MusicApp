@@ -118,7 +118,7 @@
             <div style="display:flex;gap:10px;flex-direction:column;padding:0px 24px">
                 <div style="display:flex;gap:10px;align-items:center; " class="artist-sec p-2">
                     <div style="height:80px;width:80px">
-                        <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="rounded-circle"
+                        <img id="thumbnail" src="@(!string.IsNullOrEmpty(Model.DetailSong.SingerThumbnailSrc) ? "/Public/Images/" + @Model.DetailSong.SingerThumbnailSrc : "/Public/Images/defaultSinger.png")" class="rounded-circle"
                              style="height: 100%; width: 100%; box-shadow: 0 4px 60px rgba(0, 0, 0, .5);object-fit:contain" alt="..." />
                     </div>
                     <div style="display:flex;flex-direction:column;gap:5px;" class="fw-bold fs-6">
@@ -216,15 +216,45 @@
             src: songSrc
         };
         console.log('run stored')
+
+        // Check if the song has been played in this session
+        const playedSongs = JSON.parse(sessionStorage.getItem('playedSongs')) || [];
+
+        if (!playedSongs.includes(songId)) {
+            // First time clicking this song in the session
+            console.log('First click detected for song:', songId);
+            playedSongs.push(songId);
+            sessionStorage.setItem('playedSongs', JSON.stringify(playedSongs));
+
+            // Increase song views in the database
+            $.ajax({
+                url: '@Url.Action("IncreaseView", "Song")', // Your API endpoint for increasing views
+                type: 'POST',
+                data: { songId: songId },
+                success: function (response) {
+                    console.log('Song views increased:', response);
+                },
+                error: function (error) {
+                    console.error('Error increasing song views:', error);
+                }
+            });
+        }
+
         // Check if the same song is already playing in the footer
         if (songId === currentSongId && audio.paused === false) {
             // Pause if the song is already playing
             $(document).trigger('pauseSong');
             $toggleButton.find('i').removeClass('bi-pause-fill').addClass('bi-play-fill');
-        } else {
+        } else if (songId === currentSongId && audio.paused === true) {
+            $(document).trigger('playSong');
+            $toggleButton.find('i').removeClass('bi-playe-fill').addClass('bi-pause-fill');
+        }
+        else
+        {
             // Play the song and update footer
 
             sessionStorage.setItem('currentSong', JSON.stringify(songData));
+            sessionStorage.setItem('currentTime', 0);
             currentSongId = songId;
             $toggleButton.find('i').removeClass('bi-playe-fill').addClass('bi-pause-fill');
             $(document).trigger('playSong');
