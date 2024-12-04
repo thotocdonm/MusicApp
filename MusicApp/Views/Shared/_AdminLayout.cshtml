@@ -1,4 +1,10 @@
-﻿
+﻿@{
+    string user = null;
+    if (Session["login_name"] != null)
+    {
+        user = Session["login_name"].ToString().Split('@')[0];
+    }
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,12 +44,15 @@
                 <ul class="navbar-nav ms-auto">
                     <!--begin::Navbar Search-->
                     <li class="nav-item dropdown user-menu">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img src="~/Assets/dist/assets/img/user2-160x160.jpg" class="user-image rounded-circle shadow" alt="User Image"> <span class="d-none d-md-inline">Alexander Pierce</span> </a>
-                        <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end" >
-                        <li class="user-footer" style="display:flex;flex-direction:column">
-                        <a href="#" class="btn btn-default ">Profile</a>
-                        <a href="#" class="btn btn-default float-end">Sign out</a>
-                        </li> <!--end::Menu Footer-->
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <span class="d-none d-md-inline">
+                                @if (user != null)
+                                {@(user)}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                            <li class="user-footer" style="display:flex;flex-direction:column">
+                                <a href="/Auth/Login" class="btn btn-default float-end">Sign out</a>
+                            </li> <!--end::Menu Footer-->
                         </ul>
                     </li> <!--end::User Menu Dropdown-->
                 </ul> <!--end::End Navbar Links-->
