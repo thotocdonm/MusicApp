@@ -1,4 +1,4 @@
-﻿@model MusicApp.Models.MusicViewModel
+﻿@model MusicApp.Models.ArtistViewModel
 @{
     ViewBag.Title = "Details";
     int index = 0;
@@ -79,7 +79,7 @@
 
 
             <div style="position: absolute; margin-left: 20px; padding-top: 110px;">
-                <h1 style="color:white; font-weight: bold; font-size:100px">Jung Kook</h1>
+                <h1 style="color:white; font-weight: bold; font-size:100px">@Model.Singers</h1>
                 <p style="color:white; font-size:15px">19,576,629 monthly listeners</p>
             </div>
         </div>
@@ -252,6 +252,7 @@
                 indexText.classList.add("d-none");
                 waveIcon.classList.add("d-none");
                 currentPlaying = null;
+                element = null;
             } else {
                 if (currentElement && currentElement !== element) {
                     sessionStorage.clear();
@@ -304,14 +305,14 @@
             }
 
 
-            $(document).on('footerSongPaused', function () {
+            $(document).off('footerSongPaused').on('footerSongPaused', function () {
                 $('#toggleIcon').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
-                currentPlaying = currentElement;
-                console.log(currentPlaying);
-                const playIcon = currentPlaying.querySelector(".track-index .bi-play-fill");
-                const pauseIcon = currentPlaying.querySelector(".track-index .bi-pause-fill");
-                const waveIcon = currentPlaying.querySelector(".track-index .bar-wave");
-                const indexText = currentPlaying.querySelector(".track-index .index-text");
+                //currentPlaying = currentElement;
+                console.log(currentElement , "alo");
+                const playIcon = currentElement.querySelector(".track-index .bi-play-fill");
+                const pauseIcon = currentElement.querySelector(".track-index .bi-pause-fill");
+                const waveIcon = currentElement.querySelector(".track-index .bar-wave");
+                const indexText = currentElement.querySelector(".track-index .index-text");
 
                     // Đặt lại trạng thái bài hát đang phát
                 pauseIcon.classList.add("d-none");
@@ -320,15 +321,15 @@
                 indexText.classList.remove("d-none");
             });
 
-            $(document).on('footerSongPlaying', function () {
+            $(document).off('footerSongPlaying').on('footerSongPlaying', function () {
 
                 $('#toggleIcon').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
-                currentPlaying = currentElement;
-                const playIcon = currentPlaying.querySelector(".track-index .bi-play-fill");
-                const pauseIcon = currentPlaying.querySelector(".track-index .bi-pause-fill");
-                const waveIcon = currentPlaying.querySelector(".track-index .bar-wave");
-                const indexText = currentPlaying.querySelector(".track-index .index-text");
-                const titleSong = currentPlaying.querySelector(".titleSong");
+                //currentPlaying = currentElement;
+                const playIcon = currentElement.querySelector(".track-index .bi-play-fill");
+                const pauseIcon = currentElement.querySelector(".track-index .bi-pause-fill");
+                const waveIcon = currentElement.querySelector(".track-index .bar-wave");
+                const indexText = currentElement.querySelector(".track-index .index-text");
+                const titleSong = currentElement.querySelector(".titleSong");
 
                 // Update current song's appearance
                 pauseIcon.classList.add("d-none");

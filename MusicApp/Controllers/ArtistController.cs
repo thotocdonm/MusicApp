@@ -1,4 +1,4 @@
-
+﻿
 using MusicApp.Models;
 using NAudio.Wave;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace MusicApp.Controllers
     {
 
 
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-UOULN0V\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-H3FAVBH;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
 
 
         public string GetAudioDuration(string filePath)
@@ -21,11 +21,11 @@ namespace MusicApp.Controllers
             }
         }
         // GET: Artist
-        public ActionResult DetailArtist()
+        public ActionResult DetailArtist(string id)
         {
             var singerSongs = from singer in db.mic_singers
                               join song in db.mic_songs on singer.singer_id equals song.singer_id
-                              where song.is_deleted == '0'
+                              where song.is_deleted == '0' && singer.singer_url == id
                               select new SingerSongViewModel
                               {
                                   SongId = song.song_id,
@@ -39,16 +39,13 @@ namespace MusicApp.Controllers
                                   Duration = GetAudioDuration(Server.MapPath("~/Public/Songs/" + song.song_src))
                               };
 
-            var singers = from singer in db.mic_singers
-                          select new Singer
-                          {
-                              SingerId = singer.singer_id,
-                              SingerName = singer.name,
-                          };
-            var viewModel = new MusicViewModel
+            var singers = (from singer in db.mic_singers
+                           where singer.singer_url == id
+                           select singer.name).FirstOrDefault();
+            var viewModel = new ArtistViewModel
             {
                 Songs = singerSongs,
-                Singers = singers
+                Singers = singers,
             };
 
 
