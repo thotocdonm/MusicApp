@@ -1,214 +1,161 @@
-﻿@{
+﻿@model MusicApp.Models.MusicViewModel
+@{
     ViewBag.Title = "Details";
+    int index = 0;
 }
-
+@Scripts.Render("~/Scripts/global.js")
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="~/Assets/css/artist2.css" rel="stylesheet" />
     <style>
-        body {
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            color: #444444;
-            font-size: 9pt;
-            /*            background-color: #FAFAFA;*/
+
+        .wave-bar {
+            width: 3px;
+            height: 8px;
+            background-color: #1ed760;
+            animation: wave-animation 0.6s infinite ease-in-out;
         }
 
-        .play-btn:hover {
-            background-color: #3be477 !important;
-            cursor: pointer;
-        }
-
-        .like-btn:hover {
-            color: #fff !important;
-            cursor: pointer;
-        }
-
-        .artist-sec:hover {
-            background-color: hsla(0, 0%, 100%, .1) !important;
-            cursor: pointer;
-        }
-
-        .popular-track {
-            padding: 5px 16px !important;
-        }
-
-            .popular-track:hover {
-                background-color: hsla(0, 0%, 100%, .1) !important;
+            /* Tạo độ cao khác nhau cho các cột */
+            .wave-bar:nth-child(1) {
+                animation-delay: 0.1s;
+                height: 8px;
             }
 
-        .custom-dropdown {
-            background-color: #292929;
-            color: #fff;
-            border: none;
-        }
-
-            .custom-dropdown .dropdown-item {
-                color: #fff;
-                cursor: pointer;
-                font-size: 14px;
-                padding: 5px 15px;
+            .wave-bar:nth-child(2) {
+                animation-delay: 0.2s;
+                height: 12px;
             }
 
-                .custom-dropdown .dropdown-item:hover {
-                    background-color: #333;
-                    color: #1DB954;
-                }
+            .wave-bar:nth-child(3) {
+                animation-delay: 0.3s;
+                height: 8px;
+            }
+
+        /* Hiệu ứng chuyển động */
+        @@keyframes wave-animation {
+            0%, 100% {
+                transform: scaleY(1);
+            }
+
+            50% {
+                transform: scaleY(1.5);
+            }
+        }
+
+        .btnPlay_Pause {
+            color: #1ed760;
+            font-size: 28px;
+            line-height: 0;
+            font-size: 60px
+        }
+
+            .btnPlay_Pause:hover {
+                transform: scale(1.05);
+                border-radius: 50px;
+                color: #3be477;
+                font-size: 28px;
+                line-height: 0;
+                font-size: 60px
+            }
+
+        .track-index {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 
 </head>
 <body>
-    <div id="spotify-layout" class=" rounded-3 text-white col-12" style="background: #191414;overflow-y:auto; height:100%">
-        <div class="pb-4 px-4 row g-0" style="display:flex;gap:10px;padding-top:6em;align-items:center;flex-wrap:wrap">
-            <div class="col-md-3 justify-content-center align-items-center" style="display:flex">
-                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="img-thumbnail img-fluid song-img"
-                     style="height: 232px; width: 232px; box-shadow: 0 4px 60px rgba(0, 0, 0, .5);object-fit:contain" alt="..." />
-            </div>
-            <div style="display:flex;flex-direction:column;gap:10px" class="col-md-7">
-                <div class="fw-bold fs-6">
-                    Playlist
-                </div>
-                <div style="font-size: calc(3vw + 3vh + 2vmin); width: 100%; font-weight: bold">
-                    Danh sách phát của tôi
-                </div>
-                <div class="fw-bold fs-6">
-                    Artist
-                    <span><i class="bi bi-dot"></i></span>
-                    2018
-                    <span><i class="bi bi-dot"></i></span>
-                    4:35
-                    <span><i class="bi bi-dot"></i></span>
-                    8,500,000
-                </div>
+    <div class="gradient_background" style="display: flex; flex-direction: column;max-height:100%; max-width:100%">
+        <div style="display:flex; position:relative; width:100%; height:40%">
+            <div class="image-container" style="height: 100%; width: 100%; overflow: hidden ">
+                <img id="bgArtist" src="~/Assets/img/jungkook.jpg" alt="Jungkook_img" class="fade-out-image" style="width: 100%; height: 100%;" />
             </div>
 
-        </div>
-        <div class="p-5" style="background-color: rgba(25, 20, 20,0.2)">
-            <div style="display:flex;gap:10px;padding:24px">
-                <div id="toggle-button" class="rounded-circle play-btn" style="background-color:#1db954;height:56px;width:56px;display:flex;align-items:center;justify-content:center">
-                    <i id="play-icon" class="bi bi-play-fill" style="color:black; font-size:28px; line-height:0;"></i>
-                </div>
-                <div style="height:56px;width:56px;display:flex;align-items:center;justify-content:center">
-                    <i class="bi bi-three-dots like-btn" style="color:gray; font-size:28px; line-height:0;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></i>
-                    @*DropdownMenu*@
-                    <div class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#" style="display:flex;align-items:center;">
-                            <div class="d-flex align-items-center">
-                                <span>
-                                    <i class="bi bi-pencil-fill" style="font-size:18px"></i>
-                                </span>
-                                <div>
-                                    &nbsp;
-                                    Sửa thông tin chi tiết
-                                </div>
-                            </div>
-                        </a>
-                        <a class="dropdown-item" href="#" style="display: flex; align-items: center;">
-                            <div class="d-flex align-items-center">
-                                <span>
-                                    <i class="bi bi-x-lg" style="font-size:18px"></i>
-                                </span>
-                                <div>
-                                    &nbsp;
-                                    Xóa
-                                </div>
-                               
-                                </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div style="display:flex;gap:10px;flex-direction:column;padding:0px 24px">
-                <div style="display:flex;gap:10px;align-items:center; " class="artist-sec p-2">
-                    <div style="height:80px;width:80px">
-                        <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="rounded-circle"
-                             style="height: 100%; width: 100%; box-shadow: 0 4px 60px rgba(0, 0, 0, .5);object-fit:contain" alt="..." />
-                    </div>
-                    <div style="display:flex;flex-direction:column;gap:5px;" class="fw-bold fs-6">
-                        <div>
-                            Artist
-                        </div>
-                        <div>
-                            Artist
-                        </div>
-                    </div>
-                </div>
 
-            </div>
-            <div style="display:flex;flex-direction:column;gap:5px;padding:24px;">
-                <div style="color: #b3b3b3">
-                    Popular Tracks by
-                </div>
-                <h3>
-                    Artist
-                </h3>
-                <div>
-                    <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
-                        <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
-                            <div style="color: #b3b3b3" class="track-index">
-                                1
-                            </div>
-                            <div style="height:40px;width:40px">
-                                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="rounded-1"
-                                     style="height: 100%; width: 100%;" alt="..." />
-                            </div>
-                            <span>Kaikai Kitan</span>
-                        </div>
-                        <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
-                            130,000,000
-                        </div>
-                        <div class="col-1" style="color: #b3b3b3">
-                            4:15
-                        </div>
-                    </div>
-                    <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
-                        <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
-                            <div style="color: #b3b3b3" class="track-index">
-                                2
-                            </div>
-                            <div style="height:40px;width:40px">
-                                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="rounded-1"
-                                     style="height: 100%; width: 100%;" alt="..." />
-                            </div>
-                            <span>Kaikai Kitan</span>
-                        </div>
-                        <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
-                            130,000,000
-                        </div>
-                        <div class="col-1" style="color: #b3b3b3">
-                            4:15
-                        </div>
-                    </div>
-                    <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
-                        <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
-                            <div style="color: #b3b3b3" class="track-index">
-                                3
-                            </div>
-                            <div style="height:40px;width:40px">
-                                <img id="thumbnail" src="https://i.scdn.co/image/ab67616d0000b273730cc8eb459c92944233e891" class="rounded-1"
-                                     style="height: 100%; width: 100%;" alt="..." />
-                            </div>
-                            <span>Kaikai Kitan</span>
-                        </div>
-                        <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
-                            130,000,000
-                        </div>
-                        <div class="col-1" style="color: #b3b3b3">
-                            4:15
-                        </div>
-                    </div>
-                </div>
-
+            <div style="position: absolute; margin-left: 20px; padding-top: 110px;">
+                <h1 style="color:white; font-weight: bold; font-size:100px">@Model.playlistName</h1>
+                <p style="color:white; font-size:15px">19,576,629 monthly listeners</p>
             </div>
         </div>
 
+
+        <div style="background-color: rgba(25, 20, 20,0.2);padding-top:30px; padding-left: 20px; width: 100%; display: flex; gap: 30px; max-width: 100%; flex-direction: column; height:100%">
+            <div style="display: flex; align-items: center; gap: 30px; width:100%">
+                <i id="toggleIcon" class="bi bi-play-circle-fill btnPlay_Pause" style="background-color: #121212; border-radius:50%" onclick="changeIcon(this)"></i>
+                <button class="btn btn-outline-light follow-btn">Follow</button>
+                <i class="bi bi-three-dots" style="color: #b3b3b3"></i>
+            </div>
+
+            <div style=" width: 100%">
+                <h2 style="color:white">List Song</h2>
+                @foreach (var song in Model.Songs)
+                {
+                    if (song.SingerName == "JungKook")
+                    {
+                        <div id="song-@index" data-index="@index" class="row g-0 popular-track track-container" data-song='@Html.Raw(Json.Encode(song))' onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
+                            <div class="col-11 col-sm-8" style="display:flex; gap:16px; align-items:center;">
+                                <div style="color: #b3b3b3;" class="track-index">
+                                    <p class="index-text" style="margin-top:1em">@((index + 1))</p>
+                                    <i class="bi bi-play-fill d-none"></i>
+                                    <i class="bi bi-pause-fill d-none"></i>
+                                    <div class="bar-wave d-none" style="display: flex; gap: 2px; align-items: center;">
+                                        <i class="wave-bar"></i>
+                                        <i class="wave-bar"></i>
+                                        <i class="wave-bar"></i>
+                                    </div>
+                                </div>
+                                <div style="height:40px; width:40px;">
+                                    <img src="@Url.Content("~/Public/Images/" + song.SongThumbnail)" class="rounded-1" style="height: 100%; width: 100%;" alt="..." />
+                                </div>
+                                <span class="titleSong" style="color:white;">@song.SongTitle</span>
+                            </div>
+                            <div class="col-3 d-none d-sm-block viewSong" style="color: #b3b3b3;">@song.Views</div>
+                            <div class="col-1 durationSong" style="color: #b3b3b3;">@song.Duration</div>
+                        </div>
+                        index++;
+                    }
+                }
+
+            </div>
+        </div>
     </div>
 
-
     <script>
-        //Change background color based on thumbnail
+
+
         $(document).ready(function () {
+            const image = $(".fade-out-image"); // Sử dụng jQuery để tìm ảnh
+            const fadeOutContainer = $(".fade-out-container");
+
+            fadeOutContainer.on("scroll", function () {
+                const scrollTop = fadeOutContainer.scrollTop(); // Lấy vị trí cuộn của div
+
+                const fadePoint = 250; // Điều chỉnh giá trị này theo nhu cầu
+
+
+                if (scrollTop < fadePoint) {
+                    const scale = 1.1 - (scrollTop / (fadePoint * 10));
+                    const opacity = 1 - scrollTop / fadePoint;
+                    image.css({
+                        "opacity": opacity,
+                        "transform": `scale(${scale})` // Áp dụng scale
+                    });
+                } else {
+                    image.css({
+                        "opacity": 0,
+
+                        "transform": "scale(0.9)" // Kích thước nhỏ nhất khi cuộn đến fadePoint
+                    });
+                }
+            });
             var colorThief = new ColorThief();
-            var img = document.getElementById('thumbnail');
+            var img = document.getElementById('bgArtist');
             img.setAttribute('crossOrigin', '');
 
             // When the image is loaded, extract the color
@@ -217,7 +164,7 @@
                 var rgbColor = 'rgb(' + result[0] + ',' + result[1] + ',' + result[2] + ')';
                 console.log('run')
                 // Apply the background gradient using the dominant color
-                $('#spotify-layout').css('background', 'linear-gradient(180deg, ' + rgbColor + ' 0%, #191414 100%)');
+                $('.gradient_background').css('background', 'linear-gradient(180deg, ' + rgbColor + ' 0%, #191414 100%)');
             });
 
             // If the image is already loaded (in case of cached images)
@@ -225,115 +172,192 @@
                 $(img).trigger('load');
             }
         });
+        function showIcon(element) {
+            const playIcon = element.querySelector(".track-index .bi-play-fill");
+            const pauseIcon = element.querySelector(".track-index .bi-pause-fill");
+            const indexText = element.querySelector(".track-index .index-text");
+            const waveIcon = element.querySelector(".track-index .bar-wave");
 
-        //Toggle play song btn
-        //$(document).ready(function () {
-        //    $('#toggle-button').click(function () {
-        //        var icon = $('#play-icon');
+            if (element === currentPlaying && !audio.paused) {
+                // Nếu div đang phát, hiển thị icon "pause"
+                indexText.classList.add("d-none");
+                playIcon.classList.add("d-none");
+                pauseIcon.classList.remove("d-none");
+                waveIcon.classList.add("d-none");
+            } else {
+                // Nếu div chưa phát, hiển thị icon "play"
+                indexText.classList.add("d-none");
+                playIcon.classList.remove("d-none");
+                waveIcon.classList.add("d-none");
+                pauseIcon.classList.add("d-none");
+            }
+        }
 
-        //        // Check the current icon and toggle it
-        //        if (icon.hasClass('bi-play-fill')) {
-        //            icon.removeClass('bi-play-fill').addClass('bi-pause-fill'); // Change to pause icon
-        //        } else {
-        //            icon.removeClass('bi-pause-fill').addClass('bi-play-fill'); // Change back to play icon
-        //        }
-        //    });
-        //});
+        function resetIcon(element) {
+            const playIcon = element.querySelector(".track-index .bi-play-fill");
+            const pauseIcon = element.querySelector(".track-index .bi-pause-fill");
+            const indexText = element.querySelector(".track-index .index-text");
+            const waveIcon = element.querySelector(".track-index .bar-wave");
+            // Nếu là div đang phát, trở về số ban đầu nhưng giữ trạng thái "pause" khi hover lại
+            if (element === currentPlaying && !audio.paused) {
+                indexText.classList.add("d-none");
+                playIcon.classList.add("d-none");
+                pauseIcon.classList.add("d-none");
+                waveIcon.classList.remove("d-none");
+            } else {
+                // Nếu không, hiển thị lại số và ẩn icon "play"
+                indexText.classList.remove("d-none");
+                playIcon.classList.add("d-none");
+                pauseIcon.classList.add("d-none");
+                waveIcon.classList.add("d-none");
+            }
+        }
+            // Store the current song ID
+            const $toggleButton = $('#toggleIcon');
+            const test = $('#musicPlayerFooter');
+            currentSongId = null;
+        let currentPlaying = null;
+        let currentElement = null;
+        let currentSelected = null;
+        function togglePlayPause(element) {
+            const playIcon = element.querySelector(".track-index .bi-play-fill");
+            const pauseIcon = element.querySelector(".track-index .bi-pause-fill");
+            const indexText = element.querySelector(".track-index .index-text");
+            const waveIcon = element.querySelector(".track-index .bar-wave");
+            const titleSong = element.querySelector(".titleSong");
+            // Nếu hiện tại là div đang phát
+            if (currentPlaying && currentPlaying !== element) {
+                const currentPlayIcon = currentPlaying.querySelector(".track-index .bi-play-fill");
+                const currentPauseIcon = currentPlaying.querySelector(".track-index .bi-pause-fill");
+                const currentIndexText = currentPlaying.querySelector(".track-index .index-text");
+                const currentwaveIcon = currentPlaying.querySelector(".track-index .bar-wave");
+                const currenttitleSong = currentPlaying.querySelector(".titleSong");
+                // Chuyển trạng thái bài hát đang phát về số ban đầu
+                currentPauseIcon.classList.add("d-none");
+                currentPlayIcon.classList.add("d-none");
+                currentIndexText.classList.remove("d-none");
+                currentwaveIcon.classList.add("d-none");
+                currenttitleSong.style.color = "white";
+                currentIndexText.style.color = "white";
+            }
 
-        //Toggle play song btn on Track list
-        $(document).ready(function () {
-            let playingTrack = null; // Track the currently playing track element
-            let playingButton = null; // Track the currently playing button
-
-            // Toggle play song button
-            $('#toggle-button').click(function () {
-                var icon = $('#play-icon');
-
-                // If there's a track currently playing, stop it first
-                if (playingTrack !== null) {
-                    $(playingTrack).removeClass('playing');
-                    const originalIndex = $(playingTrack).data('original-index');
-                    $(playingTrack).find('.track-index').text(originalIndex);
-                    $(playingTrack).find('.col-3, .col-1').css('color', '#b3b3b3');
-                    $(playingTrack).find('span').css('color', '#FFFFFF'); // Reset text color
-                    playingTrack = null; // No track is currently playing
+            // Cập nhật trạng thái cho bài hát mới được phát
+            if (currentPlaying === element && !audio.paused) {
+                const currenttitleSong = currentPlaying.querySelector(".titleSong");
+                // Nếu bài đang phát được nhấn lại, dừng phát
+                $(document).trigger('pauseSong');
+                $('#toggleIcon').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
+                pauseIcon.classList.add("d-none");
+                playIcon.classList.remove("d-none");
+                indexText.classList.add("d-none");
+                waveIcon.classList.add("d-none");
+                currentPlaying = null;
+            } else {
+                if (currentElement && currentElement !== element) {
+                    sessionStorage.clear();
                 }
-
-                // Check the current icon and toggle it
-                if (icon.hasClass('bi-play-fill')) {
-                    icon.removeClass('bi-play-fill').addClass('bi-pause-fill'); // Change to pause icon
-                    playingButton = this; // Mark this button as playing
-                } else {
-                    icon.removeClass('bi-pause-fill').addClass('bi-play-fill'); // Change back to play icon
-                    playingButton = null; // No button is currently playing
+                if (currentSelected) {
+                    const currenttitleSong = currentSelected.querySelector(".titleSong");
+                    const currentIndexText = currentSelected.querySelector(".track-index .index-text");
+                    currenttitleSong.style.color = "white";
+                    currentIndexText.style.color = "white";
                 }
+                $('#toggleIcon').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
+                playIcon.classList.add("d-none");
+                pauseIcon.classList.remove("d-none");
+                indexText.classList.add("d-none");
+                waveIcon.classList.add("d-none");
+                titleSong.style.color = "#3be477";
+                indexText.style.color = "#3be477";
+
+                // Update currentPlaying and currentElement
+                currentPlaying = element;
+                currentElement = element;
+                currentSelected = element;
+            }
+
+
+            window.listSong = @Html.Raw(Json.Encode(Model.Songs.Where(x=>x.SingerName=="JungKook")));
+            window.songIndex = parseInt(currentPlaying.getAttribute("data-index")) ;
+            const song = JSON.parse(currentPlaying.getAttribute("data-song"));
+            const songTitle = song.SongTitle;
+            const artistName = song.SingerName;
+            const albumArt = song.SongThumbnail;
+            const songSrc = song.SongSrc.trimEnd();
+            const songId = song.SongId; // Unique ID for the song
+            const songData = {
+                id: songId,
+                title: song.SongTitle,
+                artist: song.SingerName,
+                albumArt: song.SongThumbnail,
+                src: song.SongSrc
+            }
+
+            if (songId === currentSongId && !audio.paused) {
+                    // Nếu bài hát đang phát, tạm dừng
+                $(document).trigger('pauseSong');
+
+            } else {
+                sessionStorage.setItem('currentSong', JSON.stringify(songData));
+                currentSongId = songId;
+                $(document).trigger('playSong');
+            }
+
+
+            $(document).on('footerSongPaused', function () {
+                $('#toggleIcon').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
+                currentPlaying = currentElement;
+                console.log(currentPlaying);
+                const playIcon = currentPlaying.querySelector(".track-index .bi-play-fill");
+                const pauseIcon = currentPlaying.querySelector(".track-index .bi-pause-fill");
+                const waveIcon = currentPlaying.querySelector(".track-index .bar-wave");
+                const indexText = currentPlaying.querySelector(".track-index .index-text");
+
+                    // Đặt lại trạng thái bài hát đang phát
+                pauseIcon.classList.add("d-none");
+                playIcon.classList.add("d-none");
+                waveIcon.classList.add("d-none");
+                indexText.classList.remove("d-none");
             });
 
-            // Hover event to change index to play icon
-            $('.popular-track').hover(function () {
-                if (!$(this).hasClass('playing')) {
-                    const originalIndex = $(this).find('.track-index').text();
-                    $(this).data('original-index', originalIndex);
-                    $(this).find('.track-index').html('<i class="bi bi-play-fill"></i>'); // Show play icon
-                }
-            }, function () {
-                if (!$(this).hasClass('playing')) {
-                    const originalIndex = $(this).data('original-index');
-                    $(this).find('.track-index').text(originalIndex);
-                }
+            $(document).on('footerSongPlaying', function () {
+
+                $('#toggleIcon').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
+                currentPlaying = currentElement;
+                const playIcon = currentPlaying.querySelector(".track-index .bi-play-fill");
+                const pauseIcon = currentPlaying.querySelector(".track-index .bi-pause-fill");
+                const waveIcon = currentPlaying.querySelector(".track-index .bar-wave");
+                const indexText = currentPlaying.querySelector(".track-index .index-text");
+                const titleSong = currentPlaying.querySelector(".titleSong");
+
+                // Update current song's appearance
+                pauseIcon.classList.add("d-none");
+                playIcon.classList.add("d-none");
+                waveIcon.classList.remove("d-none");
+                indexText.classList.add("d-none");
+                titleSong.style.color = "#3be477";
+                indexText.style.color = "#3be477";
             });
 
-            // Click event to toggle play/pause for track
-            $('.popular-track').click(function () {
-                // If the clicked track is already playing, pause it
-                if ($(this).hasClass('playing')) {
-                    $(this).removeClass('playing');
-                    const originalIndex = $(this).data('original-index');
-                    $(this).find('.track-index').text(originalIndex);
-                    $(this).find('.col-3, .col-1').css('color', '#b3b3b3');
-                    $(this).find('span').css('color', '#FFFFFF'); // Reset text color
-                    playingTrack = null; // No track is currently playing
 
-                    // Revert the button's icon if the toggle button is also playing
-                    if (playingButton !== null) {
-                        $('#play-icon').removeClass('bi-pause-fill').addClass('bi-play-fill');
-                        playingButton = null;
-                    }
-                } else {
-                    // Pause any currently playing track before starting a new one
-                    if (playingTrack !== null) {
-                        $(playingTrack).removeClass('playing');
-                        const originalIndex = $(playingTrack).data('original-index');
-                        $(playingTrack).find('.track-index').text(originalIndex);
-                        $(playingTrack).find('.col-3, .col-1').css('color', '#b3b3b3');
-                        $(playingTrack).find('span').css('color', '#FFFFFF');
-                    }
+        }
 
-                    // Pause the toggle button if it is playing
-                    if (playingButton !== null) {
-                        $('#play-icon').removeClass('bi-pause-fill').addClass('bi-play-fill'); // Revert the button's icon
-                        playingButton = null;
-                    }
-
-                    // Play the clicked track
-                    const originalIndex = $(this).data('original-index');
-                    $(this).addClass('playing'); // Mark this track as playing
-                    $(this).find('.track-index').html('<i class="bi bi-pause-fill" style="color: #1db954;"></i>'); // Show pause icon
-                    $(this).find('span, .col-3, .col-1').css('color', '#1db954'); // Change text color to green
-
-                    playingTrack = this; // Set this as the currently playing track
+        function changeIcon(icon) {
+            //icon.classList.toggle('bi-play-circle-fill');
+            //icon.classList.toggle('bi-pause-circle-fill');
+            if (currentElement) {
+                togglePlayPause(currentElement); // Gọi hàm togglePlayPause cho bài hát hiện tại
+            } else {
+                sessionStorage.clear();
+                const firstItem = document.querySelector('.track-container');
+                if (firstItem) {
+                    togglePlayPause(firstItem);
                 }
-            });
-        });
-
-
-
-
-
+            }
+        }
 
 
 
     </script>
 </body>
 </html>
-

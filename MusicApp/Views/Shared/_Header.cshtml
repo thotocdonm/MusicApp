@@ -4,6 +4,114 @@
     bool isLoggedIn = Session["user_id"] != null;
 }
 
+<style>
+    .header {
+        background-color: #000000;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 7vh;
+        .bi-spotify
+
+    {
+        cursor: pointer;
+        font-size: 35px;
+        color: white;
+    }
+
+    .search {
+        margin-left: 10%;
+        display: flex;
+        align-items: center;
+        .bi-house-door
+
+    {
+        font-size: 25px;
+        color: white;
+    }
+
+    .icon-header {
+        cursor: pointer;
+        background: #1F1F1F;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    }
+
+    .input-wrapper {
+        position: relative;
+        display: inline-block;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+        .input-wrapper input {
+            padding-left: 45px;
+            height: 50px;
+            border-radius: 30px;
+            width: 500px;
+            max-width: 100%;
+            background: #1F1F1F;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+            .input-wrapper input:focus {
+                outline: 2px solid white;
+            }
+
+        .input-wrapper .icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 20px;
+        }
+
+    .register {
+        color: #757575;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 30px;
+        border: none;
+        margin-right: 10px;
+    }
+
+    .sign-in {
+        color: black;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 30px;
+        background: white;
+        border: none;
+    }
+
+
+    .btnLogout {
+        color: black;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 30px;
+        background: white;
+        border: none;
+    }
+
+    }
+
+
+   
+</style>
+
 <div class="header">
     <div onclick="redirectToHomePage()">
         <i class="bi bi-spotify"></i>
