@@ -10,6 +10,7 @@
         height: 100%;
         border-radius: 10px;
         padding: 20px;
+
         .head
 
     {
@@ -24,27 +25,6 @@
         font-weight: bold
     }
 
-    .head-child {
-        display: flex;
-        align-items: center;
-        cursor: pointer
-    }
-
-        .head-child:hover {
-            color: white;
-        }
-
-    .bi-plus-lg {
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-        .bi-plus-lg:hover {
-            color: white;
-        }
-
-    }
     .custom-dropdown {
         background-color: #292929;
         color: #fff;
@@ -62,16 +42,28 @@
                 background-color: #333;
                 color: #1DB954;
             }
+   
+        }
     .playlist-card {
         cursor: pointer;
         margin-top: 20px;
         display: flex;
         align-items: center;
+        justify-content: space-between;
         background-color: #333;
         color: #ddd;
         padding: 10px;
         border-radius: 8px;
         width: 100%;
+        font-family: Arial, sans-serif;
+    }
+
+
+    .playlist-card-child {
+        display: flex;
+        align-items: center;
+        background-color: #333;
+        color: #ddd;
         font-family: Arial, sans-serif;
     }
 
@@ -107,6 +99,90 @@
             color: #aaa;
             margin: 0;
         }
+    .search {
+        display: flex;
+        align-items: center;
+        margin-top: 30px;
+        justify-content: space-between;
+        color: #939393;
+        .input-wrapper
+
+    {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .input-wrapper input {
+        padding: 5px 5px 5px 35px;
+        width: 185px;
+        max-width: 100%;
+        background: #1F1F1F;
+        border: none;
+        border-radius: 8px;
+        outline: none;
+        color: #BBB8C0;
+        font-size: 13px;
+    }
+
+
+    .input-wrapper .icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        font-size: 13px;
+    }
+
+    .bi-search {
+        cursor: pointer;
+    }
+
+    .bi-list-ul {
+        font-size: 20px;
+    }
+
+    .filter {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+        .filter:hover {
+            color: white;
+        }
+
+    }
+
+    .custom-dropdown {
+        display: none;
+    }
+
+        .custom-dropdown.show {
+            display: block;
+        }
+
+    .head-child {
+        display: flex;
+        align-items: center;
+        cursor: pointer
+    }
+
+        .head-child:hover {
+            color: white;
+        }
+
+    .bi-plus-lg {
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .bi-plus-lg:hover {
+            color: white;
+        }
+        }
 </style>
 
 
@@ -116,47 +192,211 @@
             <i class="bi bi-layout-sidebar-reverse"></i>
             <span style="margin-left: 10px; font-size: 18px;font-weight: bold">Thư viện</span>
         </div>
-        <div>
-            <i class="bi bi-plus-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></i>
-            <div class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item">
-                    <div class="d-flex align-items-center">
-                        <span>
-                            <i class="bi bi-patch-plus" style="font-size:18px"></i>
-                        </span>
-                        <div>
-                            &nbsp;
-                            Tạo danh sách phát mới
-                        </div>
+        @if (Session["user_id"] != null)
+        {
+            <div>
 
-                    </div>
-                </a>
+                <i class="bi bi-plus-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></i>
+                <div class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" onclick="createNewPlaylist()">
+                        <div class="d-flex align-items-center">
+                            <span>
+                                <i class="bi bi-patch-plus" style="font-size:18px"></i>
+                            </span>
+                            <div>
+                                &nbsp;
+                                Tạo danh sách phát mới
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
             </div>
-        </div>
+        }
+
 
     </div>
     <div class="search">
         <div class="search-child input-wrapper">
             <label for="search-input1"><i class="bi bi-search icon"></i></label>
-            <input id="search-input1" type="text" placeholder="Tìm kiếm trong thư viện" />
+            <input id="search-input1" type="text" placeholder="Tìm kiếm trong thư viện" oninput="handleSearchInput()" />
         </div>
         <div class="filter">
             <span style="margin-right: 10px;font-weight: 500!important; font-size: 16px">Gần đây</span> <i class="bi bi-list-ul"></i>
         </div>
     </div>
-    <div class="playlist-card" onclick="redirectToPage()">
-        <div class="icon1">
-            <i class="bi bi-music-note-beamed" style="font-size: 18px"></i>
-        </div>
-        <div class="playlist-info">
-            <p class="title">Danh sách phát của tôi #1</p>
-            <p class="author">Danh sách phát</p>
-        </div>
-    </div>
+
 
     <script>
-        function redirectToPage() {
-            window.location.href = "/playlist/details";
+        function redirectToPage(id) {
+            window.location.href = `/playlist/details?id=${id}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            searchPlaylist(); 
+        });
+
+        function createNewPlaylist() {
+            const newPlaylistTitle = prompt("Nhập tên danh sách phát mới:");
+            if (newPlaylistTitle) {
+                fetch('/Playlist/Create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ title: newPlaylistTitle })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert("Danh sách phát mới đã được tạo!");
+                            searchPlaylist();
+                        } else {
+                            alert("Đã xảy ra lỗi. Vui lòng thử lại.");
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        }
+
+        let searchTimeout; 
+        function handleSearchInput() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const searchTerm = document.getElementById('search-input1').value.trim();
+                searchPlaylist(searchTerm);
+            }, 1000); 
+        }
+
+        function searchPlaylist(searchTerm = '') {
+            fetch(`/Playlist/GetPlaylists?searchTerm=${encodeURIComponent(searchTerm)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const playlistContainer = document.querySelector('.playlist');
+
+                        const cards = playlistContainer.querySelectorAll('.playlist-card');
+                        cards.forEach(card => card.remove());
+
+                        data.playlists.forEach(playlist => {
+                            const playlistCard = `
+                    <div class="playlist-card" onclick="redirectToPage('${playlist.playlist_id}')">
+                    <div class="playlist-card-child">
+                        <div class="icon1">
+                            <i class="bi bi-music-note-beamed" style="font-size: 18px"></i>
+                        </div>
+                        <div class="playlist-info">
+                            <p class="title">${playlist.name}</p>
+                        </div>
+                        </div>
+                           <div>
+                               <i class="bi bi-three-dots-vertical" data-toggle="dropdown"  onclick="openDropdown(event)" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></i>
+                               <div class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton">
+                                 <a class="dropdown-item" onclick="updatePlaylist(${playlist.playlist_id}, '${playlist.name}', event)">
+                        <div class="d-flex align-items-center">
+                   <span>
+                       <i class="bi bi-pencil-square" style="font-size:20px"></i>
+                   </span>
+                   <div>
+                       &nbsp;
+                       Sửa danh sách phát
+                   </div>
+
+               </div>
+                        </a>
+
+                                          <a class="dropdown-item" onclick="deletePlaylist(${playlist.playlist_id}, event)">
+         <div class="d-flex align-items-center">
+    <span>
+        <i class="bi bi-trash" style="font-size:20px"></i>
+    </span>
+    <div>
+        &nbsp;
+        Xóa
+    </div>
+
+</div>
+         </a>
+                                </div>
+                                            </div>
+                    </div>`;
+                            playlistContainer.insertAdjacentHTML('beforeend', playlistCard);
+                        });
+                    } else {
+                        alert("Không thể tải danh sách phát.");
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function openDropdown(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            const dropdown = event.target.nextElementSibling;
+            if (dropdown) {
+                const isOpen = dropdown.classList.contains('show');
+                document.querySelectorAll('.custom-dropdown').forEach(d => d.classList.remove('show'));
+                if (!isOpen) {
+                    dropdown.classList.add('show');
+                }
+            }
+        }
+
+        document.addEventListener('click', (event) => {
+            document.querySelectorAll('.custom-dropdown').forEach(d => d.classList.remove('show'));
+        });
+
+        function deletePlaylist(id, event) {
+            event.stopPropagation();
+            if (confirm("Bạn có chắc chắn muốn xóa danh sách phát này?")) {
+                fetch('/Playlist/Delete', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: id })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            searchPlaylist();
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        }
+
+        function updatePlaylist(id, currentTitle, event) {
+            event.stopPropagation(); 
+            const newTitle = prompt("Chỉnh sửa tên danh sách phát:", currentTitle);
+            if (newTitle) {
+                fetch('/Playlist/Update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: id, newTitle: newTitle })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            searchPlaylist();
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
         }
     </script>
 </div>
