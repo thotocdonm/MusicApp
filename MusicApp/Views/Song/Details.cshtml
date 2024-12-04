@@ -2,7 +2,7 @@
 @model MusicApp.Models.DetailSongView
 @{
     ViewBag.Title = "Details";
-    int trackIndex = 1;
+    
 }
 @Scripts.Render("~/Scripts/global.js")
 
@@ -132,41 +132,7 @@
                 </div>
 
             </div>
-            <div style="display:flex;flex-direction:column;gap:5px;padding:24px;">
-                <div style="color: #b3b3b3">
-                    Popular Tracks by
-                </div>
-                <h3>
-                    @Model.DetailSong.SingerName
-                </h3>
-                <div>
-                    @foreach (var song in Model.PopularSongs)
-                    {
-                        <div class="row g-0 popular-track" style="font-size:1rem;display:flex;align-items:center;">
-                            <div class="col-11 col-sm-8" style="display:flex;gap:16px;align-items:center">
-                                <div style="color: #b3b3b3" class="track-index">
-                                    @trackIndex
-                                </div>
-                                <div style="height:40px;width:40px">
-                                    <img id="thumbnail" src="~/Public/Images/@song.SongThumbnail" class="rounded-1"
-                                         style="height: 100%; width: 100%;" alt="..." />
-                                </div>
-                                <span>@song.SongTitle</span>
-                            </div>
-                            <div class="col-3 d-none d-sm-block" style="color: #b3b3b3">
-                                @song.Views
-                            </div>
-                            <div class="col-1" style="color: #b3b3b3">
-                                @song.Duration
-                            </div>
-                        </div>
-                        trackIndex++;
-                    }
-
-
-                </div>
-
-            </div>
+           
         </div>
 
     </div>
@@ -224,61 +190,6 @@
                 }
             });
 
-            // Hover event to change index to play icon
-            $('.popular-track').hover(function () {
-                if (!$(this).hasClass('playing')) {
-                    const originalIndex = $(this).find('.track-index').text();
-                    $(this).data('original-index', originalIndex);
-                    $(this).find('.track-index').html('<i class="bi bi-play-fill"></i>'); // Show play icon
-                }
-            }, function () {
-                if (!$(this).hasClass('playing')) {
-                    const originalIndex = $(this).data('original-index');
-                    $(this).find('.track-index').text(originalIndex);
-                }
-            });
-
-            // Click event to toggle play/pause for track
-            $('.popular-track').click(function () {
-                // If the clicked track is already playing, pause it
-                if ($(this).hasClass('playing')) {
-                    $(this).removeClass('playing');
-                    const originalIndex = $(this).data('original-index');
-                    $(this).find('.track-index').text(originalIndex);
-                    $(this).find('.col-3, .col-1').css('color', '#b3b3b3');
-                    $(this).find('span').css('color', '#FFFFFF'); // Reset text color
-                    playingTrack = null; // No track is currently playing
-
-                    // Revert the button's icon if the toggle button is also playing
-                    if (playingButton !== null) {
-                        $('#play-icon').removeClass('bi-pause-fill').addClass('bi-play-fill');
-                        playingButton = null;
-                    }
-                } else {
-                    // Pause any currently playing track before starting a new one
-                    if (playingTrack !== null) {
-                        $(playingTrack).removeClass('playing');
-                        const originalIndex = $(playingTrack).data('original-index');
-                        $(playingTrack).find('.track-index').text(originalIndex);
-                        $(playingTrack).find('.col-3, .col-1').css('color', '#b3b3b3');
-                        $(playingTrack).find('span').css('color', '#FFFFFF');
-                    }
-
-                    // Pause the toggle button if it is playing
-                    if (playingButton !== null) {
-                        $('#play-icon').removeClass('bi-pause-fill').addClass('bi-play-fill'); // Revert the button's icon
-                        playingButton = null;
-                    }
-
-                    // Play the clicked track
-                    const originalIndex = $(this).data('original-index');
-                    $(this).addClass('playing'); // Mark this track as playing
-                    $(this).find('.track-index').html('<i class="bi bi-pause-fill" style="color: #1db954;"></i>'); // Show pause icon
-                    $(this).find('span, .col-3, .col-1').css('color', '#1db954'); // Change text color to green
-
-                    playingTrack = this; // Set this as the currently playing track
-                }
-            });
         });
 
 
