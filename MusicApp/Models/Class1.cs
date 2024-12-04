@@ -35,10 +35,6 @@ namespace MusicApp.Models
     {
         public int SongId { get; set; }
 
-
-
-
-
         public string SongTitle { get; set; }
 
         public string SongGenre { get; set; }
@@ -46,7 +42,9 @@ namespace MusicApp.Models
         public int Views { get; set; }
         public int SingerId { get; set; }
         public string SingerName { get; set; }
+        public string SingerUrl { get; set; }
         public string SongSrc { get; set; }
+        public string SongUrl { get; set; }
 
 
         public string SongThumbnail { get; set; }
@@ -57,6 +55,14 @@ namespace MusicApp.Models
 
 
 
+    }
+
+    public class HomeViewModel
+    {
+        public IEnumerable<SingerSongViewModel> PopularSongs { get; set; }
+        public IEnumerable<SingerSongViewModel> VietnameseSongs { get; set; }
+        public IEnumerable<SingerSongViewModel> JapaneseSongs { get; set; }
+        public IEnumerable<SingerSongViewModel> KoreanSongs { get; set; }
     }
 
     public class DetailSong

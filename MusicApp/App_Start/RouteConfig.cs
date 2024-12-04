@@ -26,6 +26,19 @@ namespace MusicApp
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+             name: "StreamMp3",
+             url: "Public/Songs/{fileName}",
+              defaults: new { controller = "Audio", action = "StreamMp3", fileName = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+            name: "StreamMp3test",
+            url: "Audio/StreamMp3/{fileName}",
+             defaults: new { controller = "Audio", action = "StreamMp3", fileName = UrlParameter.Optional }
+           );
+
         }
     }
 }
