@@ -7,7 +7,7 @@ namespace MusicApp.Controllers
     public class HomeController : Controller
     {
 
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-H3FAVBH;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-UOULN0V\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
         public ActionResult Index()
         {
             var popularSongs = (from song in db.mic_songs
