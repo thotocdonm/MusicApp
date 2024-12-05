@@ -30,9 +30,18 @@ namespace MusicApp.Models
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertASPStateTempApplication(ASPStateTempApplication instance);
+    partial void UpdateASPStateTempApplication(ASPStateTempApplication instance);
+    partial void DeleteASPStateTempApplication(ASPStateTempApplication instance);
+    partial void InsertASPStateTempSession(ASPStateTempSession instance);
+    partial void UpdateASPStateTempSession(ASPStateTempSession instance);
+    partial void DeleteASPStateTempSession(ASPStateTempSession instance);
     partial void Insertmic_favourite_song(mic_favourite_song instance);
     partial void Updatemic_favourite_song(mic_favourite_song instance);
     partial void Deletemic_favourite_song(mic_favourite_song instance);
+    partial void Insertmic_playlist(mic_playlist instance);
+    partial void Updatemic_playlist(mic_playlist instance);
+    partial void Deletemic_playlist(mic_playlist instance);
     partial void Insertmic_singer(mic_singer instance);
     partial void Updatemic_singer(mic_singer instance);
     partial void Deletemic_singer(mic_singer instance);
@@ -51,15 +60,6 @@ namespace MusicApp.Models
     partial void Insertmic_user(mic_user instance);
     partial void Updatemic_user(mic_user instance);
     partial void Deletemic_user(mic_user instance);
-    partial void Insertmic_playlist(mic_playlist instance);
-    partial void Updatemic_playlist(mic_playlist instance);
-    partial void Deletemic_playlist(mic_playlist instance);
-    partial void InsertASPStateTempSession(ASPStateTempSession instance);
-    partial void UpdateASPStateTempSession(ASPStateTempSession instance);
-    partial void DeleteASPStateTempSession(ASPStateTempSession instance);
-    partial void InsertASPStateTempApplication(ASPStateTempApplication instance);
-    partial void UpdateASPStateTempApplication(ASPStateTempApplication instance);
-    partial void DeleteASPStateTempApplication(ASPStateTempApplication instance);
     #endregion
 		
 		public DataClasses1DataContext(string connection) : 
@@ -86,11 +86,35 @@ namespace MusicApp.Models
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<ASPStateTempApplication> ASPStateTempApplications
+		{
+			get
+			{
+				return this.GetTable<ASPStateTempApplication>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ASPStateTempSession> ASPStateTempSessions
+		{
+			get
+			{
+				return this.GetTable<ASPStateTempSession>();
+			}
+		}
+		
 		public System.Data.Linq.Table<mic_favourite_song> mic_favourite_songs
 		{
 			get
 			{
 				return this.GetTable<mic_favourite_song>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mic_playlist> mic_playlists
+		{
+			get
+			{
+				return this.GetTable<mic_playlist>();
 			}
 		}
 		
@@ -141,28 +165,392 @@ namespace MusicApp.Models
 				return this.GetTable<mic_user>();
 			}
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ASPStateTempApplications")]
+	public partial class ASPStateTempApplication : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		public System.Data.Linq.Table<mic_playlist> mic_playlists
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _AppId;
+		
+		private string _AppName;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAppIdChanging(int value);
+    partial void OnAppIdChanged();
+    partial void OnAppNameChanging(string value);
+    partial void OnAppNameChanged();
+    #endregion
+		
+		public ASPStateTempApplication()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AppId", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int AppId
 		{
 			get
 			{
-				return this.GetTable<mic_playlist>();
+				return this._AppId;
+			}
+			set
+			{
+				if ((this._AppId != value))
+				{
+					this.OnAppIdChanging(value);
+					this.SendPropertyChanging();
+					this._AppId = value;
+					this.SendPropertyChanged("AppId");
+					this.OnAppIdChanged();
+				}
 			}
 		}
 		
-		public System.Data.Linq.Table<ASPStateTempSession> ASPStateTempSessions
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AppName", DbType="Char(280) NOT NULL", CanBeNull=false)]
+		public string AppName
 		{
 			get
 			{
-				return this.GetTable<ASPStateTempSession>();
+				return this._AppName;
+			}
+			set
+			{
+				if ((this._AppName != value))
+				{
+					this.OnAppNameChanging(value);
+					this.SendPropertyChanging();
+					this._AppName = value;
+					this.SendPropertyChanged("AppName");
+					this.OnAppNameChanged();
+				}
 			}
 		}
 		
-		public System.Data.Linq.Table<ASPStateTempApplication> ASPStateTempApplications
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ASPStateTempSessions")]
+	public partial class ASPStateTempSession : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _SessionId;
+		
+		private System.DateTime _Created;
+		
+		private System.DateTime _Expires;
+		
+		private System.DateTime _LockDate;
+		
+		private System.DateTime _LockDateLocal;
+		
+		private int _LockCookie;
+		
+		private int _Timeout;
+		
+		private bool _Locked;
+		
+		private System.Data.Linq.Binary _SessionItemShort;
+		
+		private System.Data.Linq.Binary _SessionItemLong;
+		
+		private int _Flags;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnSessionIdChanging(string value);
+    partial void OnSessionIdChanged();
+    partial void OnCreatedChanging(System.DateTime value);
+    partial void OnCreatedChanged();
+    partial void OnExpiresChanging(System.DateTime value);
+    partial void OnExpiresChanged();
+    partial void OnLockDateChanging(System.DateTime value);
+    partial void OnLockDateChanged();
+    partial void OnLockDateLocalChanging(System.DateTime value);
+    partial void OnLockDateLocalChanged();
+    partial void OnLockCookieChanging(int value);
+    partial void OnLockCookieChanged();
+    partial void OnTimeoutChanging(int value);
+    partial void OnTimeoutChanged();
+    partial void OnLockedChanging(bool value);
+    partial void OnLockedChanged();
+    partial void OnSessionItemShortChanging(System.Data.Linq.Binary value);
+    partial void OnSessionItemShortChanged();
+    partial void OnSessionItemLongChanging(System.Data.Linq.Binary value);
+    partial void OnSessionItemLongChanged();
+    partial void OnFlagsChanging(int value);
+    partial void OnFlagsChanged();
+    #endregion
+		
+		public ASPStateTempSession()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SessionId", DbType="NVarChar(88) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string SessionId
 		{
 			get
 			{
-				return this.GetTable<ASPStateTempApplication>();
+				return this._SessionId;
+			}
+			set
+			{
+				if ((this._SessionId != value))
+				{
+					this.OnSessionIdChanging(value);
+					this.SendPropertyChanging();
+					this._SessionId = value;
+					this.SendPropertyChanged("SessionId");
+					this.OnSessionIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Created", DbType="DateTime NOT NULL")]
+		public System.DateTime Created
+		{
+			get
+			{
+				return this._Created;
+			}
+			set
+			{
+				if ((this._Created != value))
+				{
+					this.OnCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._Created = value;
+					this.SendPropertyChanged("Created");
+					this.OnCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Expires", DbType="DateTime NOT NULL")]
+		public System.DateTime Expires
+		{
+			get
+			{
+				return this._Expires;
+			}
+			set
+			{
+				if ((this._Expires != value))
+				{
+					this.OnExpiresChanging(value);
+					this.SendPropertyChanging();
+					this._Expires = value;
+					this.SendPropertyChanged("Expires");
+					this.OnExpiresChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LockDate", DbType="DateTime NOT NULL")]
+		public System.DateTime LockDate
+		{
+			get
+			{
+				return this._LockDate;
+			}
+			set
+			{
+				if ((this._LockDate != value))
+				{
+					this.OnLockDateChanging(value);
+					this.SendPropertyChanging();
+					this._LockDate = value;
+					this.SendPropertyChanged("LockDate");
+					this.OnLockDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LockDateLocal", DbType="DateTime NOT NULL")]
+		public System.DateTime LockDateLocal
+		{
+			get
+			{
+				return this._LockDateLocal;
+			}
+			set
+			{
+				if ((this._LockDateLocal != value))
+				{
+					this.OnLockDateLocalChanging(value);
+					this.SendPropertyChanging();
+					this._LockDateLocal = value;
+					this.SendPropertyChanged("LockDateLocal");
+					this.OnLockDateLocalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LockCookie", DbType="Int NOT NULL")]
+		public int LockCookie
+		{
+			get
+			{
+				return this._LockCookie;
+			}
+			set
+			{
+				if ((this._LockCookie != value))
+				{
+					this.OnLockCookieChanging(value);
+					this.SendPropertyChanging();
+					this._LockCookie = value;
+					this.SendPropertyChanged("LockCookie");
+					this.OnLockCookieChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Timeout", DbType="Int NOT NULL")]
+		public int Timeout
+		{
+			get
+			{
+				return this._Timeout;
+			}
+			set
+			{
+				if ((this._Timeout != value))
+				{
+					this.OnTimeoutChanging(value);
+					this.SendPropertyChanging();
+					this._Timeout = value;
+					this.SendPropertyChanged("Timeout");
+					this.OnTimeoutChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Locked", DbType="Bit NOT NULL")]
+		public bool Locked
+		{
+			get
+			{
+				return this._Locked;
+			}
+			set
+			{
+				if ((this._Locked != value))
+				{
+					this.OnLockedChanging(value);
+					this.SendPropertyChanging();
+					this._Locked = value;
+					this.SendPropertyChanged("Locked");
+					this.OnLockedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SessionItemShort", DbType="VarBinary(7000)", UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary SessionItemShort
+		{
+			get
+			{
+				return this._SessionItemShort;
+			}
+			set
+			{
+				if ((this._SessionItemShort != value))
+				{
+					this.OnSessionItemShortChanging(value);
+					this.SendPropertyChanging();
+					this._SessionItemShort = value;
+					this.SendPropertyChanged("SessionItemShort");
+					this.OnSessionItemShortChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SessionItemLong", DbType="Image", UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary SessionItemLong
+		{
+			get
+			{
+				return this._SessionItemLong;
+			}
+			set
+			{
+				if ((this._SessionItemLong != value))
+				{
+					this.OnSessionItemLongChanging(value);
+					this.SendPropertyChanging();
+					this._SessionItemLong = value;
+					this.SendPropertyChanged("SessionItemLong");
+					this.OnSessionItemLongChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Flags", DbType="Int NOT NULL")]
+		public int Flags
+		{
+			get
+			{
+				return this._Flags;
+			}
+			set
+			{
+				if ((this._Flags != value))
+				{
+					this.OnFlagsChanging(value);
+					this.SendPropertyChanging();
+					this._Flags = value;
+					this.SendPropertyChanged("Flags");
+					this.OnFlagsChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -476,6 +864,353 @@ namespace MusicApp.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mic_playlists")]
+	public partial class mic_playlist : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _playlist_id;
+		
+		private string _name;
+		
+		private char _is_deleted;
+		
+		private string _created_by;
+		
+		private System.Nullable<System.DateTime> _created_time;
+		
+		private string _modified_by;
+		
+		private System.Nullable<System.DateTime> _modified_time;
+		
+		private string _avatar;
+		
+		private string _playlist_url;
+		
+		private int _user_id;
+		
+		private EntitySet<mic_song_playlist> _mic_song_playlists;
+		
+		private EntityRef<mic_user> _mic_user;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onplaylist_idChanging(int value);
+    partial void Onplaylist_idChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void Onis_deletedChanging(char value);
+    partial void Onis_deletedChanged();
+    partial void Oncreated_byChanging(string value);
+    partial void Oncreated_byChanged();
+    partial void Oncreated_timeChanging(System.Nullable<System.DateTime> value);
+    partial void Oncreated_timeChanged();
+    partial void Onmodified_byChanging(string value);
+    partial void Onmodified_byChanged();
+    partial void Onmodified_timeChanging(System.Nullable<System.DateTime> value);
+    partial void Onmodified_timeChanged();
+    partial void OnavatarChanging(string value);
+    partial void OnavatarChanged();
+    partial void Onplaylist_urlChanging(string value);
+    partial void Onplaylist_urlChanged();
+    partial void Onuser_idChanging(int value);
+    partial void Onuser_idChanged();
+    #endregion
+		
+		public mic_playlist()
+		{
+			this._mic_song_playlists = new EntitySet<mic_song_playlist>(new Action<mic_song_playlist>(this.attach_mic_song_playlists), new Action<mic_song_playlist>(this.detach_mic_song_playlists));
+			this._mic_user = default(EntityRef<mic_user>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_playlist_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int playlist_id
+		{
+			get
+			{
+				return this._playlist_id;
+			}
+			set
+			{
+				if ((this._playlist_id != value))
+				{
+					this.Onplaylist_idChanging(value);
+					this.SendPropertyChanging();
+					this._playlist_id = value;
+					this.SendPropertyChanged("playlist_id");
+					this.Onplaylist_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(255)")]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_deleted", DbType="Char(1) NOT NULL")]
+		public char is_deleted
+		{
+			get
+			{
+				return this._is_deleted;
+			}
+			set
+			{
+				if ((this._is_deleted != value))
+				{
+					this.Onis_deletedChanging(value);
+					this.SendPropertyChanging();
+					this._is_deleted = value;
+					this.SendPropertyChanged("is_deleted");
+					this.Onis_deletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created_by", DbType="NVarChar(50)")]
+		public string created_by
+		{
+			get
+			{
+				return this._created_by;
+			}
+			set
+			{
+				if ((this._created_by != value))
+				{
+					this.Oncreated_byChanging(value);
+					this.SendPropertyChanging();
+					this._created_by = value;
+					this.SendPropertyChanged("created_by");
+					this.Oncreated_byChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created_time", DbType="DateTime")]
+		public System.Nullable<System.DateTime> created_time
+		{
+			get
+			{
+				return this._created_time;
+			}
+			set
+			{
+				if ((this._created_time != value))
+				{
+					this.Oncreated_timeChanging(value);
+					this.SendPropertyChanging();
+					this._created_time = value;
+					this.SendPropertyChanged("created_time");
+					this.Oncreated_timeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_modified_by", DbType="NVarChar(50)")]
+		public string modified_by
+		{
+			get
+			{
+				return this._modified_by;
+			}
+			set
+			{
+				if ((this._modified_by != value))
+				{
+					this.Onmodified_byChanging(value);
+					this.SendPropertyChanging();
+					this._modified_by = value;
+					this.SendPropertyChanged("modified_by");
+					this.Onmodified_byChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_modified_time", DbType="DateTime")]
+		public System.Nullable<System.DateTime> modified_time
+		{
+			get
+			{
+				return this._modified_time;
+			}
+			set
+			{
+				if ((this._modified_time != value))
+				{
+					this.Onmodified_timeChanging(value);
+					this.SendPropertyChanging();
+					this._modified_time = value;
+					this.SendPropertyChanged("modified_time");
+					this.Onmodified_timeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_avatar", DbType="NChar(500)")]
+		public string avatar
+		{
+			get
+			{
+				return this._avatar;
+			}
+			set
+			{
+				if ((this._avatar != value))
+				{
+					this.OnavatarChanging(value);
+					this.SendPropertyChanging();
+					this._avatar = value;
+					this.SendPropertyChanged("avatar");
+					this.OnavatarChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_playlist_url", DbType="NVarChar(500)")]
+		public string playlist_url
+		{
+			get
+			{
+				return this._playlist_url;
+			}
+			set
+			{
+				if ((this._playlist_url != value))
+				{
+					this.Onplaylist_urlChanging(value);
+					this.SendPropertyChanging();
+					this._playlist_url = value;
+					this.SendPropertyChanged("playlist_url");
+					this.Onplaylist_urlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_id", DbType="Int NOT NULL")]
+		public int user_id
+		{
+			get
+			{
+				return this._user_id;
+			}
+			set
+			{
+				if ((this._user_id != value))
+				{
+					if (this._mic_user.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onuser_idChanging(value);
+					this.SendPropertyChanging();
+					this._user_id = value;
+					this.SendPropertyChanged("user_id");
+					this.Onuser_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_playlist_mic_song_playlist", Storage="_mic_song_playlists", ThisKey="playlist_id", OtherKey="playlist_id")]
+		public EntitySet<mic_song_playlist> mic_song_playlists
+		{
+			get
+			{
+				return this._mic_song_playlists;
+			}
+			set
+			{
+				this._mic_song_playlists.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_user_mic_playlist", Storage="_mic_user", ThisKey="user_id", OtherKey="user_id", IsForeignKey=true)]
+		public mic_user mic_user
+		{
+			get
+			{
+				return this._mic_user.Entity;
+			}
+			set
+			{
+				mic_user previousValue = this._mic_user.Entity;
+				if (((previousValue != value) 
+							|| (this._mic_user.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._mic_user.Entity = null;
+						previousValue.mic_playlists.Remove(this);
+					}
+					this._mic_user.Entity = value;
+					if ((value != null))
+					{
+						value.mic_playlists.Add(this);
+						this._user_id = value.user_id;
+					}
+					else
+					{
+						this._user_id = default(int);
+					}
+					this.SendPropertyChanged("mic_user");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_mic_song_playlists(mic_song_playlist entity)
+		{
+			this.SendPropertyChanging();
+			entity.mic_playlist = this;
+		}
+		
+		private void detach_mic_song_playlists(mic_song_playlist entity)
+		{
+			this.SendPropertyChanging();
+			entity.mic_playlist = null;
 		}
 	}
 	
@@ -1383,9 +2118,9 @@ namespace MusicApp.Models
 		
 		private System.Nullable<System.DateTime> _modified_time;
 		
-		private EntityRef<mic_song> _mic_song;
-		
 		private EntityRef<mic_playlist> _mic_playlist;
+		
+		private EntityRef<mic_song> _mic_song;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1411,8 +2146,8 @@ namespace MusicApp.Models
 		
 		public mic_song_playlist()
 		{
-			this._mic_song = default(EntityRef<mic_song>);
 			this._mic_playlist = default(EntityRef<mic_playlist>);
+			this._mic_song = default(EntityRef<mic_song>);
 			OnCreated();
 		}
 		
@@ -1584,40 +2319,6 @@ namespace MusicApp.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_song_mic_song_playlist", Storage="_mic_song", ThisKey="song_id", OtherKey="song_id", IsForeignKey=true)]
-		public mic_song mic_song
-		{
-			get
-			{
-				return this._mic_song.Entity;
-			}
-			set
-			{
-				mic_song previousValue = this._mic_song.Entity;
-				if (((previousValue != value) 
-							|| (this._mic_song.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._mic_song.Entity = null;
-						previousValue.mic_song_playlists.Remove(this);
-					}
-					this._mic_song.Entity = value;
-					if ((value != null))
-					{
-						value.mic_song_playlists.Add(this);
-						this._song_id = value.song_id;
-					}
-					else
-					{
-						this._song_id = default(int);
-					}
-					this.SendPropertyChanged("mic_song");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_playlist_mic_song_playlist", Storage="_mic_playlist", ThisKey="playlist_id", OtherKey="playlist_id", IsForeignKey=true)]
 		public mic_playlist mic_playlist
 		{
@@ -1648,6 +2349,40 @@ namespace MusicApp.Models
 						this._playlist_id = default(int);
 					}
 					this.SendPropertyChanged("mic_playlist");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_song_mic_song_playlist", Storage="_mic_song", ThisKey="song_id", OtherKey="song_id", IsForeignKey=true)]
+		public mic_song mic_song
+		{
+			get
+			{
+				return this._mic_song.Entity;
+			}
+			set
+			{
+				mic_song previousValue = this._mic_song.Entity;
+				if (((previousValue != value) 
+							|| (this._mic_song.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._mic_song.Entity = null;
+						previousValue.mic_song_playlists.Remove(this);
+					}
+					this._mic_song.Entity = value;
+					if ((value != null))
+					{
+						value.mic_song_playlists.Add(this);
+						this._song_id = value.song_id;
+					}
+					else
+					{
+						this._song_id = default(int);
+					}
+					this.SendPropertyChanged("mic_song");
 				}
 			}
 		}
@@ -2258,11 +2993,11 @@ namespace MusicApp.Models
 		
 		private EntitySet<mic_favourite_song> _mic_favourite_songs;
 		
+		private EntitySet<mic_playlist> _mic_playlists;
+		
 		private EntitySet<mic_song_comment> _mic_song_comments;
 		
 		private EntitySet<mic_song_like> _mic_song_likes;
-		
-		private EntitySet<mic_playlist> _mic_playlists;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2299,9 +3034,9 @@ namespace MusicApp.Models
 		public mic_user()
 		{
 			this._mic_favourite_songs = new EntitySet<mic_favourite_song>(new Action<mic_favourite_song>(this.attach_mic_favourite_songs), new Action<mic_favourite_song>(this.detach_mic_favourite_songs));
+			this._mic_playlists = new EntitySet<mic_playlist>(new Action<mic_playlist>(this.attach_mic_playlists), new Action<mic_playlist>(this.detach_mic_playlists));
 			this._mic_song_comments = new EntitySet<mic_song_comment>(new Action<mic_song_comment>(this.attach_mic_song_comments), new Action<mic_song_comment>(this.detach_mic_song_comments));
 			this._mic_song_likes = new EntitySet<mic_song_like>(new Action<mic_song_like>(this.attach_mic_song_likes), new Action<mic_song_like>(this.detach_mic_song_likes));
-			this._mic_playlists = new EntitySet<mic_playlist>(new Action<mic_playlist>(this.attach_mic_playlists), new Action<mic_playlist>(this.detach_mic_playlists));
 			OnCreated();
 		}
 		
@@ -2578,6 +3313,19 @@ namespace MusicApp.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_user_mic_playlist", Storage="_mic_playlists", ThisKey="user_id", OtherKey="user_id")]
+		public EntitySet<mic_playlist> mic_playlists
+		{
+			get
+			{
+				return this._mic_playlists;
+			}
+			set
+			{
+				this._mic_playlists.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_user_mic_song_comment", Storage="_mic_song_comments", ThisKey="user_id", OtherKey="user_id")]
 		public EntitySet<mic_song_comment> mic_song_comments
 		{
@@ -2601,19 +3349,6 @@ namespace MusicApp.Models
 			set
 			{
 				this._mic_song_likes.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_user_mic_playlist", Storage="_mic_playlists", ThisKey="user_id", OtherKey="user_id")]
-		public EntitySet<mic_playlist> mic_playlists
-		{
-			get
-			{
-				return this._mic_playlists;
-			}
-			set
-			{
-				this._mic_playlists.Assign(value);
 			}
 		}
 		
@@ -2649,6 +3384,18 @@ namespace MusicApp.Models
 			entity.mic_user = null;
 		}
 		
+		private void attach_mic_playlists(mic_playlist entity)
+		{
+			this.SendPropertyChanging();
+			entity.mic_user = this;
+		}
+		
+		private void detach_mic_playlists(mic_playlist entity)
+		{
+			this.SendPropertyChanging();
+			entity.mic_user = null;
+		}
+		
 		private void attach_mic_song_comments(mic_song_comment entity)
 		{
 			this.SendPropertyChanging();
@@ -2671,753 +3418,6 @@ namespace MusicApp.Models
 		{
 			this.SendPropertyChanging();
 			entity.mic_user = null;
-		}
-		
-		private void attach_mic_playlists(mic_playlist entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_user = this;
-		}
-		
-		private void detach_mic_playlists(mic_playlist entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_user = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mic_playlists")]
-	public partial class mic_playlist : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _playlist_id;
-		
-		private string _name;
-		
-		private char _is_deleted;
-		
-		private string _created_by;
-		
-		private System.Nullable<System.DateTime> _created_time;
-		
-		private string _modified_by;
-		
-		private System.Nullable<System.DateTime> _modified_time;
-		
-		private string _avatar;
-		
-		private string _playlist_url;
-		
-		private int _user_id;
-		
-		private EntitySet<mic_song_playlist> _mic_song_playlists;
-		
-		private EntityRef<mic_user> _mic_user;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onplaylist_idChanging(int value);
-    partial void Onplaylist_idChanged();
-    partial void OnnameChanging(string value);
-    partial void OnnameChanged();
-    partial void Onis_deletedChanging(char value);
-    partial void Onis_deletedChanged();
-    partial void Oncreated_byChanging(string value);
-    partial void Oncreated_byChanged();
-    partial void Oncreated_timeChanging(System.Nullable<System.DateTime> value);
-    partial void Oncreated_timeChanged();
-    partial void Onmodified_byChanging(string value);
-    partial void Onmodified_byChanged();
-    partial void Onmodified_timeChanging(System.Nullable<System.DateTime> value);
-    partial void Onmodified_timeChanged();
-    partial void OnavatarChanging(string value);
-    partial void OnavatarChanged();
-    partial void Onplaylist_urlChanging(string value);
-    partial void Onplaylist_urlChanged();
-    partial void Onuser_idChanging(int value);
-    partial void Onuser_idChanged();
-    #endregion
-		
-		public mic_playlist()
-		{
-			this._mic_song_playlists = new EntitySet<mic_song_playlist>(new Action<mic_song_playlist>(this.attach_mic_song_playlists), new Action<mic_song_playlist>(this.detach_mic_song_playlists));
-			this._mic_user = default(EntityRef<mic_user>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_playlist_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int playlist_id
-		{
-			get
-			{
-				return this._playlist_id;
-			}
-			set
-			{
-				if ((this._playlist_id != value))
-				{
-					this.Onplaylist_idChanging(value);
-					this.SendPropertyChanging();
-					this._playlist_id = value;
-					this.SendPropertyChanged("playlist_id");
-					this.Onplaylist_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(255)")]
-		public string name
-		{
-			get
-			{
-				return this._name;
-			}
-			set
-			{
-				if ((this._name != value))
-				{
-					this.OnnameChanging(value);
-					this.SendPropertyChanging();
-					this._name = value;
-					this.SendPropertyChanged("name");
-					this.OnnameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_deleted", DbType="Char(1) NOT NULL")]
-		public char is_deleted
-		{
-			get
-			{
-				return this._is_deleted;
-			}
-			set
-			{
-				if ((this._is_deleted != value))
-				{
-					this.Onis_deletedChanging(value);
-					this.SendPropertyChanging();
-					this._is_deleted = value;
-					this.SendPropertyChanged("is_deleted");
-					this.Onis_deletedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created_by", DbType="NVarChar(50)")]
-		public string created_by
-		{
-			get
-			{
-				return this._created_by;
-			}
-			set
-			{
-				if ((this._created_by != value))
-				{
-					this.Oncreated_byChanging(value);
-					this.SendPropertyChanging();
-					this._created_by = value;
-					this.SendPropertyChanged("created_by");
-					this.Oncreated_byChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created_time", DbType="DateTime")]
-		public System.Nullable<System.DateTime> created_time
-		{
-			get
-			{
-				return this._created_time;
-			}
-			set
-			{
-				if ((this._created_time != value))
-				{
-					this.Oncreated_timeChanging(value);
-					this.SendPropertyChanging();
-					this._created_time = value;
-					this.SendPropertyChanged("created_time");
-					this.Oncreated_timeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_modified_by", DbType="NVarChar(50)")]
-		public string modified_by
-		{
-			get
-			{
-				return this._modified_by;
-			}
-			set
-			{
-				if ((this._modified_by != value))
-				{
-					this.Onmodified_byChanging(value);
-					this.SendPropertyChanging();
-					this._modified_by = value;
-					this.SendPropertyChanged("modified_by");
-					this.Onmodified_byChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_modified_time", DbType="DateTime")]
-		public System.Nullable<System.DateTime> modified_time
-		{
-			get
-			{
-				return this._modified_time;
-			}
-			set
-			{
-				if ((this._modified_time != value))
-				{
-					this.Onmodified_timeChanging(value);
-					this.SendPropertyChanging();
-					this._modified_time = value;
-					this.SendPropertyChanged("modified_time");
-					this.Onmodified_timeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_avatar", DbType="NChar(500)")]
-		public string avatar
-		{
-			get
-			{
-				return this._avatar;
-			}
-			set
-			{
-				if ((this._avatar != value))
-				{
-					this.OnavatarChanging(value);
-					this.SendPropertyChanging();
-					this._avatar = value;
-					this.SendPropertyChanged("avatar");
-					this.OnavatarChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_playlist_url", DbType="NVarChar(500)")]
-		public string playlist_url
-		{
-			get
-			{
-				return this._playlist_url;
-			}
-			set
-			{
-				if ((this._playlist_url != value))
-				{
-					this.Onplaylist_urlChanging(value);
-					this.SendPropertyChanging();
-					this._playlist_url = value;
-					this.SendPropertyChanged("playlist_url");
-					this.Onplaylist_urlChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_id", DbType="Int NOT NULL")]
-		public int user_id
-		{
-			get
-			{
-				return this._user_id;
-			}
-			set
-			{
-				if ((this._user_id != value))
-				{
-					if (this._mic_user.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onuser_idChanging(value);
-					this.SendPropertyChanging();
-					this._user_id = value;
-					this.SendPropertyChanged("user_id");
-					this.Onuser_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_playlist_mic_song_playlist", Storage="_mic_song_playlists", ThisKey="playlist_id", OtherKey="playlist_id")]
-		public EntitySet<mic_song_playlist> mic_song_playlists
-		{
-			get
-			{
-				return this._mic_song_playlists;
-			}
-			set
-			{
-				this._mic_song_playlists.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="mic_user_mic_playlist", Storage="_mic_user", ThisKey="user_id", OtherKey="user_id", IsForeignKey=true)]
-		public mic_user mic_user
-		{
-			get
-			{
-				return this._mic_user.Entity;
-			}
-			set
-			{
-				mic_user previousValue = this._mic_user.Entity;
-				if (((previousValue != value) 
-							|| (this._mic_user.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._mic_user.Entity = null;
-						previousValue.mic_playlists.Remove(this);
-					}
-					this._mic_user.Entity = value;
-					if ((value != null))
-					{
-						value.mic_playlists.Add(this);
-						this._user_id = value.user_id;
-					}
-					else
-					{
-						this._user_id = default(int);
-					}
-					this.SendPropertyChanged("mic_user");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_mic_song_playlists(mic_song_playlist entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_playlist = this;
-		}
-		
-		private void detach_mic_song_playlists(mic_song_playlist entity)
-		{
-			this.SendPropertyChanging();
-			entity.mic_playlist = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ASPStateTempSessions")]
-	public partial class ASPStateTempSession : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _SessionId;
-		
-		private System.DateTime _Created;
-		
-		private System.DateTime _Expires;
-		
-		private System.DateTime _LockDate;
-		
-		private System.DateTime _LockDateLocal;
-		
-		private int _LockCookie;
-		
-		private int _Timeout;
-		
-		private bool _Locked;
-		
-		private System.Data.Linq.Binary _SessionItemShort;
-		
-		private System.Data.Linq.Binary _SessionItemLong;
-		
-		private int _Flags;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnSessionIdChanging(string value);
-    partial void OnSessionIdChanged();
-    partial void OnCreatedChanging(System.DateTime value);
-    partial void OnCreatedChanged();
-    partial void OnExpiresChanging(System.DateTime value);
-    partial void OnExpiresChanged();
-    partial void OnLockDateChanging(System.DateTime value);
-    partial void OnLockDateChanged();
-    partial void OnLockDateLocalChanging(System.DateTime value);
-    partial void OnLockDateLocalChanged();
-    partial void OnLockCookieChanging(int value);
-    partial void OnLockCookieChanged();
-    partial void OnTimeoutChanging(int value);
-    partial void OnTimeoutChanged();
-    partial void OnLockedChanging(bool value);
-    partial void OnLockedChanged();
-    partial void OnSessionItemShortChanging(System.Data.Linq.Binary value);
-    partial void OnSessionItemShortChanged();
-    partial void OnSessionItemLongChanging(System.Data.Linq.Binary value);
-    partial void OnSessionItemLongChanged();
-    partial void OnFlagsChanging(int value);
-    partial void OnFlagsChanged();
-    #endregion
-		
-		public ASPStateTempSession()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SessionId", DbType="NVarChar(88) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string SessionId
-		{
-			get
-			{
-				return this._SessionId;
-			}
-			set
-			{
-				if ((this._SessionId != value))
-				{
-					this.OnSessionIdChanging(value);
-					this.SendPropertyChanging();
-					this._SessionId = value;
-					this.SendPropertyChanged("SessionId");
-					this.OnSessionIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Created", DbType="DateTime NOT NULL")]
-		public System.DateTime Created
-		{
-			get
-			{
-				return this._Created;
-			}
-			set
-			{
-				if ((this._Created != value))
-				{
-					this.OnCreatedChanging(value);
-					this.SendPropertyChanging();
-					this._Created = value;
-					this.SendPropertyChanged("Created");
-					this.OnCreatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Expires", DbType="DateTime NOT NULL")]
-		public System.DateTime Expires
-		{
-			get
-			{
-				return this._Expires;
-			}
-			set
-			{
-				if ((this._Expires != value))
-				{
-					this.OnExpiresChanging(value);
-					this.SendPropertyChanging();
-					this._Expires = value;
-					this.SendPropertyChanged("Expires");
-					this.OnExpiresChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LockDate", DbType="DateTime NOT NULL")]
-		public System.DateTime LockDate
-		{
-			get
-			{
-				return this._LockDate;
-			}
-			set
-			{
-				if ((this._LockDate != value))
-				{
-					this.OnLockDateChanging(value);
-					this.SendPropertyChanging();
-					this._LockDate = value;
-					this.SendPropertyChanged("LockDate");
-					this.OnLockDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LockDateLocal", DbType="DateTime NOT NULL")]
-		public System.DateTime LockDateLocal
-		{
-			get
-			{
-				return this._LockDateLocal;
-			}
-			set
-			{
-				if ((this._LockDateLocal != value))
-				{
-					this.OnLockDateLocalChanging(value);
-					this.SendPropertyChanging();
-					this._LockDateLocal = value;
-					this.SendPropertyChanged("LockDateLocal");
-					this.OnLockDateLocalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LockCookie", DbType="Int NOT NULL")]
-		public int LockCookie
-		{
-			get
-			{
-				return this._LockCookie;
-			}
-			set
-			{
-				if ((this._LockCookie != value))
-				{
-					this.OnLockCookieChanging(value);
-					this.SendPropertyChanging();
-					this._LockCookie = value;
-					this.SendPropertyChanged("LockCookie");
-					this.OnLockCookieChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Timeout", DbType="Int NOT NULL")]
-		public int Timeout
-		{
-			get
-			{
-				return this._Timeout;
-			}
-			set
-			{
-				if ((this._Timeout != value))
-				{
-					this.OnTimeoutChanging(value);
-					this.SendPropertyChanging();
-					this._Timeout = value;
-					this.SendPropertyChanged("Timeout");
-					this.OnTimeoutChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Locked", DbType="Bit NOT NULL")]
-		public bool Locked
-		{
-			get
-			{
-				return this._Locked;
-			}
-			set
-			{
-				if ((this._Locked != value))
-				{
-					this.OnLockedChanging(value);
-					this.SendPropertyChanging();
-					this._Locked = value;
-					this.SendPropertyChanged("Locked");
-					this.OnLockedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SessionItemShort", DbType="VarBinary(7000)", UpdateCheck=UpdateCheck.Never)]
-		public System.Data.Linq.Binary SessionItemShort
-		{
-			get
-			{
-				return this._SessionItemShort;
-			}
-			set
-			{
-				if ((this._SessionItemShort != value))
-				{
-					this.OnSessionItemShortChanging(value);
-					this.SendPropertyChanging();
-					this._SessionItemShort = value;
-					this.SendPropertyChanged("SessionItemShort");
-					this.OnSessionItemShortChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SessionItemLong", DbType="Image", UpdateCheck=UpdateCheck.Never)]
-		public System.Data.Linq.Binary SessionItemLong
-		{
-			get
-			{
-				return this._SessionItemLong;
-			}
-			set
-			{
-				if ((this._SessionItemLong != value))
-				{
-					this.OnSessionItemLongChanging(value);
-					this.SendPropertyChanging();
-					this._SessionItemLong = value;
-					this.SendPropertyChanged("SessionItemLong");
-					this.OnSessionItemLongChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Flags", DbType="Int NOT NULL")]
-		public int Flags
-		{
-			get
-			{
-				return this._Flags;
-			}
-			set
-			{
-				if ((this._Flags != value))
-				{
-					this.OnFlagsChanging(value);
-					this.SendPropertyChanging();
-					this._Flags = value;
-					this.SendPropertyChanged("Flags");
-					this.OnFlagsChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ASPStateTempApplications")]
-	public partial class ASPStateTempApplication : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _AppId;
-		
-		private string _AppName;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnAppIdChanging(int value);
-    partial void OnAppIdChanged();
-    partial void OnAppNameChanging(string value);
-    partial void OnAppNameChanged();
-    #endregion
-		
-		public ASPStateTempApplication()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AppId", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int AppId
-		{
-			get
-			{
-				return this._AppId;
-			}
-			set
-			{
-				if ((this._AppId != value))
-				{
-					this.OnAppIdChanging(value);
-					this.SendPropertyChanging();
-					this._AppId = value;
-					this.SendPropertyChanged("AppId");
-					this.OnAppIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AppName", DbType="Char(280) NOT NULL", CanBeNull=false)]
-		public string AppName
-		{
-			get
-			{
-				return this._AppName;
-			}
-			set
-			{
-				if ((this._AppName != value))
-				{
-					this.OnAppNameChanging(value);
-					this.SendPropertyChanging();
-					this._AppName = value;
-					this.SendPropertyChanged("AppName");
-					this.OnAppNameChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 }
