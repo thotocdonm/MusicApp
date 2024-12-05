@@ -272,7 +272,7 @@
             }
 
 
-            window.listSong = @Html.Raw(Json.Encode(Model.Songs.Where(x=>x.SingerName=="JungKook")));
+            window.listSong = @Html.Raw(Json.Encode(Model.Songs));
             window.songIndex = parseInt(currentPlaying.getAttribute("data-index")) ;
             const song = JSON.parse(currentPlaying.getAttribute("data-song"));
             const songTitle = song.SongTitle;

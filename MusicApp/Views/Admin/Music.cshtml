@@ -143,7 +143,7 @@
                 @using (Html.BeginForm("EditSong", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <!-- Song ID (Hidden) -->
-                    <input type="hidden" id="editSongId" name="songId" />
+                    <input type="text" id="editSongId" name="songId" />
 
                     <!-- Song Title -->
                     <label for="editSongTitle">Song Title</label>
