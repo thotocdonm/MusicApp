@@ -80,7 +80,6 @@
 
             <div style="position: absolute; margin-left: 20px; padding-top: 110px;">
                 <h1 style="color:white; font-weight: bold; font-size:100px">@Model.playlistName</h1>
-                <p style="color:white; font-size:15px">19,576,629 monthly listeners</p>
             </div>
         </div>
 
@@ -88,16 +87,13 @@
         <div style="background-color: rgba(25, 20, 20,0.2);padding-top:30px; padding-left: 20px; width: 100%; display: flex; gap: 30px; max-width: 100%; flex-direction: column; height:100%">
             <div style="display: flex; align-items: center; gap: 30px; width:100%">
                 <i id="toggleIcon" class="bi bi-play-circle-fill btnPlay_Pause" style="background-color: #121212; border-radius:50%" onclick="changeIcon(this)"></i>
-                <button class="btn btn-outline-light follow-btn">Follow</button>
-                <i class="bi bi-three-dots" style="color: #b3b3b3"></i>
             </div>
 
             <div style=" width: 100%">
                 <h2 style="color:white">List Song</h2>
                 @foreach (var song in Model.Songs)
                 {
-                    if (song.SingerName == "JungKook")
-                    {
+                   
                         <div id="song-@index" data-index="@index" class="row g-0 popular-track track-container" data-song='@Html.Raw(Json.Encode(song))' onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
                             <div class="col-11 col-sm-8" style="display:flex; gap:16px; align-items:center;">
                                 <div style="color: #b3b3b3;" class="track-index">
@@ -119,7 +115,6 @@
                             <div class="col-1 durationSong" style="color: #b3b3b3;">@song.Duration</div>
                         </div>
                         index++;
-                    }
                 }
 
             </div>

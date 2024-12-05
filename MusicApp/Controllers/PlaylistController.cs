@@ -10,7 +10,7 @@ namespace MusicApp.Controllers
     public class PlaylistController : Controller
     {
 
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-H3FAVBH;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-1VP4FKU\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
         // GET: Playlist
         public string GetAudioDuration(string filePath)
         {
@@ -57,6 +57,45 @@ namespace MusicApp.Controllers
 
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public JsonResult AddToPlaylist(int playlistId, int songId)
+        {
+            try
+            {
+                var playlist = db.mic_playlists.FirstOrDefault(p => p.playlist_id == playlistId && p.is_deleted == '0');
+
+                if (playlist == null)
+                {
+                    return Json(new { success = false, message = "Playlist not found" });
+                }
+
+                var existingSong = db.mic_song_playlists
+         .FirstOrDefault(sp => sp.song_id == songId && sp.playlist_id == playlistId && sp.is_deleted == '0');
+
+                if (existingSong != null)
+                {
+                    return Json(new { success = false, message = "Song already exists in the playlist." });
+                }
+
+                mic_song_playlist data = new mic_song_playlist();
+                data.song_id = songId;
+                data.is_deleted = '0';
+                data.playlist_id = playlistId;
+                data.created_time = DateTime.Now;
+                data.created_by = Session["login_name"]?.ToString();
+
+                db.mic_song_playlists.InsertOnSubmit(data);
+                db.SubmitChanges();
+                TempData["SuccessMessage"] = "song added playlist successfully!";
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
         }
 
         [HttpGet]
