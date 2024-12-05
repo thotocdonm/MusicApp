@@ -82,10 +82,6 @@
                     $('.volume-input').val(audio.volume * 100);
 
                     // Play the song
-                    audio.addEventListener('canplay', function () {
-                        console.log("Audio is ready to play");
-                        audio.play();
-                    }, { once: true });
                     isPlaying = true;
 
                     // Update sessionStorage with the current time during playback
@@ -191,7 +187,6 @@
 
             // Play the song
 
-            audio.play();
             isPlaying = true;
 
             // Update sessionStorage with the current time during playback
@@ -270,8 +265,9 @@
             $('.artist-name').text(data.artist);
 
             // Set audio source
+            audio.preload = "auto";
             audio.src = "/Public/Songs/" + data.src;
-
+            audio.load();
             // Update the total time based on the audio duration
             audio.addEventListener('loadedmetadata', function () {
                 $('.total-time').text(formatTime(audio.duration));

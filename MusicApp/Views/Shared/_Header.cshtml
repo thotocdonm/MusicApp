@@ -2,9 +2,52 @@
 @{
     ViewBag.Title = "Header";
     bool isLoggedIn = Session["user_id"] != null;
+    string role = null;
+    string user = null;
+    if (Session["role"] != null && Session["login_name"] != null)
+    {
+        role = Session["role"].ToString();
+        user = Session["login_name"].ToString().Split('@')[0];
+    }
 }
 
 <style>
+    .dropdown-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-button {
+        padding: 20px 20px;
+        background-color: #ffffff;
+        color: black;
+        border-radius: 30px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #121212;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        overflow: hidden;
+        z-index: 1000;
+    }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+        }
+
+            .dropdown-menu a:hover {
+                background-color: grey;
+            }
     .header {
         background-color: #000000;
         padding: 0 20px;
@@ -105,11 +148,7 @@
         background: white;
         border: none;
     }
-
     }
-
-
-   
 </style>
 
 <div class="header">
@@ -128,16 +167,44 @@
     <div>
         <button type="button" class="btn register @(isLoggedIn ? "d-none" : "")" onclick="location.href='/Auth/Register/'">Đăng ký</button>
         <button type="button" class="btn sign-in @(isLoggedIn ? "d-none" : "")" onclick="location.href='/Auth/Login/'">Đăng nhập</button>
-        <button type="button" class="btn btnLogout @(isLoggedIn ? "" : "d-none")" onclick="location.href='/Auth/Logout/'">Đăng xuất</button>
+        @if (role != null && user != null)
+        {
+            <div class="dropdown-container">
+                <div class="dropdown-button">@(user)</div>
+                <div class="dropdown-menu">
+                    <a href="#">Information</a>
+                    @if (role == "admin")
+                    {
+                        <a href="/Admin/Dashboard">Admin</a>
+                    }
+
+                    <a href='/Auth/Logout/'>Đăng xuất</a>
+                </div>
+            </div>
+
+        }
     </div>
 
 
 
 
     <script>
-    function redirectToHomePage() {
-        window.location.href = "/";
-    }
+        function redirectToHomePage() {
+            window.location.href = "/";
+        }
+        document.querySelector('.dropdown-button').addEventListener('click', function () {
+            const menu = document.querySelector('.dropdown-menu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', function (e) {
+            const button = document.querySelector('.dropdown-button');
+            const menu = document.querySelector('.dropdown-menu');
+
+            if (!button.contains(e.target)) {
+                menu.style.display = 'none';
+            }
+        });
     </script>
 </div>
 

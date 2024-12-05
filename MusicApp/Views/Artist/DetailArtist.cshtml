@@ -146,7 +146,7 @@
             fadeOutContainer.on("scroll", function () {
                 const scrollTop = fadeOutContainer.scrollTop(); // Lấy vị trí cuộn của div
 
-                const fadePoint = 250; // Điều chỉnh giá trị này theo nhu cầu
+                const fadePoint = 150; // Điều chỉnh giá trị này theo nhu cầu
 
 
                 if (scrollTop < fadePoint) {
@@ -262,7 +262,6 @@
                 indexText.classList.add("d-none");
                 waveIcon.classList.add("d-none");
                 currentPlaying = null;
-                element = null;
             } else {
                 if (currentElement && currentElement !== element) {
                     sessionStorage.clear();
@@ -302,6 +301,27 @@
                 artist: song.SingerName,
                 albumArt: song.SongThumbnail,
                 src: song.SongSrc
+            }
+            const playedSongs = JSON.parse(sessionStorage.getItem('playedSongs')) || [];
+
+            if (!playedSongs.includes(songId)) {
+                // First time clicking this song in the session
+                console.log('First click detected for song:', songId);
+                playedSongs.push(songId);
+                sessionStorage.setItem('playedSongs', JSON.stringify(playedSongs));
+
+                // Increase song views in the database
+                $.ajax({
+                    url: '@Url.Action("IncreaseView", "Song")', // Your API endpoint for increasing views
+                    type: 'POST',
+                    data: { songId: songId },
+                    success: function (response) {
+                        console.log('Song views increased:', response);
+                    },
+                    error: function (error) {
+                        console.error('Error increasing song views:', error);
+                    }
+                });
             }
 
             if (songId === currentSongId && !audio.paused) {
