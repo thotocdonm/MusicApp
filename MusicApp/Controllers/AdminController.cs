@@ -11,7 +11,7 @@ namespace MusicApp.Controllers
     {
 
 
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-1VP4FKU\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-UOULN0V\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
 
 
         // GET: Admin
@@ -374,13 +374,15 @@ namespace MusicApp.Controllers
             // If new music file is uploaded, delete old file and save new one
             if (musicFile != null && musicFile.ContentLength > 0)
             {
+                long unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                 var oldMusicFilePath = Server.MapPath("~/Public/Songs/" + song.song_src);
                 if (System.IO.File.Exists(oldMusicFilePath))
                 {
                     System.IO.File.Delete(oldMusicFilePath);
                 }
 
-                var musicFileName = Path.GetFileName(musicFile.FileName);
+                var musicFileName = $"{Path.GetFileNameWithoutExtension(musicFile.FileName)}_{unixTimestamp}{Path.GetExtension(musicFile.FileName)}";
+                musicFileName = musicFileName.Replace(" ", "_");
                 var musicFilePath = Path.Combine(Server.MapPath("~/Public/Songs"), musicFileName);
                 musicFile.SaveAs(musicFilePath);
                 song.song_src = musicFileName;
@@ -389,12 +391,19 @@ namespace MusicApp.Controllers
             // If new thumbnail is uploaded, delete old file and save new one
             if (thumbnailFile != null && thumbnailFile.ContentLength > 0)
             {
+                long unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                 var oldThumbnailFilePath = Server.MapPath("~/Public/Images/" + song.thumbnail);
                 if (System.IO.File.Exists(oldThumbnailFilePath))
                 {
                     System.IO.File.Delete(oldThumbnailFilePath);
                 }
 
+
+                var thumbnailFileName = $"{Path.GetFileNameWithoutExtension(thumbnailFile.FileName)}_{unixTimestamp}{Path.GetExtension(thumbnailFile.FileName)}";
+                thumbnailFileName = thumbnailFileName.Replace(" ", "_");
+                var thumbnailFilePath = Path.Combine(Server.MapPath("~/Public/Images"), thumbnailFileName);
+                thumbnailFile.SaveAs(thumbnailFilePath);
+                song.thumbnail = thumbnailFileName;
             }
 
             db.SubmitChanges();
