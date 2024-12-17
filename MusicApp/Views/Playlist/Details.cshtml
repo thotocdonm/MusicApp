@@ -95,7 +95,7 @@
                 {
                    
                         <div id="song-@index" data-index="@index" class="row g-0 popular-track track-container" data-song='@Html.Raw(Json.Encode(song))' onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
-                            <div class="col-11 col-sm-8" style="display:flex; gap:16px; align-items:center;">
+                            <div class="col-11 col-sm-7" style="display:flex; gap:16px; align-items:center;">
                                 <div style="color: #b3b3b3;" class="track-index">
                                     <p class="index-text" style="margin-top:1em">@((index + 1))</p>
                                     <i class="bi bi-play-fill d-none"></i>
@@ -113,6 +113,12 @@
                             </div>
                             <div class="col-3 d-none d-sm-block viewSong" style="color: #b3b3b3;">@song.Views</div>
                             <div class="col-1 durationSong" style="color: #b3b3b3;">@song.Duration</div>
+                            <div class="col-1" style="color: #b3b3b3; display: flex; justify-content: center; align-items: center;">
+                                <i class="bi bi-trash-fill" style="cursor: pointer; color: red; font-size: 1.2rem;"
+                                   title="Delete song"
+                                   onclick="deleteSong(@Model.playlistId, @song.SongId, event)">
+                                </i>
+                            </div>
                         </div>
                         index++;
                 }
@@ -348,6 +354,32 @@
                 if (firstItem) {
                     togglePlayPause(firstItem);
                 }
+            }
+        }
+
+        function deleteSong(playlistId, songId, event) {
+            event.stopPropagation();
+            if (confirm("Bạn có chắc chắn muốn xóa bài hát này?")) {
+                fetch('/Playlist/DeleteSong', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        playlistId: playlistId,
+                        songId: songId
+                        })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            window.location.href = `/Playlist/Details/${playlistId}`;
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
             }
         }
 

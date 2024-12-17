@@ -22,6 +22,7 @@ namespace MusicApp.Models
         public IEnumerable<Singer> Singers { get; set; }
 
         public String playlistName { get; set; }
+        public long playlistId { get; set; }
     }
 
     public class Artist
