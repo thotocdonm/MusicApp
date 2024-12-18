@@ -10,7 +10,7 @@ namespace MusicApp.Controllers
     public class PlaylistController : Controller
     {
 
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-1VP4FKU\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-UOULN0V\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
         // GET: Playlist
         public string GetAudioDuration(string filePath)
         {

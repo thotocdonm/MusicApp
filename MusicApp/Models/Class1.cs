@@ -79,6 +79,8 @@ namespace MusicApp.Models
         public string SongTitle { get; set; }
         public int Views { get; set; }
         public int SingerId { get; set; }
+
+        public string SingerUrl { get; set; }
         public string SingerName { get; set; }
 
         public string SingerThumbnailSrc { get; set; }
