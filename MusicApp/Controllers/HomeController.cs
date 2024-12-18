@@ -106,5 +106,36 @@ namespace MusicApp.Controllers
 
             return View();
         }
+
+        public JsonResult Search(string keyword)
+        {
+            var resultSongs = (from song in db.mic_songs
+                               join singer in db.mic_singers on song.singer_id equals singer.singer_id
+                               where song.is_deleted == '0' && song.name.Contains(keyword)
+                               select new SingerSongViewModel
+                               {
+                                   SongId = song.song_id,
+                                   SongSrc = song.song_src,
+                                   SongUrl = song.song_url,
+                                   SingerId = song.singer_id,
+                                   SingerName = singer.name,
+                                   SongTitle = song.name,
+                                   SingerUrl = singer.singer_url,
+                                   SongThumbnail = song.thumbnail,
+                               }).ToList();
+
+            var resultSingers = (from singer in db.mic_singers 
+                          where singer.name.Contains(keyword)
+                          select new SingerSongViewModel
+                          {
+                              SingerId = singer.singer_id,
+                              SingerName = singer.name,
+                              SingerThumbnail = singer.avatar,
+                              SingerUrl = singer.singer_url,
+                          }).ToList();
+
+            return Json(new {Songs = resultSongs, Singers = resultSingers}, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

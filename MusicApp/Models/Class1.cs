@@ -52,7 +52,7 @@ namespace MusicApp.Models
         public string SingerUrl { get; set; }
         public string SongSrc { get; set; }
         public string SongUrl { get; set; }
-
+        public string SingerThumbnail { get; set; }
 
         public string SongThumbnail { get; set; }
         public string Duration { get; set; }

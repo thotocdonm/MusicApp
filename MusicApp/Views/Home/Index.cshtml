@@ -11,9 +11,9 @@
         border-radius: 10px;
         padding: 20px;
         overflow-y: hidden;
-        display:flex;
-        flex-direction:column;
-        gap:20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
         .music
 
     {
@@ -102,83 +102,181 @@
         <button type="button" class="btn btn-top">Podcast</button>
     </div>
     <div class="title">Phổ biến</div>
-    <div class="row g-2">
-        @foreach (var song in Model.PopularSongs)
-        {
-            <div class="col-md-2 music" onclick="window.location.href='/Song/Details/@song.SongUrl';">
-                <img src="~/Public/Images/@song.SongThumbnail" class="object-fit-contain" />
-                <i class="bi bi-play-fill"></i>
-                <div class="description">
-                    <div class="title">@song.SongTitle</div>
-                    <a href="~/Artist/DetailArtist/@song.SingerUrl" style="text-decoration:none;" class="inner-desc">
-                        @song.SingerName
-                    </a>
-
-                </div>
-            </div>
-        }
 
 
+    <div id="searchResult" class="row g-2" style="display:none">
+        <h2 style="color:white">Artists</h2><br />
+        <div id="matchArtist" class="d-flex" style="flex-wrap:wrap"></div>
+        <h2 style="color:white">Songs</h2><br />
+        <div id="matchSong" class="d-flex" style="flex-wrap:wrap"></div>
     </div>
 
-    <div class="title">Nhạc Nhật</div>
-    <div class="row g-2">
-        @foreach (var song in Model.JapaneseSongs)
-        {
-            <div class="col-md-2 music" onclick="window.location.href='/Song/Details/@song.SongUrl';">
-                <img src="~/Public/Images/@song.SongThumbnail" class="object-fit-contain" />
-                <i class="bi bi-play-fill"></i>
-                <div class="description">
-                    <div class="title">@song.SongTitle</div>
-                    <a href="~/Artist/DetailArtist/@song.SingerUrl" style="text-decoration:none;" class="inner-desc">
-                        @song.SingerName
-                    </a>
 
+    <div id="allSong">
+        <div class="row g-2">
+            @foreach (var song in Model.PopularSongs)
+            {
+                <div class="col-md-2 music" onclick="window.location.href='/Song/Details/@song.SongUrl';">
+                    <img src="~/Public/Images/@song.SongThumbnail" class="object-fit-contain" />
+                    <i class="bi bi-play-fill"></i>
+                    <div class="description">
+                        <div class="title">@song.SongTitle</div>
+                        <a href="~/Artist/DetailArtist/@song.SingerUrl" style="text-decoration:none;" class="inner-desc">
+                            @song.SingerName
+                        </a>
+
+                    </div>
                 </div>
-            </div>
-        }
+            }
 
 
-    </div>
+        </div>
 
-    <div class="title">Nhạc Việt</div>
-    <div class="row g-2">
-        @foreach (var song in Model.VietnameseSongs)
-        {
-            <div class="col-md-2 music" onclick="window.location.href='/Song/Details/@song.SongUrl';">
-                <img src="~/Public/Images/@song.SongThumbnail" class="object-fit-contain" />
-                <i class="bi bi-play-fill"></i>
-                <div class="description">
-                    <div class="title">@song.SongTitle</div>
-                    <a href="~/Artist/DetailArtist/@song.SingerUrl" style="text-decoration:none;" class="inner-desc">
-                        @song.SingerName
-                    </a>
+        <div class="title">Nhạc Nhật</div>
+        <div class="row g-2">
+            @foreach (var song in Model.JapaneseSongs)
+            {
+                <div class="col-md-2 music" onclick="window.location.href='/Song/Details/@song.SongUrl';">
+                    <img src="~/Public/Images/@song.SongThumbnail" class="object-fit-contain" />
+                    <i class="bi bi-play-fill"></i>
+                    <div class="description">
+                        <div class="title">@song.SongTitle</div>
+                        <a href="~/Artist/DetailArtist/@song.SingerUrl" style="text-decoration:none;" class="inner-desc">
+                            @song.SingerName
+                        </a>
 
+                    </div>
                 </div>
-            </div>
-        }
+            }
 
 
-    </div>
+        </div>
 
-    <div class="title">Nhạc Hàn</div>
-    <div class="row g-2">
-        @foreach (var song in Model.KoreanSongs)
-        {
-            <div class="col-md-2 music" onclick="window.location.href='/Song/Details/@song.SongUrl';">
-                <img src="~/Public/Images/@song.SongThumbnail" class="object-fit-contain" />
-                <i class="bi bi-play-fill"></i>
-                <div class="description">
-                    <div class="title">@song.SongTitle</div>
-                    <a href="~/Artist/DetailArtist/@song.SingerUrl" style="text-decoration:none;" class="inner-desc">
-                        @song.SingerName
-                    </a>
+        <div class="title">Nhạc Việt</div>
+        <div class="row g-2">
+            @foreach (var song in Model.VietnameseSongs)
+            {
+                <div class="col-md-2 music" onclick="window.location.href='/Song/Details/@song.SongUrl';">
+                    <img src="~/Public/Images/@song.SongThumbnail" class="object-fit-contain" />
+                    <i class="bi bi-play-fill"></i>
+                    <div class="description">
+                        <div class="title">@song.SongTitle</div>
+                        <a href="~/Artist/DetailArtist/@song.SingerUrl" style="text-decoration:none;" class="inner-desc">
+                            @song.SingerName
+                        </a>
 
+                    </div>
                 </div>
-            </div>
-        }
+            }
 
 
+        </div>
+
+        <div class="title">Nhạc Hàn</div>
+        <div class="row g-2">
+            @foreach (var song in Model.KoreanSongs)
+            {
+                <div class="col-md-2 music" onclick="window.location.href='/Song/Details/@song.SongUrl';">
+                    <img src="~/Public/Images/@song.SongThumbnail" class="object-fit-contain" />
+                    <i class="bi bi-play-fill"></i>
+                    <div class="description">
+                        <div class="title">@song.SongTitle</div>
+                        <a href="~/Artist/DetailArtist/@song.SingerUrl" style="text-decoration:none;" class="inner-desc">
+                            @song.SingerName
+                        </a>
+
+                    </div>
+                </div>
+            }
+
+
+        </div>
     </div>
-
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#search-input').on('input', function () {
+            const inputValue = $(this).val().trim();
+
+            if (inputValue === '') {
+                $('#allSong').show();
+                $('#searchResult').hide();
+            } else {
+                $('#allSong').hide();
+                $('#searchResult').show();
+            }
+        });
+    });
+
+    let searchsongTimeout;
+function timesearchSong() {
+    clearTimeout(searchsongTimeout);
+    searchsongTimeout = setTimeout(() => {
+        searchSong();
+    }, 1000);
+}
+
+function searchSong() {
+    let keyword = $('#search-input').val().trim();
+    console.log(keyword);
+
+        if (keyword.length > 0) {
+            $.ajax({
+                url: '@Url.Action("Search", "Home")',
+                type: 'GET',
+                data: { keyword: keyword },
+                success: function (response) {
+                    console.log(response);
+                    console.log(response.Songs)
+                    let resultsongHtml = '';
+                    let resultsingerHtml = '';
+                    if (response.Songs.length > 0) {
+                        response.Songs.forEach(function (song) {
+                            resultsongHtml += `
+                                <div class="col-md-2 music" onclick="window.location.href='/Song/Details/${song.SongUrl}'">
+                                    <img src="/Public/Images/${song.SongThumbnail}" class="object-fit-contain" />
+                                    <i class="bi bi-play-fill"></i>
+                                    <div class="description">
+                                        <div class="title">${song.SongTitle}</div>
+                                        <a href="/Artist/DetailArtist/${song.SingerUrl}" style="text-decoration:none;" class="inner-desc">
+                                            ${song.SingerName}
+                                        </a>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        resultsongHtml = '<div class="col-12 text-white">Không tìm thấy kết quả nào.</div>';
+                    }
+                    if (response.Singers.length > 0) {
+                        response.Singers.forEach(function (song) {
+                            resultsingerHtml += `
+                                    <div class="col-md-2 music" onclick="window.location.href='/Artist/DetailArtist/${song.SingerUrl}'">
+                                        <img style="border-radius:50%" src="/Public/Images/${song.SingerThumbnail}" class="object-fit-contain" />
+                                        <i class="bi bi-play-fill"></i>
+                                        <div class="description">
+                                            <div class="title">${song.SingerName}</div>
+                                            <a href="/Artist/DetailArtist/${song.SingerUrl}" style="text-decoration:none;" class="inner-desc">
+                                                Artist
+                                            </a>
+                                        </div>
+                                    </div>
+                                `;
+                        });
+                    } else {
+                        resultsingerHtml = '<div class="col-12 text-white">Không tìm thấy kết quả nào.</div>';
+                    }
+                    $('#matchSong').html(resultsongHtml);
+                    $('#matchArtist').html(resultsingerHtml);
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        } else {
+            $('#searchResult').html(''); // Xóa kết quả tìm kiếm khi không nhập từ khóa
+        }
+}
+</script>

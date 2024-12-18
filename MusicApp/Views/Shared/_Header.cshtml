@@ -18,11 +18,13 @@
     }
 
     .dropdown-button {
-        color: #AAAAAA;
+        display:flex;
+        justify-content:center;
+        color: white;
         font-weight:bold;
         font-size: 20px;
         cursor: pointer;
-        text-align: center;
+        align-items:center
     }
 
     .dropdown-menu {
@@ -160,7 +162,7 @@
         </div>
         <div class="input-wrapper">
             <label for="search-input"><i class="bi bi-search icon"></i></label>
-            <input id="search-input" type="text" placeholder="Bạn muốn phát nội dùng gì?" />
+            <input id="search-input" type="text" placeholder="Bạn muốn phát nội dùng gì?" oninput="timesearchSong()" />
         </div>
     </div>
     <div>
@@ -169,9 +171,9 @@
         @if (role != null && user != null)
         {
             <div class="dropdown-container">
-                <div class="dropdown-button">@(user)</div>
+                <div class="dropdown-button" style="background-color:#fe8301; border-radius:50%; width:2.5rem; height:2.5rem">@(user[0])</div>
                 <div class="dropdown-menu">
-                    <a href="#">Information</a>
+                    <a href="/User">Account</a>
                     @if (role == "admin")
                     {
                         <a href="/Admin/Dashboard">Admin</a>

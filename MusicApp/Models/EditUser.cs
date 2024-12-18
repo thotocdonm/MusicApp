@@ -17,6 +17,14 @@ namespace MusicApp.Models
         [Required]
         public string mobile_number { get; set; }
         [Required]
+        public string full_name { get; set; }
+        [Required]
+        public string password { get; set; }
+        [Required]
+        public string newPassWord { get; set; }
+        [Required]
+        public string cfPassWord { get; set; }
+        [Required]
         public string role { get; set; }
     }
 

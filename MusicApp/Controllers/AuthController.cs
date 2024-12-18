@@ -77,6 +77,9 @@ namespace MusicApp.Controllers
                         Session["user_id"] = user.user_id;
                         Session["login_name"] = user.login_name;
                         Session["role"] = user.role;
+                        Session["phone"] = user.mobile_number;
+                        Session["fullname"] = user.full_name;
+                        Session["email"] = user.email;
                         return RedirectToAction("Index", "Home");
                     }
                     else

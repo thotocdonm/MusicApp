@@ -161,6 +161,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\SongController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2197,6 +2198,7 @@
     <Content Include="Views\Song\Details.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\test\Index.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

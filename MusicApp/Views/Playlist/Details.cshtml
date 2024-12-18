@@ -295,6 +295,7 @@
             } else {
                 sessionStorage.setItem('currentSong', JSON.stringify(songData));
                 currentSongId = songId;
+                $(document).trigger('playSongFirst');
                 $(document).trigger('playSong');
             }
 
