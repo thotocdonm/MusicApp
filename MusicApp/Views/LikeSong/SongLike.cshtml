@@ -1,6 +1,7 @@
-﻿@model MusicApp.Models.MusicViewModel
+﻿
+@model IEnumerable<MusicApp.Models.SingerSongViewModel>
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "SongLike";
     int index = 0;
 }
 @Scripts.Render("~/Scripts/global.js")
@@ -9,6 +10,20 @@
 <head>
     <link href="~/Assets/css/artist2.css" rel="stylesheet" />
     <style>
+        ﻿.image-container {
+            width: 100%;
+            height: 100%; /* Thay đổi này để khớp với kích thước ảnh */
+            overflow: hidden; /* Ẩn phần ảnh bị thừa */
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            overflow: hidden;
+            object-fit: contain;
+        }
+
+        .image-container img {
+            object-fit: cover; /* Giữ nguyên tỉ lệ và chỉ hiển thị phần ảnh trong khung */
+            transform: scale(1.1)
+        }
 
         .wave-bar {
             width: 3px;
@@ -72,16 +87,15 @@
 </head>
 <body>
     <div class="gradient_background" style="display: flex; flex-direction: column;max-height:100%; max-width:100%">
-        
         <div style="display:flex; width:100%; height:40%; gap: 20px">
-            <div class="image-container" style="position: relative; overflow: hidden; align-content: center; margin-left: 1rem; display: flex; box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.3)">
-                <img id="bgArtist" src="~/Public/Images/grey.jpg" alt="Jungkook_img" class="fade-out-image" style="width: 200px; height: 200px;" />
-                <i class="bi bi-music-note-beamed" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 8rem "></i>
+            <div class="image-container" style="position: relative; overflow: hidden; align-content: center; margin-left: 1rem; display: flex; box-shadow:0px 0px 5px 5px rgba(0, 0, 0, 0.3)">
+                <img id="bgArtist" src="~/Public/Images/likesong.jpg" alt="Jungkook_img" class="fade-out-image" style="width: 200px; height: 200px; " />
+                <i class="bi bi-balloon-heart-fill" style="color:white;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 8rem "></i>
             </div>
 
 
             <div style="align-content:center">
-                <h1 style="color:white; font-weight: bold; font-size:100px">@Model.playlistName</h1>
+                <h1 style="color:white; font-weight: bold; font-size:100px">Liked Songs</h1>
             </div>
         </div>
 
@@ -89,15 +103,16 @@
         <div style="background-color: rgba(25, 20, 20,0.2);padding-top:30px; padding-left: 20px; width: 100%; display: flex; gap: 30px; max-width: 100%; flex-direction: column; height:100%">
             <div style="display: flex; align-items: center; gap: 30px; width:100%">
                 <i id="toggleIcon" class="bi bi-play-circle-fill btnPlay_Pause" style="background-color: #121212; border-radius:50%" onclick="changeIcon(this)"></i>
+                <button class="btn btn-outline-light follow-btn">Follow</button>
+                <i class="bi bi-three-dots" style="color: #b3b3b3"></i>
             </div>
 
             <div style=" width: 100%">
-                <h2 style="color:white">List Song</h2>
-                @foreach (var song in Model.Songs)
+                <h2 style="color:white">Popular</h2>
+                @foreach (var song in Model)
                 {
-
                     <div id="song-@index" data-index="@index" class="row g-0 popular-track track-container" data-song='@Html.Raw(Json.Encode(song))' onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
-                        <div class="col-11 col-sm-7" style="display:flex; gap:16px; align-items:center;">
+                        <div class="col-11 col-sm-8" style="display:flex; gap:16px; align-items:center;">
                             <div style="color: #b3b3b3;" class="track-index">
                                 <p class="index-text" style="margin-top:1em">@((index + 1))</p>
                                 <i class="bi bi-play-fill d-none"></i>
@@ -115,15 +130,10 @@
                         </div>
                         <div class="col-3 d-none d-sm-block viewSong" style="color: #b3b3b3;">@song.Views</div>
                         <div class="col-1 durationSong" style="color: #b3b3b3;">@song.Duration</div>
-                        <div class="col-1" style="color: #b3b3b3; display: flex; justify-content: center; align-items: center;">
-                            <i class="bi bi-trash-fill" style="cursor: pointer; color: red; font-size: 1.2rem;"
-                               title="Delete song"
-                               onclick="deleteSong(@Model.playlistId, @song.SongId, event)">
-                            </i>
-                        </div>
                     </div>
                     index++;
                 }
+                
 
             </div>
         </div>
@@ -139,7 +149,7 @@
             fadeOutContainer.on("scroll", function () {
                 const scrollTop = fadeOutContainer.scrollTop(); // Lấy vị trí cuộn của div
 
-                const fadePoint = 250; // Điều chỉnh giá trị này theo nhu cầu
+                const fadePoint = 150; // Điều chỉnh giá trị này theo nhu cầu
 
 
                 if (scrollTop < fadePoint) {
@@ -280,7 +290,7 @@
             }
 
 
-            window.listSong = @Html.Raw(Json.Encode(Model.Songs));
+            window.listSong = @Html.Raw(Json.Encode(Model));
             window.songIndex = parseInt(currentPlaying.getAttribute("data-index")) ;
             const song = JSON.parse(currentPlaying.getAttribute("data-song"));
             const songTitle = song.SongTitle;
@@ -329,14 +339,14 @@
             }
 
 
-            $(document).on('footerSongPaused', function () {
+            $(document).off('footerSongPaused').on('footerSongPaused', function () {
                 $('#toggleIcon').removeClass('bi-pause-circle-fill').addClass('bi-play-circle-fill');
-                currentPlaying = currentElement;
-                console.log(currentPlaying);
-                const playIcon = currentPlaying.querySelector(".track-index .bi-play-fill");
-                const pauseIcon = currentPlaying.querySelector(".track-index .bi-pause-fill");
-                const waveIcon = currentPlaying.querySelector(".track-index .bar-wave");
-                const indexText = currentPlaying.querySelector(".track-index .index-text");
+                //currentPlaying = currentElement;
+                console.log(currentElement , "alo");
+                const playIcon = currentElement.querySelector(".track-index .bi-play-fill");
+                const pauseIcon = currentElement.querySelector(".track-index .bi-pause-fill");
+                const waveIcon = currentElement.querySelector(".track-index .bar-wave");
+                const indexText = currentElement.querySelector(".track-index .index-text");
 
                     // Đặt lại trạng thái bài hát đang phát
                 pauseIcon.classList.add("d-none");
@@ -345,15 +355,15 @@
                 indexText.classList.remove("d-none");
             });
 
-            $(document).on('footerSongPlaying', function () {
+            $(document).off('footerSongPlaying').on('footerSongPlaying', function () {
 
                 $('#toggleIcon').removeClass('bi-play-circle-fill').addClass('bi-pause-circle-fill');
-                currentPlaying = currentElement;
-                const playIcon = currentPlaying.querySelector(".track-index .bi-play-fill");
-                const pauseIcon = currentPlaying.querySelector(".track-index .bi-pause-fill");
-                const waveIcon = currentPlaying.querySelector(".track-index .bar-wave");
-                const indexText = currentPlaying.querySelector(".track-index .index-text");
-                const titleSong = currentPlaying.querySelector(".titleSong");
+                //currentPlaying = currentElement;
+                const playIcon = currentElement.querySelector(".track-index .bi-play-fill");
+                const pauseIcon = currentElement.querySelector(".track-index .bi-pause-fill");
+                const waveIcon = currentElement.querySelector(".track-index .bar-wave");
+                const indexText = currentElement.querySelector(".track-index .index-text");
+                const titleSong = currentElement.querySelector(".titleSong");
 
                 // Update current song's appearance
                 pauseIcon.classList.add("d-none");
@@ -381,34 +391,9 @@
             }
         }
 
-        function deleteSong(playlistId, songId, event) {
-            event.stopPropagation();
-            if (confirm("Bạn có chắc chắn muốn xóa bài hát này?")) {
-                fetch('/Playlist/DeleteSong', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        playlistId: playlistId,
-                        songId: songId
-                        })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert(data.message);
-                            window.location.href = `/Playlist/Details/${playlistId}`;
-                        } else {
-                            alert(data.message);
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-            }
-        }
-
 
 
     </script>
 </body>
 </html>
+

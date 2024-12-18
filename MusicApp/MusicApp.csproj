@@ -159,6 +159,7 @@
     <Compile Include="Controllers\AudioController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LikeSongController.cs" />
     <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\SongController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -2173,6 +2174,7 @@
     <Content Include="Views\Artist\DetailArtist.cshtml" />
     <Content Include="Views\Admin\AccessDenied.cshtml" />
     <Content Include="Views\Home\AccessDenied.cshtml" />
+    <Content Include="Views\LikeSong\SongLike.cshtml" />
     <None Include="Views\Shared\_FooterMain.cshtml" />
     <None Include="Views\Playlist\Details.cshtml" />
     <Content Include="Web.config" />
