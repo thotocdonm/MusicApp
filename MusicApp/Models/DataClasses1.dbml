@@ -1,25 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="music" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Table Name="dbo.ASPStateTempApplications" Member="ASPStateTempApplications">
-    <Type Name="ASPStateTempApplication">
-      <Column Name="AppId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="AppName" Type="System.String" DbType="Char(280) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ASPStateTempSessions" Member="ASPStateTempSessions">
-    <Type Name="ASPStateTempSession">
-      <Column Name="SessionId" Type="System.String" DbType="NVarChar(88) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="Expires" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="LockDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="LockDateLocal" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="LockCookie" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Timeout" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Locked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="SessionItemShort" Type="System.Data.Linq.Binary" DbType="VarBinary(7000)" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="SessionItemLong" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="Flags" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.mic_favourite_songs" Member="mic_favourite_songs">
     <Type Name="mic_favourite_song">
       <Column Name="favourite_song_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
