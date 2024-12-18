@@ -1,4 +1,5 @@
 ﻿using MusicApp.Models;
+using MusicApp.Utils;
 using System;
 using System.IO;
 using System.Linq;
@@ -7,15 +8,21 @@ using System.Web.Mvc;
 
 namespace MusicApp.Controllers
 {
+    [AdminAuthorizeAttribute]
     public class AdminController : Controller
     {
 
 
-        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-1VP4FKU\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
+        private DataClasses1DataContext db = new DataClasses1DataContext("Data Source=DESKTOP-UOULN0V\\SQLEXPRESS;Initial Catalog=music;Integrated Security=True;TrustServerCertificate=True");
 
 
         // GET: Admin
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult AccessDenied()
         {
             return View();
         }
