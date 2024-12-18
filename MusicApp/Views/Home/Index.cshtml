@@ -276,7 +276,10 @@ function searchSong() {
                 }
             });
         } else {
-            $('#searchResult').html(''); // Xóa kết quả tìm kiếm khi không nhập từ khóa
+            $('#matchSong').html('');
+            $('#matchArtist').html('');
+            $('#searchResult').hide();
+            $('#allSong').show();
         }
 }
 </script>
