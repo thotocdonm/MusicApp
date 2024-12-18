@@ -40,10 +40,10 @@ namespace MusicApp.Controllers
                                   Duration = GetAudioDuration(Server.MapPath("~/Public/Songs/" + song.song_src))
                               };
 
-            string playListName = db.mic_playlists
-                                    .Where(playlist => playlist.is_deleted == '0' && playlist.playlist_id == id)
-                                    .Select(playlist => playlist.name)
-                                    .SingleOrDefault();
+            var playlist = db.mic_playlists
+                       .Where(playlistData => playlistData.is_deleted == '0' && playlistData.playlist_id == id)
+                       .Select(playlistData => new { playlistData.playlist_id, playlistData.name })
+                       .SingleOrDefault();
 
             var viewModel = new MusicViewModel();
 
@@ -52,7 +52,8 @@ namespace MusicApp.Controllers
             viewModel = new MusicViewModel
             {
                 Songs = singerSongs ?? Enumerable.Empty<SingerSongViewModel>(),
-                playlistName = playListName
+                playlistName = playlist.name,
+                playlistId = playlist.playlist_id
             };
 
 
@@ -177,6 +178,34 @@ namespace MusicApp.Controllers
                 db.SubmitChanges();
 
                 return Json(new { success = true, message = "Danh sách phát đã được xóa thành công!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult DeleteSong(long playlistId, long songId)
+        {
+            try
+            {
+                if (Session["user_id"] == null)
+                {
+                    return Json(new { success = false, message = "Bạn chưa đăng nhập!" });
+                }
+
+                var songPlaylist = db.mic_song_playlists.FirstOrDefault(p => p.playlist_id == playlistId && p.song_id == songId && p.is_deleted == '0');
+
+                if (songPlaylist == null)
+                {
+                    return Json(new { success = false, message = "Nhạc không tồn tại!" });
+                }
+
+                songPlaylist.is_deleted = '1';
+                db.SubmitChanges();
+
+                return Json(new { success = true, message = "Nhạc đã được xóa thành công!" });
             }
             catch (Exception ex)
             {

@@ -93,6 +93,11 @@ namespace MusicApp.Controllers
             return View(viewModel);
         }
 
+
+        public ActionResult AccessDenied()
+        {
+            return View();
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

@@ -1,4 +1,5 @@
 ﻿using MusicApp.Models;
+using MusicApp.Utils;
 using System;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace MusicApp.Controllers
 {
+    [AdminAuthorizeAttribute]
     public class AdminController : Controller
     {
 
@@ -16,6 +18,11 @@ namespace MusicApp.Controllers
 
         // GET: Admin
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult AccessDenied()
         {
             return View();
         }

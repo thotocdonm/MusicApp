@@ -105,9 +105,9 @@
 
 
     <div id="searchResult" class="row g-2" style="display:none">
-        <h2 style="color:white">Artists</h2><br />
+        <h1 style="color:white">Artists</h1><br />
         <div id="matchArtist" class="d-flex" style="flex-wrap:wrap"></div>
-        <h2 style="color:white">Songs</h2><br />
+        <h1 style="color:white">Songs</h1><br />
         <div id="matchSong" class="d-flex" style="flex-wrap:wrap"></div>
     </div>
 
@@ -215,7 +215,7 @@ function timesearchSong() {
     clearTimeout(searchsongTimeout);
     searchsongTimeout = setTimeout(() => {
         searchSong();
-    }, 1000);
+    }, 300);
 }
 
 function searchSong() {

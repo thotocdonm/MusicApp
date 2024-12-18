@@ -72,13 +72,15 @@
 </head>
 <body>
     <div class="gradient_background" style="display: flex; flex-direction: column;max-height:100%; max-width:100%">
-        <div style="display:flex; position:relative; width:100%; height:40%">
-            <div class="image-container" style="height: 100%; width: 100%; overflow: hidden ">
-                <img id="bgArtist" src="~/Assets/img/jungkook.jpg" alt="Jungkook_img" class="fade-out-image" style="width: 100%; height: 100%;" />
+        
+        <div style="display:flex; width:100%; height:40%; gap: 20px">
+            <div class="image-container" style="position:relative;overflow: hidden; align-content: center; margin-left: 1rem; display:flex">
+                <img id="bgArtist" src="~/Public/Images/grey.jpg" alt="Jungkook_img" class="fade-out-image" style="width: 200px; height: 200px;" />
+                <i class="bi bi-music-note-beamed" style="position: absolute; z-index: 1000; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 8rem "></i>
             </div>
 
 
-            <div style="position: absolute; margin-left: 20px; padding-top: 110px;">
+            <div style="align-content:center">
                 <h1 style="color:white; font-weight: bold; font-size:100px">@Model.playlistName</h1>
             </div>
         </div>
@@ -93,28 +95,34 @@
                 <h2 style="color:white">List Song</h2>
                 @foreach (var song in Model.Songs)
                 {
-                   
-                        <div id="song-@index" data-index="@index" class="row g-0 popular-track track-container" data-song='@Html.Raw(Json.Encode(song))' onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
-                            <div class="col-11 col-sm-8" style="display:flex; gap:16px; align-items:center;">
-                                <div style="color: #b3b3b3;" class="track-index">
-                                    <p class="index-text" style="margin-top:1em">@((index + 1))</p>
-                                    <i class="bi bi-play-fill d-none"></i>
-                                    <i class="bi bi-pause-fill d-none"></i>
-                                    <div class="bar-wave d-none" style="display: flex; gap: 2px; align-items: center;">
-                                        <i class="wave-bar"></i>
-                                        <i class="wave-bar"></i>
-                                        <i class="wave-bar"></i>
-                                    </div>
+
+                    <div id="song-@index" data-index="@index" class="row g-0 popular-track track-container" data-song='@Html.Raw(Json.Encode(song))' onclick="togglePlayPause(this)" style="font-size:1rem; display:flex; align-items:center; cursor:pointer;" onmouseenter="showIcon(this)" onmouseleave="resetIcon(this)">
+                        <div class="col-11 col-sm-7" style="display:flex; gap:16px; align-items:center;">
+                            <div style="color: #b3b3b3;" class="track-index">
+                                <p class="index-text" style="margin-top:1em">@((index + 1))</p>
+                                <i class="bi bi-play-fill d-none"></i>
+                                <i class="bi bi-pause-fill d-none"></i>
+                                <div class="bar-wave d-none" style="display: flex; gap: 2px; align-items: center;">
+                                    <i class="wave-bar"></i>
+                                    <i class="wave-bar"></i>
+                                    <i class="wave-bar"></i>
                                 </div>
-                                <div style="height:40px; width:40px;">
-                                    <img src="@Url.Content("~/Public/Images/" + song.SongThumbnail)" class="rounded-1" style="height: 100%; width: 100%;" alt="..." />
-                                </div>
-                                <span class="titleSong" style="color:white;">@song.SongTitle</span>
                             </div>
-                            <div class="col-3 d-none d-sm-block viewSong" style="color: #b3b3b3;">@song.Views</div>
-                            <div class="col-1 durationSong" style="color: #b3b3b3;">@song.Duration</div>
+                            <div style="height:40px; width:40px;">
+                                <img src="@Url.Content("~/Public/Images/" + song.SongThumbnail)" class="rounded-1" style="height: 100%; width: 100%;" alt="..." />
+                            </div>
+                            <span class="titleSong" style="color:white;">@song.SongTitle</span>
                         </div>
-                        index++;
+                        <div class="col-3 d-none d-sm-block viewSong" style="color: #b3b3b3;">@song.Views</div>
+                        <div class="col-1 durationSong" style="color: #b3b3b3;">@song.Duration</div>
+                        <div class="col-1" style="color: #b3b3b3; display: flex; justify-content: center; align-items: center;">
+                            <i class="bi bi-trash-fill" style="cursor: pointer; color: red; font-size: 1.2rem;"
+                               title="Delete song"
+                               onclick="deleteSong(@Model.playlistId, @song.SongId, event)">
+                            </i>
+                        </div>
+                    </div>
+                    index++;
                 }
 
             </div>
@@ -349,6 +357,32 @@
                 if (firstItem) {
                     togglePlayPause(firstItem);
                 }
+            }
+        }
+
+        function deleteSong(playlistId, songId, event) {
+            event.stopPropagation();
+            if (confirm("Bạn có chắc chắn muốn xóa bài hát này?")) {
+                fetch('/Playlist/DeleteSong', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        playlistId: playlistId,
+                        songId: songId
+                        })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            window.location.href = `/Playlist/Details/${playlistId}`;
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
             }
         }
 

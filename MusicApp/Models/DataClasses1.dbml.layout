@@ -1,103 +1,116 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 16.25, 12.25" name="DataClasses1">
+=======
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 13.125, 12.5" name="DataClasses1">
+>>>>>>> 42c4c54ab2dcd69c3810e09e22e67125381de110
   <DataContextMoniker Name="/DataClasses1DataContext" />
   <nestedChildShapes>
-    <classShape Id="41661040-c188-4d0a-b716-58aedaf4d39e" absoluteBounds="4, 3.5, 2, 1.1939925130208333">
+    <classShape Id="c518d674-2d9e-465a-8789-2539b21f1f1d" absoluteBounds="3.25, 1.875, 2, 1.1939925130208333">
       <DataClassMoniker Name="/DataClasses1DataContext/ASPStateTempApplication" />
       <nestedChildShapes>
-        <elementListCompartment Id="fe0d8e61-eb66-43aa-b463-2625117c469a" absoluteBounds="4.015, 3.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="c14ea21e-95a8-4548-9fc9-a1a4324bf6d6" absoluteBounds="3.265, 2.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="29509bdb-49e1-4bf9-b6a3-98443d5ce475" absoluteBounds="2.625, 6.125, 2, 2.9247054036458331">
+    <classShape Id="264017f9-c357-490d-9780-04842d8e3956" absoluteBounds="2.125, 4, 2, 2.9247054036458331">
       <DataClassMoniker Name="/DataClasses1DataContext/ASPStateTempSession" />
       <nestedChildShapes>
-        <elementListCompartment Id="37102139-716a-4342-86b1-14a1ff509b13" absoluteBounds="2.64, 6.585, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="aabf8b05-ede5-4cb8-8376-01251fd301e6" absoluteBounds="2.14, 4.46, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="7ad7f007-53c0-40d7-b5ea-957fc37d9b1e" absoluteBounds="9.25, 4.375, 2, 2.3478011067708335">
+    <classShape Id="deded5b4-6a3e-4139-ad8e-4aae921c2066" absoluteBounds="9.125, 4.125, 2, 2.3478011067708335">
       <DataClassMoniker Name="/DataClasses1DataContext/mic_favourite_song" />
       <nestedChildShapes>
-        <elementListCompartment Id="9525e1c9-31a6-41d6-97d1-678fff680d20" absoluteBounds="9.265, 4.835, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="a0c13c03-58d2-493e-a0fd-85b973b9f79a" absoluteBounds="9.14, 4.585, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="a0a12ddc-30a7-4ef7-89a4-a54fe1563bc4" absoluteBounds="7.625, 7.125, 2, 2.7324039713541666">
+    <classShape Id="dbe71123-2186-4b33-8676-8e72b44e3600" absoluteBounds="5.75, 5.5, 2, 2.7324039713541666">
       <DataClassMoniker Name="/DataClasses1DataContext/mic_playlist" />
       <nestedChildShapes>
-        <elementListCompartment Id="3d6410e3-4295-4d9a-bd89-b7ff73047830" absoluteBounds="7.64, 7.585, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="2573839b-9981-4d01-80de-dd049cda71ca" absoluteBounds="5.765, 5.96, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="39f4a3d3-1bf3-4457-9ef7-dde1250a908c" absoluteBounds="11.875, 8.125, 2, 2.7324039713541666">
+    <classShape Id="10e24bfd-1b77-43ae-adfe-5f803294bcac" absoluteBounds="6.125, 3.25, 2, 2.7324039713541666">
       <DataClassMoniker Name="/DataClasses1DataContext/mic_singer" />
       <nestedChildShapes>
-        <elementListCompartment Id="adb4f1bb-fb67-4434-ac60-e50dad47bb1e" absoluteBounds="11.89, 8.585, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="23734bcb-d511-4673-aedc-1ce275660156" absoluteBounds="6.14, 3.71, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="c8f6d948-ae15-485c-a5ab-204a00c0e703" absoluteBounds="6, 9.875, 2, 2.1554996744791666">
+    <classShape Id="e8632781-81ba-45f6-8661-2fe2697527b6" absoluteBounds="7.125, 1.875, 2, 2.1554996744791666">
       <DataClassMoniker Name="/DataClasses1DataContext/mic_song_comment" />
       <nestedChildShapes>
-        <elementListCompartment Id="71f0cd49-be27-4af6-99da-14c53a029d43" absoluteBounds="6.015, 10.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="b92051a0-e765-4472-bf43-fda6e3d164aa" absoluteBounds="7.14, 2.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="17bad62b-1a11-4e4c-99cd-f63b2034d47b" absoluteBounds="6.625, 6.25, 2, 2.1554996744791666">
+    <classShape Id="da1d7998-9c75-40f5-b0a1-f3603cd9d65e" absoluteBounds="4.875, 7.625, 2, 2.1554996744791666">
       <DataClassMoniker Name="/DataClasses1DataContext/mic_song_like" />
       <nestedChildShapes>
-        <elementListCompartment Id="74a135d9-fe66-4ecb-986e-eb1c157440bc" absoluteBounds="6.64, 6.71, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="9972ae86-c095-4d4d-b5fc-09d0f96b306c" absoluteBounds="4.89, 8.085, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="ef7862d6-8ac0-4ee4-8d4f-e94113f99a38" absoluteBounds="7.25, 3.875, 2, 2.3478011067708335">
+    <classShape Id="b4a42048-a473-45f0-992a-21137b1ca4d3" absoluteBounds="1.75, 8.25, 2, 2.3478011067708335">
       <DataClassMoniker Name="/DataClasses1DataContext/mic_song_playlist" />
       <nestedChildShapes>
-        <elementListCompartment Id="4debde8b-b414-47a5-8ee6-82500027c05a" absoluteBounds="7.265, 4.335, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="c2b6db8e-c9ac-4029-b041-c7f048cb65e8" absoluteBounds="1.7650000000000001, 8.71, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(8.9375 : 7.125); (8.9375 : 6.22280110677083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.75 : 7.27485270182292); (1.90625 : 7.27485270182292); (1.90625 : 8.25)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasses1DataContext/mic_playlist/mic_playlist_mic_song_playlist" />
       <nodes>
-        <classShapeMoniker Id="a0a12ddc-30a7-4ef7-89a4-a54fe1563bc4" />
-        <classShapeMoniker Id="ef7862d6-8ac0-4ee4-8d4f-e94113f99a38" />
+        <classShapeMoniker Id="dbe71123-2186-4b33-8676-8e72b44e3600" />
+        <classShapeMoniker Id="b4a42048-a473-45f0-992a-21137b1ca4d3" />
       </nodes>
     </associationConnector>
-    <classShape Id="e04cefb1-600a-4c10-87d7-68a9f93072e7" absoluteBounds="11.375, 3.25, 2, 3.6939111328124996">
+    <classShape Id="7abba093-6b90-4ea8-88f4-5b3a8fe49eaf" absoluteBounds="3.875, 8.125, 2, 3.6939111328124996">
       <DataClassMoniker Name="/DataClasses1DataContext/mic_song" />
       <nestedChildShapes>
-        <elementListCompartment Id="cfae0304-78e6-416a-a5a3-dc8083da3434" absoluteBounds="11.39, 3.71, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="2dc59a4f-2df0-4bd5-8c70-cdf3869b7b7b" absoluteBounds="3.89, 8.585, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(11.375 : 6.0473046875); (11.25 : 6.0473046875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.875 : 10.8309554036458); (7.88541666666667 : 10.8309554036458 : JumpStart); (8.05208333333333 : 10.8309554036458 : JumpEnd); (9.9999995 : 10.8309554036458); (9.9999995 : 6.47280110677083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasses1DataContext/mic_song/mic_song_mic_favourite_song" />
       <nodes>
-        <classShapeMoniker Id="e04cefb1-600a-4c10-87d7-68a9f93072e7" />
-        <classShapeMoniker Id="7ad7f007-53c0-40d7-b5ea-957fc37d9b1e" />
+        <classShapeMoniker Id="7abba093-6b90-4ea8-88f4-5b3a8fe49eaf" />
+        <classShapeMoniker Id="deded5b4-6a3e-4139-ad8e-4aae921c2066" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(11.59375 : 6.9439111328125); (11.59375 : 11.4752018229167); (8 : 11.4752018229167)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.875 : 10.3057250390625); (7.88541666666667 : 10.3057250390625 : JumpStart); (8.05208333333333 : 10.3057250390625 : JumpEnd); (8.625 : 10.3057250390625); (8.625 : 4.03049967447917)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasses1DataContext/mic_song/mic_song_mic_song_comment" />
       <nodes>
-        <classShapeMoniker Id="e04cefb1-600a-4c10-87d7-68a9f93072e7" />
-        <classShapeMoniker Id="c8f6d948-ae15-485c-a5ab-204a00c0e703" />
+        <classShapeMoniker Id="7abba093-6b90-4ea8-88f4-5b3a8fe49eaf" />
+        <classShapeMoniker Id="e8632781-81ba-45f6-8661-2fe2697527b6" />
       </nodes>
     </associationConnector>
+<<<<<<< HEAD
     <associationConnector edgePoints="[(11.375 : 6.86460611979167); (9.02083333333333 : 6.86460611979167 : JumpStart); (8.85416666666667 : 6.86460611979167 : JumpEnd); (8.625 : 6.86460611979167)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+=======
+    <associationConnector edgePoints="[(4.875 : 8.125); (4.875 : 7.375); (5.875 : 7.375); (5.875 : 7.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+>>>>>>> 42c4c54ab2dcd69c3810e09e22e67125381de110
       <AssociationMoniker Name="/DataClasses1DataContext/mic_song/mic_song_mic_song_like" />
       <nodes>
-        <classShapeMoniker Id="e04cefb1-600a-4c10-87d7-68a9f93072e7" />
-        <classShapeMoniker Id="17bad62b-1a11-4e4c-99cd-f63b2034d47b" />
+        <classShapeMoniker Id="7abba093-6b90-4ea8-88f4-5b3a8fe49eaf" />
+        <classShapeMoniker Id="da1d7998-9c75-40f5-b0a1-f3603cd9d65e" />
       </nodes>
     </associationConnector>
+<<<<<<< HEAD
     <associationConnector edgePoints="[(11.375 : 4.09375); (10.3645833333333 : 4.09375 : JumpStart); (10.1979166666667 : 4.09375 : JumpEnd); (9.25 : 4.09375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+=======
+    <associationConnector edgePoints="[(3.875 : 9.42390055338542); (3.75 : 9.42390055338542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+>>>>>>> 42c4c54ab2dcd69c3810e09e22e67125381de110
       <AssociationMoniker Name="/DataClasses1DataContext/mic_song/mic_song_mic_song_playlist" />
       <nodes>
-        <classShapeMoniker Id="e04cefb1-600a-4c10-87d7-68a9f93072e7" />
-        <classShapeMoniker Id="ef7862d6-8ac0-4ee4-8d4f-e94113f99a38" />
+        <classShapeMoniker Id="7abba093-6b90-4ea8-88f4-5b3a8fe49eaf" />
+        <classShapeMoniker Id="b4a42048-a473-45f0-992a-21137b1ca4d3" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(12.625 : 8.125); (12.625 : 6.9439111328125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(7.96875 : 5.98240397135417); (7.96875 : 11.3561857682292); (5.875 : 11.3561857682292)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasses1DataContext/mic_singer/mic_singer_mic_song" />
       <nodes>
-        <classShapeMoniker Id="39f4a3d3-1bf3-4457-9ef7-dde1250a908c" />
-        <classShapeMoniker Id="e04cefb1-600a-4c10-87d7-68a9f93072e7" />
+        <classShapeMoniker Id="10e24bfd-1b77-43ae-adfe-5f803294bcac" />
+        <classShapeMoniker Id="7abba093-6b90-4ea8-88f4-5b3a8fe49eaf" />
       </nodes>
     </associationConnector>
+<<<<<<< HEAD
     <classShape Id="d0856e74-4473-470d-bcc5-6e2a2a68334b" absoluteBounds="14, 2.625, 2, 3.3093082682291666">
       <DataClassMoniker Name="/DataClasses1DataContext/mic_user" />
       <nestedChildShapes>
@@ -105,31 +118,52 @@
       </nestedChildShapes>
     </classShape>
     <associationConnector edgePoints="[(14 : 2.90625); (10.28125 : 2.90625); (10.28125 : 4.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+=======
+    <classShape Id="5f12d47d-aff1-46b1-8c6f-fe91dc574c02" absoluteBounds="10.875, 9, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/DataClasses1DataContext/mic_user" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b1ef0af8-d0cb-48db-bcc2-f6a4c317bd0d" absoluteBounds="10.89, 9.46, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(12.0000005 : 9); (12.0000005 : 5.29890055338542); (11.6458310833333 : 5.29890055338542 : JumpStart); (11.4791644166667 : 5.29890055338542 : JumpEnd); (11.125 : 5.29890055338542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+>>>>>>> 42c4c54ab2dcd69c3810e09e22e67125381de110
       <AssociationMoniker Name="/DataClasses1DataContext/mic_user/mic_user_mic_favourite_song" />
       <nodes>
-        <classShapeMoniker Id="d0856e74-4473-470d-bcc5-6e2a2a68334b" />
-        <classShapeMoniker Id="7ad7f007-53c0-40d7-b5ea-957fc37d9b1e" />
+        <classShapeMoniker Id="5f12d47d-aff1-46b1-8c6f-fe91dc574c02" />
+        <classShapeMoniker Id="deded5b4-6a3e-4139-ad8e-4aae921c2066" />
       </nodes>
     </associationConnector>
+<<<<<<< HEAD
     <associationConnector edgePoints="[(15 : 5.93430826822917); (15 : 7.59375); (14.5520808333333 : 7.59375 : JumpStart); (14.3854141666667 : 7.59375 : JumpEnd); (12.7083333333333 : 7.59375 : JumpStart); (12.5416666666667 : 7.59375 : JumpEnd); (11.6770833333333 : 7.59375 : JumpStart); (11.5104166666667 : 7.59375 : JumpEnd); (9.625 : 7.59375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+=======
+    <associationConnector edgePoints="[(12.46875275 : 9); (12.46875275 : 7.3838525390625); (12.0833338333333 : 7.3838525390625 : JumpStart); (11.9166671666667 : 7.3838525390625 : JumpEnd); (11.6458310833333 : 7.3838525390625 : JumpStart); (11.4791644166667 : 7.3838525390625 : JumpEnd); (10.0833328333333 : 7.3838525390625 : JumpStart); (9.91666616666667 : 7.3838525390625 : JumpEnd); (8.70833333333333 : 7.3838525390625 : JumpStart); (8.54166666666667 : 7.3838525390625 : JumpEnd); (8.05208333333333 : 7.3838525390625 : JumpStart); (7.88541666666667 : 7.3838525390625 : JumpEnd); (7.75 : 7.3838525390625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+>>>>>>> 42c4c54ab2dcd69c3810e09e22e67125381de110
       <AssociationMoniker Name="/DataClasses1DataContext/mic_user/mic_user_mic_playlist" />
       <nodes>
-        <classShapeMoniker Id="d0856e74-4473-470d-bcc5-6e2a2a68334b" />
-        <classShapeMoniker Id="a0a12ddc-30a7-4ef7-89a4-a54fe1563bc4" />
+        <classShapeMoniker Id="5f12d47d-aff1-46b1-8c6f-fe91dc574c02" />
+        <classShapeMoniker Id="dbe71123-2186-4b33-8676-8e72b44e3600" />
       </nodes>
     </associationConnector>
+<<<<<<< HEAD
     <associationConnector edgePoints="[(14.4687475 : 5.93430826822917); (14.4687475 : 11.1663003971354); (11.6770833333333 : 11.1663003971354 : JumpStart); (11.5104166666667 : 11.1663003971354 : JumpEnd); (8 : 11.1663003971354)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+=======
+    <associationConnector edgePoints="[(11.56249775 : 9); (11.56249775 : 2.95274983723958); (9.125 : 2.95274983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+>>>>>>> 42c4c54ab2dcd69c3810e09e22e67125381de110
       <AssociationMoniker Name="/DataClasses1DataContext/mic_user/mic_user_mic_song_comment" />
       <nodes>
-        <classShapeMoniker Id="d0856e74-4473-470d-bcc5-6e2a2a68334b" />
-        <classShapeMoniker Id="c8f6d948-ae15-485c-a5ab-204a00c0e703" />
+        <classShapeMoniker Id="5f12d47d-aff1-46b1-8c6f-fe91dc574c02" />
+        <classShapeMoniker Id="e8632781-81ba-45f6-8661-2fe2697527b6" />
       </nodes>
     </associationConnector>
+<<<<<<< HEAD
     <associationConnector edgePoints="[(14 : 3.0781275); (10.3645833333333 : 3.0781275 : JumpStart); (10.1979166666667 : 3.0781275 : JumpEnd); (6.90625 : 3.0781275); (6.90625 : 6.25)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+=======
+    <associationConnector edgePoints="[(10.875 : 9.39024983723958); (6.875 : 9.39024983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+>>>>>>> 42c4c54ab2dcd69c3810e09e22e67125381de110
       <AssociationMoniker Name="/DataClasses1DataContext/mic_user/mic_user_mic_song_like" />
       <nodes>
-        <classShapeMoniker Id="d0856e74-4473-470d-bcc5-6e2a2a68334b" />
-        <classShapeMoniker Id="17bad62b-1a11-4e4c-99cd-f63b2034d47b" />
+        <classShapeMoniker Id="5f12d47d-aff1-46b1-8c6f-fe91dc574c02" />
+        <classShapeMoniker Id="da1d7998-9c75-40f5-b0a1-f3603cd9d65e" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>
