@@ -295,6 +295,27 @@
                 albumArt: song.SongThumbnail,
                 src: song.SongSrc
             }
+            const playedSongs = JSON.parse(sessionStorage.getItem('playedSongs')) || [];
+
+            if (!playedSongs.includes(songId)) {
+                // First time clicking this song in the session
+                console.log('First click detected for song:', songId);
+                playedSongs.push(songId);
+                sessionStorage.setItem('playedSongs', JSON.stringify(playedSongs));
+
+                // Increase song views in the database
+                $.ajax({
+                    url: '@Url.Action("IncreaseView", "Song")', // Your API endpoint for increasing views
+                    type: 'POST',
+                    data: { songId: songId },
+                    success: function (response) {
+                        console.log('Song views increased:', response);
+                    },
+                    error: function (error) {
+                        console.error('Error increasing song views:', error);
+                    }
+                });
+            }
 
             if (songId === currentSongId && !audio.paused) {
                     // Nếu bài hát đang phát, tạm dừng
