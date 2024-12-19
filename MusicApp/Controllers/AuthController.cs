@@ -48,7 +48,7 @@ namespace MusicApp.Controllers
                     newuser.password = hashPassword;
                     newuser.full_name = fullName;
                     newuser.mobile_number = phoneNumber;
-                    newuser.role = "user";
+                    newuser.role = "User";
                     newuser.is_deleted = '0';
                     newuser.email = username;
                     newuser.created_by = username;

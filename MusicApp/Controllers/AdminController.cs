@@ -164,7 +164,7 @@ namespace MusicApp.Controllers
                 }
                 return RedirectToAction("User", "Admin");
             }
-            return View(user);
+            return RedirectToAction("User", "Admin");
         }
         [HttpPost]
         public ActionResult AddUser(AddUser user)
@@ -420,6 +420,10 @@ namespace MusicApp.Controllers
 
         public ActionResult Dashboard()
         {
+            int totalSongs = db.mic_songs.Count();
+            int totalUsers = db.mic_users.Count();
+            ViewBag.TotalSongs = totalSongs;
+            ViewBag.TotalUsers = totalUsers;
             return View();
         }
 
