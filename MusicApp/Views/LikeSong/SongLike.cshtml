@@ -126,7 +126,10 @@
                             <div style="height:40px; width:40px;">
                                 <img src="@Url.Content("~/Public/Images/" + song.SongThumbnail)" class="rounded-1" style="height: 100%; width: 100%;" alt="..." />
                             </div>
-                            <span class="titleSong" style="color:white;">@song.SongTitle</span>
+                            <div style="display: flex; position: relative; width: 12rem; pointer-events: auto;">
+                                <span class="titleSong" style="color:white;text-decoration: none; position: absolute; top: -1.5rem; z-index: 2 ">@song.SongTitle</span>
+                                <span class="titleSong small" style="color:white;text-decoration: none; position: absolute; top: -0.3rem; z-index: 2 ">@song.SingerName</span>
+                            </div>
                         </div>
                         <div class="col-3 d-none d-sm-block viewSong" style="color: #b3b3b3;">@song.Views</div>
                         <div class="col-1 durationSong" style="color: #b3b3b3;">@song.Duration</div>

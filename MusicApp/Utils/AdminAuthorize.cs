@@ -8,7 +8,7 @@ namespace MusicApp.Utils
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             var userRole = httpContext.Session["Role"] as string;
-            return userRole == "admin"; // Allow access only if the role is "Admin"
+            return userRole == "Admin"; // Allow access only if the role is "Admin"
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)

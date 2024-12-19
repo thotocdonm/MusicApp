@@ -32,6 +32,8 @@ namespace MusicApp.Controllers
                               where song.is_deleted == '0' && users.user_id == int.Parse(Session["user_id"].ToString())
                               select new SingerSongViewModel
                               {
+                                  SingerUrl = singer.singer_url,
+                                  SongUrl = song.song_url,
                                   SongId = song.song_id,
                                   SongTitle = song.name,
                                   SingerName = singer.name,

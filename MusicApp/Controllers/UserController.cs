@@ -23,7 +23,7 @@ namespace MusicApp.Controllers
         public ActionResult EditUser(EditUserModel user)
         {
             var existingUser = db.mic_users.FirstOrDefault(u => u.user_id == user.id);
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 
                 if (existingUser != null)
@@ -43,7 +43,7 @@ namespace MusicApp.Controllers
         public ActionResult EditPassword(EditUserModel user)
         {
             var existingUser = db.mic_users.FirstOrDefault(u => u.user_id == user.id);
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 
                 if (existingUser != null)
